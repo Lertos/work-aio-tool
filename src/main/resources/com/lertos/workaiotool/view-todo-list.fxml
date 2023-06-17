@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19"
+<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="tabPaneMain" xmlns="http://javafx.com/javafx/19"
          fx:controller="com.lertos.workaiotool.Controller">
    <tabs>
-      <Tab text="To-Do">
+      <Tab id="tabTodo" fx:id="tabTodo" text="To-Do">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>
@@ -19,7 +18,7 @@
             </VBox>
          </content>
       </Tab>
-      <Tab text="Folders">
+      <Tab id="tabFolders" fx:id="tabFolders" text="Folders">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>
@@ -32,7 +31,7 @@
             </VBox>
          </content>
       </Tab>
-      <Tab text="Copy">
+      <Tab id="tabCopy" fx:id="tabCopy" text="Copy">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>
@@ -45,7 +44,7 @@
             </VBox>
          </content>
       </Tab>
-      <Tab text="Promoter">
+      <Tab id="tabPromoter" fx:id="tabPromoter" text="Promoter">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>
@@ -58,7 +57,7 @@
             </VBox>
          </content>
       </Tab>
-      <Tab text="Info">
+      <Tab id="tabInfo" fx:id="tabInfo" text="Info">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>
@@ -71,7 +70,7 @@
             </VBox>
          </content>
       </Tab>
-      <Tab text="SQL Compare">
+      <Tab id="tabSQLCompare" fx:id="tabSQLCompare" text="SQL Compare">
          <content>
             <VBox alignment="CENTER" spacing="20.0">
                <padding>

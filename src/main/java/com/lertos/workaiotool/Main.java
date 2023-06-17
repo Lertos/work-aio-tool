@@ -12,6 +12,10 @@ public class Main extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view-todo-list.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 400, 500);
+
+        Controller controller = fxmlLoader.getController();
+        controller.setListeners(scene);
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
