@@ -1,2 +1,4 @@
-package com.lertos.workaiotool.model;public class Data {
+package com.lertos.workaiotool.model;
+
+public class Data {
 }
