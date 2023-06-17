@@ -1,16 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.lertos.workaiotool.Controller">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TabPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19"
+         fx:controller="com.lertos.workaiotool.Controller">
+   <tabs>
+      <Tab text="To-Do">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+               <Label fx:id="welcomeText"/>
+               <Button onAction="#onHelloButtonClick" text="Hello!"/>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Folders">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <children>
+                  <Label fx:id="welcomeText1"/>
+                  <Button onAction="#onHelloButtonClick" text="Hello!"/>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Copy">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <children>
+                  <Label fx:id="welcomeText11"/>
+                  <Button onAction="#onHelloButtonClick" text="Hello!"/>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Promoter">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <children>
+                  <Label fx:id="welcomeText111"/>
+                  <Button onAction="#onHelloButtonClick" text="Hello!"/>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="Info">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <children>
+                  <Label fx:id="welcomeText1111"/>
+                  <Button onAction="#onHelloButtonClick" text="Hello!"/>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+      <Tab text="SQL Compare">
+         <content>
+            <VBox alignment="CENTER" spacing="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+               </padding>
+               <children>
+                  <Label fx:id="welcomeText11111"/>
+                  <Button onAction="#onHelloButtonClick" text="Hello!"/>
+               </children>
+            </VBox>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
