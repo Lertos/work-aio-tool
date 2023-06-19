@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<TabPane xmlns:fx="http://javafx.com/fxml/1" fx:id="tabPaneMain" xmlns="http://javafx.com/javafx/17"
+         fx:controller="com.lertos.workaiotool.controllers.ControllerMain">
+   <tabs>
+      <Tab id="tabTodo" fx:id="tabTodo" text="To-Do">
+         <content>
+            <fx:include source="tab-todo-list.fxml"/>
+         </content>
+      </Tab>
+      <Tab id="tabFolders" fx:id="tabFolders" text="Folders">
+         <content>
+            <fx:include source="tab-folders.fxml"/>
+         </content>
+      </Tab>
+      <Tab id="tabCopy" fx:id="tabCopy" text="Copy">
+         <content>
+            <fx:include source="tab-copy.fxml"/>
+         </content>
+      </Tab>
+      <Tab id="tabPromoter" fx:id="tabPromoter" text="Promoter">
+         <content>
+            <fx:include source="tab-promoter.fxml"/>
+         </content>
+      </Tab>
+      <Tab id="tabInfo" fx:id="tabInfo" text="Info">
+         <content>
+            <fx:include source="tab-info.fxml"/>
+         </content>
+      </Tab>
+      <Tab id="tabSQLCompare" fx:id="tabSQLCompare" text="SQL Compare">
+         <content>
+            <fx:include source="tab-sql-compare.fxml"/>
+         </content>
+      </Tab>
+   </tabs>
+</TabPane>
