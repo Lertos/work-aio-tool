@@ -1,4 +1,4 @@
-package com.lertos.workaiotool;
+package com.lertos.workaiotool.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
-public class Controller {
+public class ControllerMain {
 
     @FXML
     private TabPane tabPaneMain;
@@ -27,7 +27,7 @@ public class Controller {
 
     public void setListeners(Scene scene) {
         scene.setOnKeyPressed(event -> {
-            //TODO: Will most likely need to check if the focused item is a text field and return if so
+            //NOTE: It seems text fields properly grasp the focus and do not filter past it so this works as intended
             switch (event.getCode()) {
                 case DIGIT1 -> switchTab(tabTodo);
                 case DIGIT2 -> switchTab(tabFolders);
@@ -45,6 +45,6 @@ public class Controller {
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText("Welcome to JavaFX Application from Contr!");
     }
 }
