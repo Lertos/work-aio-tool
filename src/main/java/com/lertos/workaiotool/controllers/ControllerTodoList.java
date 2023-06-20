@@ -32,6 +32,8 @@ public class ControllerTodoList {
     private final double SPACING_BUFFER = 20.0;
     private final double BUTTON_ICON_SIZE = 18.0;
     private final double BUTTON_PADDING_SIZE = 4.0;
+    private final Color TEXT_ACTIVE = Color.BLACK;
+    private final Color TEXT_INACTIVE = Color.DARKGRAY;
     private final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
 
     @FXML
@@ -70,6 +72,15 @@ public class ControllerTodoList {
 
                             button.setGraphic(imageView);
 
+                            //When checked, the item is completed; otherwise it's still active
+                            if (item.isDone()) {
+                                checkBox.setSelected(true);
+                                label.setTextFill(TEXT_INACTIVE);
+                            } else {
+                                checkBox.setSelected(false);
+                                label.setTextFill(TEXT_ACTIVE);
+                            }
+
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
                             setGraphic(hbox);
                         }
@@ -104,15 +115,20 @@ public class ControllerTodoList {
 
             button.setOnAction(event -> System.out.println(getItem().getDescription() + " : button clicked: " + event));
 
+            //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
-                System.out.println(getItem().getDescription() + " : checkbox clicked: " + event);
                 if (getItem().isDone())
-                    label.setTextFill(Color.BLACK);
+                    label.setTextFill(TEXT_ACTIVE);
                 else
-                    label.setTextFill(Color.DARKGRAY);
+                    label.setTextFill(TEXT_INACTIVE);
                 getItem().setDone(!getItem().isDone());
             });
 
+            //========================
+            //Set the onDrag events
+            //========================
+
+            //When the drag is started, copy the current rows' text to the clipboard
             setOnDragDetected(event -> {
                 if (getItem() == null)
                     return;
@@ -128,32 +144,35 @@ public class ControllerTodoList {
                 event.consume();
             });
 
+            //Accept an event's dragOver event IFF the dragged element is of the same class type
             setOnDragOver(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT)) {
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
                     event.acceptTransferModes(TransferMode.MOVE);
-                }
                 event.consume();
             });
 
+            //When the source element is hovering over another row, give the row some opacity to show where it is
             setOnDragEntered(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT)) {
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
                     setOpacity(0.3);
-                }
             });
 
+            //When the row is not being hovered on, set the opacity back to normal
             setOnDragExited(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT)) {
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
                     setOpacity(1);
-                }
             });
 
+            //When the item is dropped, swap the content in the observable array list so the ListView updates automatically
             setOnDragDropped(event -> {
+                //If the item was dropped somewhere other than on another item, return
                 if (getItem() == null)
                     return;
 
                 Dragboard db = event.getDragboard();
                 boolean success = false;
 
+                //Check if the item dropped on is another item
                 if (db.hasContent(TODO_ITEM_DATA_FORMAT)) {
                     TodoItem droppedTodoItem = (TodoItem) db.getContent(TODO_ITEM_DATA_FORMAT);
                     ObservableList<TodoItem> items = getListView().getItems();
