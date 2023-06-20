@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.controllers;
 
+import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,9 +32,6 @@ public class ControllerTodoList {
     private final double SPACING_BUFFER = 20.0;
     private final double BUTTON_ICON_SIZE = 18.0;
     private final double BUTTON_PADDING_SIZE = 4.0;
-    private final Color TEXT_ACTIVE = Color.BLACK;
-    private final Color TEXT_INACTIVE = Color.DARKGRAY;
-    private final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
 
     @FXML
     public void initialize() {
@@ -75,10 +72,10 @@ public class ControllerTodoList {
                             //When checked, the item is completed; otherwise it's still active
                             if (item.isDone()) {
                                 checkBox.setSelected(true);
-                                label.setTextFill(TEXT_INACTIVE);
+                                label.setTextFill(Data.getInstance().TEXT_INACTIVE);
                             } else {
                                 checkBox.setSelected(false);
-                                label.setTextFill(TEXT_ACTIVE);
+                                label.setTextFill(Data.getInstance().TEXT_ACTIVE);
                             }
 
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
@@ -103,7 +100,7 @@ public class ControllerTodoList {
         CheckBox checkBox = new CheckBox();
         Label label = new Label();
         Pane pane = new Pane();
-        ImageView imageView = new ImageView(new Image(new FileInputStream(DELETE_BUTTON_PATH)));
+        ImageView imageView = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
         Button button = new Button();
 
         public TodoItemCell() throws FileNotFoundException {
@@ -118,9 +115,9 @@ public class ControllerTodoList {
             //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
                 if (getItem().isDone())
-                    label.setTextFill(TEXT_ACTIVE);
+                    label.setTextFill(Data.getInstance().TEXT_ACTIVE);
                 else
-                    label.setTextFill(TEXT_INACTIVE);
+                    label.setTextFill(Data.getInstance().TEXT_INACTIVE);
                 getItem().setDone(!getItem().isDone());
             });
 
