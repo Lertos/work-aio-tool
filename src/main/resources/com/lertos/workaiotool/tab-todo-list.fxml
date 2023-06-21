@@ -11,10 +11,12 @@
       <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Hint: Right click a row to edit"/>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
          <children>
-            <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" text="Delete Multiple"/>
+            <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" onMouseClicked="#onDeleteMultipleClicked"
+                    text="Delete Multiple"/>
             <Button fx:id="btnDeleteChecked" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                    text="Delete Checked"/>
-            <Button fx:id="btnAdd" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Add"/>
+                    onMouseClicked="#onDeleteCheckedClicked" text="Delete Checked"/>
+            <Button fx:id="btnAdd" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onAddClicked"
+                    text="Add"/>
          </children>
          <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>

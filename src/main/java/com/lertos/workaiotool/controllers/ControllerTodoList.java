@@ -5,10 +5,7 @@ import com.lertos.workaiotool.model.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -20,6 +17,12 @@ public class ControllerTodoList {
 
     @FXML
     private VBox vboxTodoList;
+    @FXML
+    private Button btnDeleteMultiple;
+    @FXML
+    private Button btnDeleteChecked;
+    @FXML
+    private Button btnAdd;
 
     private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
             new TodoItem(false, "First line"),
@@ -32,6 +35,7 @@ public class ControllerTodoList {
 
     @FXML
     public void initialize() {
+        //Setup and create the list of TodoItems
         ListView<TodoItem> itemsListView = new ListView<>(todoItems);
 
         itemsListView.setCellFactory(param -> {
@@ -167,5 +171,20 @@ public class ControllerTodoList {
             });
             setOnDragDone(DragEvent::consume);
         }
+    }
+
+    @FXML
+    private void onDeleteMultipleClicked() {
+        System.out.println("DeleteMultiple");
+    }
+
+    @FXML
+    private void onDeleteCheckedClicked() {
+        System.out.println("DeleteChecked");
+    }
+
+    @FXML
+    private void onAddClicked() {
+        System.out.println("Add");
     }
 }
