@@ -180,7 +180,7 @@ public class ControllerTodoList {
 
     @FXML
     private void onDeleteCheckedClicked() {
-        System.out.println("DeleteChecked");
+        todoItems.removeIf(item -> item.isDone() == true);
     }
 
     @FXML
