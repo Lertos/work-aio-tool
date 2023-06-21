@@ -11,9 +11,9 @@
       <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Hint: Right click a row to edit"/>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
          <children>
-            <Button mnemonicParsing="false" text="Delete"/>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Delete Done"/>
-            <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Add New"/>
+            <Button mnemonicParsing="false" text="Delete Multiple"/>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Delete Checked"/>
+            <Button layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Add"/>
          </children>
          <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
