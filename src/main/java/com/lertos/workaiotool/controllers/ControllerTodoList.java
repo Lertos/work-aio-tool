@@ -5,16 +5,15 @@ import com.lertos.workaiotool.model.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.input.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class ControllerTodoList {
@@ -30,8 +29,6 @@ public class ControllerTodoList {
     );
     private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-todo-item");
     private final double SPACING_BUFFER = 20.0;
-    private final double BUTTON_ICON_SIZE = 18.0;
-    private final double BUTTON_PADDING_SIZE = 4.0;
 
     @FXML
     public void initialize() {
@@ -56,18 +53,6 @@ public class ControllerTodoList {
                             //Make the label wrap the text so the entire text can be seen
                             label.setWrapText(true);
                             label.setText(item != null ? item.getDescription() : "");
-
-                            //Set the button's image to the same size of the button, preserving the aspect ratio
-                            double totalButtonSize = BUTTON_ICON_SIZE + BUTTON_PADDING_SIZE;
-
-                            button.setMinSize(totalButtonSize, totalButtonSize);
-                            button.setMaxSize(totalButtonSize, totalButtonSize);
-
-                            imageView.setPreserveRatio(true);
-                            imageView.setFitWidth(BUTTON_ICON_SIZE);
-                            imageView.setFitHeight(BUTTON_ICON_SIZE);
-
-                            button.setGraphic(imageView);
 
                             //When checked, the item is completed; otherwise it's still active
                             if (item.isDone()) {
@@ -99,18 +84,13 @@ public class ControllerTodoList {
         HBox hbox = new HBox();
         CheckBox checkBox = new CheckBox();
         Label label = new Label();
-        Pane pane = new Pane();
-        ImageView imageView = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
-        Button button = new Button();
 
         public TodoItemCell() throws FileNotFoundException {
             super();
 
-            hbox.getChildren().addAll(checkBox, label, pane, button);
+            hbox.getChildren().addAll(checkBox, label);
             hbox.setSpacing(4);
-            hbox.setHgrow(pane, Priority.ALWAYS); //Puts the label to the left and grows the pane so the button(s) will be push to the far right
-
-            button.setOnAction(event -> System.out.println(getItem().getDescription() + " : button clicked: " + event));
+            hbox.setHgrow(label, Priority.ALWAYS);
 
             //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
