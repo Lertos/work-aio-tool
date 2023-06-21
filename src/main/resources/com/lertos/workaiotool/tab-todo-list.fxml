@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vboxTodoList" xmlns="http://javafx.com/javafx/19"
       fx:controller="com.lertos.workaiotool.controllers.ControllerTodoList">
    <children>
       <Separator prefWidth="200.0"/>
+      <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Hint: Right click a row to edit"/>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
          <children>
             <Button mnemonicParsing="false" text="Delete"/>
