@@ -23,6 +23,8 @@ public class ControllerTodoList {
     private Button btnDeleteChecked;
     @FXML
     private Button btnAdd;
+    @FXML
+    private Button btnFinishDeleting;
 
     private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
             new TodoItem(false, "First line"),
@@ -35,6 +37,9 @@ public class ControllerTodoList {
 
     @FXML
     public void initialize() {
+        //Make sure buttons are in the correct start states
+        enableDeletionMode(false);
+
         //Setup and create the list of TodoItems
         ListView<TodoItem> itemsListView = new ListView<>(todoItems);
 
@@ -175,7 +180,7 @@ public class ControllerTodoList {
 
     @FXML
     private void onDeleteMultipleClicked() {
-        System.out.println("DeleteMultiple");
+        enableDeletionMode(true);
     }
 
     @FXML
@@ -186,5 +191,22 @@ public class ControllerTodoList {
     @FXML
     private void onAddClicked() {
         System.out.println("Add");
+    }
+
+    @FXML
+    private void onFinishDeletingClicked() {
+        enableDeletionMode(false);
+    }
+
+    private void enableDeletionMode(boolean value) {
+        btnDeleteMultiple.setVisible(!value);
+        btnDeleteMultiple.setManaged(!value);
+        btnDeleteChecked.setVisible(!value);
+        btnDeleteChecked.setManaged(!value);
+        btnAdd.setVisible(!value);
+        btnAdd.setManaged(!value);
+
+        btnFinishDeleting.setVisible(value);
+        btnFinishDeleting.setManaged(value);
     }
 }
