@@ -8,7 +8,8 @@
       fx:controller="com.lertos.workaiotool.controllers.ControllerTodoList">
    <children>
       <Separator prefWidth="200.0"/>
-      <Label alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" text="Hint: Right click a row to edit"/>
+      <Label fx:id="lblClickHint" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308"
+             text="Click the text of a row to edit"/>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
          <children>
             <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" onMouseClicked="#onDeleteMultipleClicked"

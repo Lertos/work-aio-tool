@@ -25,6 +25,10 @@ public class ControllerTodoList {
     private Button btnAdd;
     @FXML
     private Button btnFinishDeleting;
+    @FXML
+    private Label lblClickHint;
+
+    private boolean isDeleteModeEnabled;
 
     private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
             new TodoItem(false, "First line"),
@@ -89,6 +93,51 @@ public class ControllerTodoList {
         });
     }
 
+    //Enables deleting of rows simply by clicking the rows
+    private void enableDeletionMode(boolean value) {
+        isDeleteModeEnabled = value;
+
+        //Set the hint label to the text that makes sense for the current state
+        if (value) {
+            lblClickHint.setText("To DELETE, click the text of a row");
+            lblClickHint.setTextFill(Data.getInstance().TEXT_ERROR);
+        } else {
+            lblClickHint.setText("To EDIT, click the text of a row");
+            lblClickHint.setTextFill(Data.getInstance().TEXT_ACTIVE);
+        }
+
+        //Setting visible so the button is hidden; setting managed to false when the button shouldn't take space when hidden
+        btnDeleteMultiple.setVisible(!value);
+        btnDeleteMultiple.setManaged(!value);
+        btnDeleteChecked.setVisible(!value);
+        btnDeleteChecked.setManaged(!value);
+        btnAdd.setVisible(!value);
+        btnAdd.setManaged(!value);
+
+        btnFinishDeleting.setVisible(value);
+        btnFinishDeleting.setManaged(value);
+    }
+
+    @FXML
+    private void onDeleteMultipleClicked() {
+        enableDeletionMode(true);
+    }
+
+    @FXML
+    private void onDeleteCheckedClicked() {
+        todoItems.removeIf(item -> item.isDone() == true);
+    }
+
+    @FXML
+    private void onAddClicked() {
+        System.out.println("Add");
+    }
+
+    @FXML
+    private void onFinishDeletingClicked() {
+        enableDeletionMode(false);
+    }
+
     private class TodoItemCell extends ListCell<TodoItem> {
         HBox hbox = new HBox();
         CheckBox checkBox = new CheckBox();
@@ -100,6 +149,18 @@ public class ControllerTodoList {
             hbox.getChildren().addAll(checkBox, label);
             hbox.setSpacing(4);
             hbox.setHgrow(label, Priority.ALWAYS);
+
+            //Add the label listener to either edit or delete a row
+            label.setOnMouseClicked(event -> {
+                //If delete mode is ON - a click means delete and add to history queue
+                if (isDeleteModeEnabled) {
+                    System.out.println("Deleted");
+                }
+                //If delete mode is OFF - a click means they wish to edit the text, so show a dialogue to change it
+                else {
+                    System.out.println("Edit");
+                }
+            });
 
             //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
@@ -176,37 +237,5 @@ public class ControllerTodoList {
             });
             setOnDragDone(DragEvent::consume);
         }
-    }
-
-    @FXML
-    private void onDeleteMultipleClicked() {
-        enableDeletionMode(true);
-    }
-
-    @FXML
-    private void onDeleteCheckedClicked() {
-        todoItems.removeIf(item -> item.isDone() == true);
-    }
-
-    @FXML
-    private void onAddClicked() {
-        System.out.println("Add");
-    }
-
-    @FXML
-    private void onFinishDeletingClicked() {
-        enableDeletionMode(false);
-    }
-
-    private void enableDeletionMode(boolean value) {
-        btnDeleteMultiple.setVisible(!value);
-        btnDeleteMultiple.setManaged(!value);
-        btnDeleteChecked.setVisible(!value);
-        btnDeleteChecked.setManaged(!value);
-        btnAdd.setVisible(!value);
-        btnAdd.setManaged(!value);
-
-        btnFinishDeleting.setVisible(value);
-        btnFinishDeleting.setManaged(value);
     }
 }
