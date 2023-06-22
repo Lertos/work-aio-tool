@@ -11,8 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-import java.io.FileNotFoundException;
-
 public class ControllerTodoList {
 
     @FXML
@@ -47,42 +45,36 @@ public class ControllerTodoList {
         //Setup and create the list of TodoItems
         ListView<TodoItem> itemsListView = new ListView<>(todoItems);
 
-        itemsListView.setCellFactory(param -> {
-            try {
-                return new TodoItemCell() {
-                    @Override
-                    protected void updateItem(TodoItem item, boolean empty) {
-                        super.updateItem(item, empty);
+        itemsListView.setCellFactory(param -> new TodoItemCell() {
+            @Override
+            protected void updateItem(TodoItem item, boolean empty) {
+                super.updateItem(item, empty);
 
-                        setText(null);
+                setText(null);
 
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            //Make sure the HBox never gets squishes off the screen
-                            hbox.setPrefWidth(param.getWidth() - SPACING_BUFFER);
-                            hbox.setMaxWidth(param.getWidth() - SPACING_BUFFER);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    //Make sure the HBox never gets squishes off the screen
+                    hbox.setPrefWidth(param.getWidth() - SPACING_BUFFER);
+                    hbox.setMaxWidth(param.getWidth() - SPACING_BUFFER);
 
-                            //Make the label wrap the text so the entire text can be seen
-                            label.setWrapText(true);
-                            label.setText(item != null ? item.getDescription() : "");
+                    //Make the label wrap the text so the entire text can be seen
+                    label.setWrapText(true);
+                    label.setText(item != null ? item.getDescription() : "");
 
-                            //When checked, the item is completed; otherwise it's still active
-                            if (item.isDone()) {
-                                checkBox.setSelected(true);
-                                label.setTextFill(Data.getInstance().TEXT_INACTIVE);
-                            } else {
-                                checkBox.setSelected(false);
-                                label.setTextFill(Data.getInstance().TEXT_ACTIVE);
-                            }
-
-                            //This will make sure the row is shown as expected, with each element in the right order horizontally
-                            setGraphic(hbox);
-                        }
+                    //When checked, the item is completed; otherwise it's still active
+                    if (item.isDone()) {
+                        checkBox.setSelected(true);
+                        label.setTextFill(Data.getInstance().TEXT_INACTIVE);
+                    } else {
+                        checkBox.setSelected(false);
+                        label.setTextFill(Data.getInstance().TEXT_ACTIVE);
                     }
-                };
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
+
+                    //This will make sure the row is shown as expected, with each element in the right order horizontally
+                    setGraphic(hbox);
+                }
             }
         });
         vboxTodoList.getChildren().add(0, itemsListView);
@@ -143,7 +135,7 @@ public class ControllerTodoList {
         CheckBox checkBox = new CheckBox();
         Label label = new Label();
 
-        public TodoItemCell() throws FileNotFoundException {
+        public TodoItemCell() {
             super();
 
             hbox.getChildren().addAll(checkBox, label);
@@ -154,7 +146,8 @@ public class ControllerTodoList {
             label.setOnMouseClicked(event -> {
                 //If delete mode is ON - a click means delete and add to history queue
                 if (isDeleteModeEnabled) {
-                    System.out.println("Deleted");
+                    //TODO: Add the item (and index) to the history queue for TodoItems
+                    todoItems.remove(getItem());
                 }
                 //If delete mode is OFF - a click means they wish to edit the text, so show a dialogue to change it
                 else {
