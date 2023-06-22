@@ -8,6 +8,8 @@ public class Data {
 
     public final Color TEXT_ACTIVE = Color.BLACK;
     public final Color TEXT_INACTIVE = Color.DARKGRAY;
+    public final Color TEXT_ERROR = Color.RED;
+    public final Color TEXT_WARNING = Color.YELLOW;
     public final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
 
     private Data() {
