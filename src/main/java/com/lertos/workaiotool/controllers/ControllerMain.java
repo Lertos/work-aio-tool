@@ -2,7 +2,6 @@ package com.lertos.workaiotool.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -22,8 +21,6 @@ public class ControllerMain {
     private Tab tabInfo;
     @FXML
     private Tab tabSQLCompare;
-    @FXML
-    private Label welcomeText;
 
     public void setListeners(Scene scene) {
         scene.setOnKeyPressed(event -> {
@@ -41,10 +38,5 @@ public class ControllerMain {
 
     private void switchTab(Tab tab) {
         tabPaneMain.getSelectionModel().select(tab);
-    }
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application from Contr!");
     }
 }
