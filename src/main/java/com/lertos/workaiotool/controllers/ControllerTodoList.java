@@ -149,9 +149,11 @@ public class ControllerTodoList {
                     //TODO: Add the item (and index) to the history queue for TodoItems
                     todoItems.remove(getItem());
                 }
-                //If delete mode is OFF - a click means they wish to edit the text, so show a dialogue to change it
+                //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
-                    System.out.println("Edit");
+                    if (event.getButton().toString().equals("SECONDARY")) {
+                        System.out.println("Edit");
+                    }
                 }
             });
 
