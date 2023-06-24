@@ -135,7 +135,7 @@ public class ControllerTodoList {
             hbox.setHgrow(label, Priority.ALWAYS);
 
             //Add the label listener to either edit or delete a row
-            label.setOnMouseClicked(event -> {
+            hbox.setOnMouseClicked(event -> {
                 //If delete mode is ON - a click means delete the item and add it to the history queue
                 if (isDeleteModeEnabled) {
                     Data.getInstance().getHistoryTodoItems().add(getItem());
