@@ -1,15 +1,15 @@
 package com.lertos.workaiotool.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
-
-import java.util.List;
 
 public class Data {
 
     private static Data instance;
 
-    private List<TodoItem> activeTodoItems;
-    private List<TodoItem> historyTodoItems;
+    private ObservableList<TodoItem> activeTodoItems;
+    private ObservableList<TodoItem> historyTodoItems;
 
     public final Color TEXT_ACTIVE = Color.BLACK;
     public final Color TEXT_INACTIVE = Color.DARKGRAY;
@@ -25,11 +25,27 @@ public class Data {
         return instance;
     }
 
-    public List<TodoItem> getActiveTodoItems() {
+    public ObservableList<TodoItem> getActiveTodoItems() {
+        //If list is empty, load it
+        if (activeTodoItems == null) {
+            //TODO: Load this from a save/data file; if no file is found, load an empty list
+            activeTodoItems = FXCollections.observableArrayList();
+
+            //TODO: These are simply for testing
+            activeTodoItems.add(new TodoItem(false, "First line"));
+            activeTodoItems.add(new TodoItem(false, "Second line"));
+            activeTodoItems.add(new TodoItem(false, "Third line"));
+            activeTodoItems.add(new TodoItem(false, "Fourth line"));
+        }
         return activeTodoItems;
     }
 
-    public List<TodoItem> getHistoryTodoItems() {
+    public ObservableList<TodoItem> getHistoryTodoItems() {
+        //If list is empty, load it
+        if (historyTodoItems == null) {
+            //TODO: Load this from a save/data file; if no file is found, load an empty list
+            historyTodoItems = FXCollections.observableArrayList();
+        }
         return historyTodoItems;
     }
 }

@@ -2,7 +2,6 @@ package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.TodoItem;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -27,13 +26,6 @@ public class ControllerTodoList {
     private Label lblClickHint;
 
     private boolean isDeleteModeEnabled;
-
-    private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
-            new TodoItem(false, "First line"),
-            new TodoItem(false, "Second line"),
-            new TodoItem(false, "Third line"),
-            new TodoItem(false, "Fourth line")
-    );
     private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-todo-item");
     private final double SPACING_BUFFER = 20.0;
 
@@ -43,7 +35,7 @@ public class ControllerTodoList {
         enableDeletionMode(false);
 
         //Setup and create the list of TodoItems
-        ListView<TodoItem> itemsListView = new ListView<>(todoItems);
+        ListView<TodoItem> itemsListView = new ListView<>(Data.getInstance().getActiveTodoItems());
 
         itemsListView.setCellFactory(param -> new TodoItemCell() {
             @Override
@@ -117,7 +109,7 @@ public class ControllerTodoList {
 
     @FXML
     private void onDeleteCheckedClicked() {
-        todoItems.removeIf(item -> item.isDone() == true);
+        Data.getInstance().getActiveTodoItems().removeIf(item -> item.isDone() == true);
     }
 
     @FXML
@@ -144,10 +136,10 @@ public class ControllerTodoList {
 
             //Add the label listener to either edit or delete a row
             label.setOnMouseClicked(event -> {
-                //If delete mode is ON - a click means delete and add to history queue
+                //If delete mode is ON - a click means delete the item and add it to the history queue
                 if (isDeleteModeEnabled) {
-                    //TODO: Add the item (and index) to the history queue for TodoItems
-                    todoItems.remove(getItem());
+                    Data.getInstance().getHistoryTodoItems().add(getItem());
+                    Data.getInstance().getActiveTodoItems().add(getItem());
                 }
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
@@ -221,9 +213,9 @@ public class ControllerTodoList {
                     int draggedIdx = items.indexOf(droppedTodoItem);
                     int thisIdx = items.indexOf(getItem());
 
-                    TodoItem temp = todoItems.get(draggedIdx);
-                    todoItems.set(draggedIdx, todoItems.get(thisIdx));
-                    todoItems.set(thisIdx, temp);
+                    TodoItem temp = Data.getInstance().getActiveTodoItems().get(draggedIdx);
+                    Data.getInstance().getActiveTodoItems().set(draggedIdx, Data.getInstance().getActiveTodoItems().get(thisIdx));
+                    Data.getInstance().getActiveTodoItems().set(thisIdx, temp);
 
                     success = true;
                 }
