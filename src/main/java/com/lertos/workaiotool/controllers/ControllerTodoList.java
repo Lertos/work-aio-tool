@@ -139,7 +139,7 @@ public class ControllerTodoList {
                 //If delete mode is ON - a click means delete the item and add it to the history queue
                 if (isDeleteModeEnabled) {
                     Data.getInstance().getHistoryTodoItems().add(getItem());
-                    Data.getInstance().getActiveTodoItems().add(getItem());
+                    Data.getInstance().getActiveTodoItems().remove(getItem());
                 }
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
