@@ -26,6 +26,7 @@ public class ControllerTodoList {
     @FXML
     private Label lblClickHint;
 
+    private ListView<TodoItem> itemsListView;
     private boolean isDeleteModeEnabled;
     private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-todo-item");
     private final double SPACING_BUFFER = 20.0;
@@ -36,7 +37,7 @@ public class ControllerTodoList {
         enableDeletionMode(false);
 
         //Setup and create the list of TodoItems
-        ListView<TodoItem> itemsListView = new ListView<>(Data.getInstance().getActiveTodoItems());
+        itemsListView = new ListView<>(Data.getInstance().getActiveTodoItems());
 
         itemsListView.setCellFactory(param -> new TodoItemCell() {
             @Override
@@ -116,7 +117,14 @@ public class ControllerTodoList {
 
     @FXML
     private void onAddClicked() {
-        TodoPopup.display(-1);
+        showPopup(-1);
+    }
+
+    private void showPopup(int itemIndex) {
+        boolean updated = TodoPopup.display(itemIndex);
+
+        if (updated)
+            itemsListView.refresh();
     }
 
     @FXML
@@ -146,7 +154,7 @@ public class ControllerTodoList {
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
                     if (event.getButton().toString().equals("SECONDARY")) {
-                        TodoPopup.display(Data.getInstance().getActiveTodoItems().indexOf(getItem()));
+                        showPopup(Data.getInstance().getActiveTodoItems().indexOf(getItem()));
                     }
                 }
             });

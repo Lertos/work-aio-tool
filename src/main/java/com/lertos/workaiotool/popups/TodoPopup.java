@@ -95,11 +95,29 @@ public class TodoPopup {
         //Set listeners
         btnCancel.setOnAction(e -> {
             updated = false;
+
             popupWindow.close();
         });
 
         btnSave.setOnAction(e -> {
             updated = true;
+
+            //First check the validations
+            if (tfDisplayName.getText().isEmpty())
+                return;
+
+            //If adding a new item
+            if (itemIndex == -1) {
+                TodoItem newItem = new TodoItem(false, tfDisplayName.getText(), taAdditionalText.getText());
+
+                Data.getInstance().getActiveTodoItems().add(newItem);
+            }
+            //If updating an existing TodoItem
+            else {
+                Data.getInstance().getActiveTodoItems().get(itemIndex).setDescription(tfDisplayName.getText());
+                Data.getInstance().getActiveTodoItems().get(itemIndex).setAdditionalText(taAdditionalText.getText());
+            }
+
             popupWindow.close();
         });
 
