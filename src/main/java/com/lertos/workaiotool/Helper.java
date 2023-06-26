@@ -1,6 +1,8 @@
 package com.lertos.workaiotool;
 
 import com.lertos.workaiotool.model.Data;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -29,6 +31,10 @@ public class Helper {
         hBox.setSpacing(spacing);
 
         return hBox;
+    }
+
+    public static void showAlert(String text) {
+        new Alert(Alert.AlertType.NONE, text, ButtonType.OK).showAndWait();
     }
 
 }
