@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.popups;
 
 import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.TodoItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,7 +18,15 @@ import javafx.stage.Stage;
 
 public class TodoPopup {
 
-    public static void display() {
+    private static boolean updated = false;
+
+    public static boolean display(int itemIndex) {
+        //Get the item info
+        TodoItem item = null;
+
+        if (itemIndex != -1 && itemIndex < Data.getInstance().getActiveTodoItems().size())
+            item = Data.getInstance().getActiveTodoItems().get(itemIndex);
+
         //Create the popup window
         Stage popupWindow = new Stage();
 
@@ -35,9 +44,20 @@ public class TodoPopup {
         TextArea taAdditionalText = new TextArea();
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Save");
+        Button btnSave;
+
+        if (item == null)
+            btnSave = new Button("Add");
+        else
+            btnSave = new Button("Update");
 
         HBox buttonHBox = new HBox(btnCancel, btnSave);
+
+        //Set the values of the text fields from the item info
+        if (item != null) {
+            tfDisplayName.setText(item.getDescription());
+            taAdditionalText.setText(item.getAdditionalText());
+        }
 
         //Add children
         layout.getChildren().addAll(gridPane, buttonHBox);
@@ -73,12 +93,22 @@ public class TodoPopup {
         taAdditionalText.setPrefColumnCount(tfDisplayName.getPrefColumnCount() * 2);
 
         //Set listeners
-        btnCancel.setOnAction(e -> popupWindow.close());
+        btnCancel.setOnAction(e -> {
+            updated = false;
+            popupWindow.close();
+        });
+
+        btnSave.setOnAction(e -> {
+            updated = true;
+            popupWindow.close();
+        });
 
         //Create the new scene and show the popup
         Scene scene = new Scene(layout);
 
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
+
+        return updated;
     }
 }

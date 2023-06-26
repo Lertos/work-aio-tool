@@ -116,8 +116,7 @@ public class ControllerTodoList {
 
     @FXML
     private void onAddClicked() {
-        System.out.println("Add");
-        TodoPopup.display();
+        TodoPopup.display(-1);
     }
 
     @FXML
@@ -147,7 +146,7 @@ public class ControllerTodoList {
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
                     if (event.getButton().toString().equals("SECONDARY")) {
-                        System.out.println("Edit");
+                        TodoPopup.display(Data.getInstance().getActiveTodoItems().indexOf(getItem()));
                     }
                 }
             });
