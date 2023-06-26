@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -31,7 +32,7 @@ public class TodoPopup {
         Text txtAdditionalText = new Text("Additional Text");
 
         TextField tfDisplayName = new TextField();
-        TextField tfAdditionalText = new TextField();
+        TextArea taAdditionalText = new TextArea();
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -45,7 +46,7 @@ public class TodoPopup {
         gridPane.add(txtDisplayName, 0, 0);
         gridPane.add(tfDisplayName, 1, 0);
         gridPane.add(txtAdditionalText, 0, 1);
-        gridPane.add(tfAdditionalText, 1, 1);
+        gridPane.add(taAdditionalText, 1, 1);
 
         //Set the padding
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -65,6 +66,11 @@ public class TodoPopup {
 
         //Set spacing
         buttonHBox.setSpacing(Data.getInstance().DEFAULT_BUTTON_SPACING);
+
+        //Set other attributes
+        taAdditionalText.setWrapText(true);
+        taAdditionalText.setPrefRowCount(4);
+        taAdditionalText.setPrefColumnCount(tfDisplayName.getPrefColumnCount() * 2);
 
         //Set listeners
         btnCancel.setOnAction(e -> popupWindow.close());
