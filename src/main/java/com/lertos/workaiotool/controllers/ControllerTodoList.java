@@ -2,6 +2,7 @@ package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.TodoItem;
+import com.lertos.workaiotool.popups.TodoPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -115,6 +116,7 @@ public class ControllerTodoList {
     @FXML
     private void onAddClicked() {
         System.out.println("Add");
+        TodoPopup.display();
     }
 
     @FXML
