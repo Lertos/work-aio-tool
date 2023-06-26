@@ -37,10 +37,10 @@ public class Data {
             activeTodoItems = FXCollections.observableArrayList();
 
             //TODO: These are simply for testing
-            activeTodoItems.add(new TodoItem(false, "First line"));
-            activeTodoItems.add(new TodoItem(false, "Second line"));
-            activeTodoItems.add(new TodoItem(false, "Third line"));
-            activeTodoItems.add(new TodoItem(false, "Fourth line"));
+            activeTodoItems.add(new TodoItem(false, "First line", "Additional text 1"));
+            activeTodoItems.add(new TodoItem(false, "Second line", "Additional text 2"));
+            activeTodoItems.add(new TodoItem(false, "Third line", "Additional text 3"));
+            activeTodoItems.add(new TodoItem(false, "Fourth line", "Additional text 4"));
         }
         return activeTodoItems;
     }

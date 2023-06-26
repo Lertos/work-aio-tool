@@ -20,10 +20,10 @@ import java.io.FileNotFoundException;
 public class ControllerCopy {
 
     private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
-            new TodoItem(false, "First line"),
-            new TodoItem(false, "Second line"),
-            new TodoItem(false, "Third line"),
-            new TodoItem(false, "Fourth line")
+            new TodoItem(false, "First line", ""),
+            new TodoItem(false, "Second line", ""),
+            new TodoItem(false, "Third line", ""),
+            new TodoItem(false, "Fourth line", "")
     );
     private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-copy-item");
     private final double SPACING_BUFFER = 20.0;

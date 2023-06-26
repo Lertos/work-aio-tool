@@ -7,10 +7,12 @@ public class TodoItem implements Serializable {
 
     private boolean isDone;
     private String description;
+    private String additionalText;
 
-    public TodoItem(boolean isDone, String description) {
+    public TodoItem(boolean isDone, String description, String additionalText) {
         this.isDone = isDone;
         this.description = description;
+        this.additionalText = additionalText;
     }
 
     public boolean isDone() {
@@ -29,6 +31,14 @@ public class TodoItem implements Serializable {
         this.description = description;
     }
 
+    public String getAdditionalText() {
+        return additionalText;
+    }
+
+    public void setAdditionalText(String additionalText) {
+        this.additionalText = additionalText;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -39,11 +49,11 @@ public class TodoItem implements Serializable {
 
         TodoItem todoItem = (TodoItem) o;
 
-        return Objects.equals(isDone, todoItem.isDone) && Objects.equals(description, todoItem.description);
+        return Objects.equals(isDone, todoItem.isDone) && Objects.equals(description, todoItem.description) & Objects.equals(additionalText, todoItem.additionalText);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isDone, description);
+        return Objects.hash(isDone, description, additionalText);
     }
 }
