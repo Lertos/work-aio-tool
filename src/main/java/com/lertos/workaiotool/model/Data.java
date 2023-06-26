@@ -15,6 +15,10 @@ public class Data {
     public final Color TEXT_INACTIVE = Color.DARKGRAY;
     public final Color TEXT_ERROR = Color.RED;
     public final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
+    //Giving different options for spacing throughout the system to keep the look consistent
+    public final double DEFAULT_BUTTON_SPACING = 10;
+    public final double DEFAULT_CONTROL_SPACING = 10;
+    public final double DEFAULT_CONTAINER_SPACING = 10;
 
     private Data() {
     }
