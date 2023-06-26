@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.popups;
 
+import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.TodoItem;
 import javafx.geometry.HPos;
@@ -103,19 +104,21 @@ public class TodoPopup {
             updated = true;
 
             //First check the validations
-            if (tfDisplayName.getText().isEmpty())
+            if (tfDisplayName.getText().trim().isEmpty()) {
+                Helper.showAlert("Display Name cannot be empty");
                 return;
+            }
 
             //If adding a new item
             if (itemIndex == -1) {
-                TodoItem newItem = new TodoItem(false, tfDisplayName.getText(), taAdditionalText.getText());
+                TodoItem newItem = new TodoItem(false, tfDisplayName.getText().trim(), taAdditionalText.getText().trim());
 
                 Data.getInstance().getActiveTodoItems().add(newItem);
             }
             //If updating an existing TodoItem
             else {
-                Data.getInstance().getActiveTodoItems().get(itemIndex).setDescription(tfDisplayName.getText());
-                Data.getInstance().getActiveTodoItems().get(itemIndex).setAdditionalText(taAdditionalText.getText());
+                Data.getInstance().getActiveTodoItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
+                Data.getInstance().getActiveTodoItems().get(itemIndex).setAdditionalText(taAdditionalText.getText().trim());
             }
 
             popupWindow.close();
