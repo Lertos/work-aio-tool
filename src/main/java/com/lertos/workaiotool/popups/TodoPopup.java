@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.popups;
 
 import com.lertos.workaiotool.model.Data;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,10 +22,8 @@ public class TodoPopup {
 
         popupWindow.initModality(Modality.APPLICATION_MODAL);
 
-        //TODO: Cleanup and reorganize to have sections for each operation type on each control
-
         //Create the controls
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(Data.getInstance().DEFAULT_CONTROL_SPACING);
 
         GridPane gridPane = new GridPane();
 
@@ -34,16 +33,13 @@ public class TodoPopup {
         TextField tfDisplayName = new TextField();
         TextField tfAdditionalText = new TextField();
 
-        //Setting the padding
-        layout.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        Button btnCancel = new Button("Cancel");
+        Button btnSave = new Button("Save");
 
-        //Setting the vertical and horizontal gaps between the columns
-        gridPane.setVgap(5);
-        gridPane.setHgap(5);
+        HBox buttonHBox = new HBox(btnCancel, btnSave);
 
-        //Setting the Grid alignment
-        gridPane.setAlignment(Pos.CENTER);
+        //Add children
+        layout.getChildren().addAll(gridPane, buttonHBox);
 
         //Arranging all the nodes in the grid
         gridPane.add(txtDisplayName, 0, 0);
@@ -51,19 +47,27 @@ public class TodoPopup {
         gridPane.add(txtAdditionalText, 0, 1);
         gridPane.add(tfAdditionalText, 1, 1);
 
-        Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Save");
+        //Set the padding
+        layout.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        HBox buttonHBox = new HBox(btnCancel, btnSave);
+        //Set the vertical and horizontal gaps between the columns
+        gridPane.setVgap(Data.getInstance().DEFAULT_GRID_PANE_SPACING);
+        gridPane.setHgap(Data.getInstance().DEFAULT_GRID_PANE_SPACING);
 
-        buttonHBox.setSpacing(Data.getInstance().DEFAULT_BUTTON_SPACING);
+        //Set the alignments
+        layout.setAlignment(Pos.CENTER);
+        gridPane.setAlignment(Pos.CENTER);
         buttonHBox.setAlignment(Pos.CENTER);
 
+        GridPane.setHalignment(txtDisplayName, HPos.RIGHT);
+        GridPane.setHalignment(txtAdditionalText, HPos.RIGHT);
+
+        //Set spacing
+        buttonHBox.setSpacing(Data.getInstance().DEFAULT_BUTTON_SPACING);
+
+        //Set listeners
         btnCancel.setOnAction(e -> popupWindow.close());
-
-        layout.getChildren().addAll(gridPane, buttonHBox);
-
-        layout.setAlignment(Pos.CENTER);
 
         //Create the new scene and show the popup
         Scene scene = new Scene(layout);
