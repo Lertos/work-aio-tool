@@ -55,6 +55,7 @@ public class ControllerTodoList {
                     //Make the label wrap the text so the entire text can be seen
                     label.setWrapText(true);
                     label.setText(item != null ? item.getDescription() : "");
+                    label.setTooltip(new Tooltip(item.getAdditionalText()));
 
                     //When checked, the item is completed; otherwise it's still active
                     if (item.isDone()) {
