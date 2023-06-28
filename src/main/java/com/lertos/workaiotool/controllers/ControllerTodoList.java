@@ -126,12 +126,19 @@ public class ControllerTodoList {
                 iter.remove();
             }
         }
+        showUndoButtonIfEntriesExist();
+    }
+
+    private void showUndoButtonIfEntriesExist() {
+        if (Data.getInstance().getHistoryTodoItems().size() > 0) {
+            btnUndoDelete.setVisible(true);
+            btnUndoDelete.setManaged(true);
+        }
     }
 
     @FXML
     private void onUndoDeleteClicked() {
         int size = Data.getInstance().getHistoryTodoItems().size();
-        System.out.println(size);
 
         if (size > 0) {
             TodoItem item = Data.getInstance().getHistoryTodoItems().remove(size - 1);
@@ -179,6 +186,8 @@ public class ControllerTodoList {
                 if (isDeleteModeEnabled) {
                     Data.getInstance().getHistoryTodoItems().add(getItem());
                     Data.getInstance().getActiveTodoItems().remove(getItem());
+
+                    showUndoButtonIfEntriesExist();
                 }
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
