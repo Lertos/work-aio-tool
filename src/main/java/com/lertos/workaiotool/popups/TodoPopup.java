@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -92,6 +93,9 @@ public class TodoPopup {
         taAdditionalText.setWrapText(true);
         taAdditionalText.setPrefRowCount(4);
         taAdditionalText.setPrefColumnCount(tfDisplayName.getPrefColumnCount() * 2);
+
+        //Adding an event handler so tabs can be used to go to the next control in a text area
+        taAdditionalText.addEventFilter(KeyEvent.KEY_PRESSED, Helper.consumeTabEventForControl());
 
         //Set listeners
         btnCancel.setOnAction(e -> {
