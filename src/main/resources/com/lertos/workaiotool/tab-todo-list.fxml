@@ -12,14 +12,14 @@
              text="Click the text of a row to edit"/>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
          <children>
-            <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" onMouseClicked="#onDeleteMultipleClicked"
+            <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" onAction="#onDeleteMultipleClicked"
                     text="Delete Multiple"/>
             <Button fx:id="btnDeleteChecked" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                    onMouseClicked="#onDeleteCheckedClicked" text="Delete Checked"/>
-            <Button fx:id="btnAdd" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onAddClicked"
+                    onAction="#onDeleteCheckedClicked" text="Delete Checked"/>
+            <Button fx:id="btnAdd" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAddClicked"
                     text="Add"/>
             <Button fx:id="btnFinishDeleting" layoutX="181.0" layoutY="16.0" mnemonicParsing="false"
-                    onMouseClicked="#onFinishDeletingClicked" text="Finish Deleting" visible="false"/>
+                    onAction="#onFinishDeletingClicked" text="Finish Deleting" visible="false"/>
          </children>
          <padding>
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
