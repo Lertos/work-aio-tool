@@ -11,6 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.util.ListIterator;
+
 public class ControllerTodoList {
 
     @FXML
@@ -23,6 +25,8 @@ public class ControllerTodoList {
     private Button btnAdd;
     @FXML
     private Button btnFinishDeleting;
+    @FXML
+    private Button btnUndoDelete;
     @FXML
     private Label lblClickHint;
 
@@ -112,7 +116,32 @@ public class ControllerTodoList {
 
     @FXML
     private void onDeleteCheckedClicked() {
-        Data.getInstance().getActiveTodoItems().removeIf(item -> item.isDone() == true);
+        ListIterator<TodoItem> iter = Data.getInstance().getActiveTodoItems().listIterator();
+
+        while (iter.hasNext()) {
+            TodoItem item = iter.next();
+
+            if (item.isDone()) {
+                Data.getInstance().getHistoryTodoItems().add(item);
+                iter.remove();
+            }
+        }
+    }
+
+    @FXML
+    private void onUndoDeleteClicked() {
+        int size = Data.getInstance().getHistoryTodoItems().size();
+        System.out.println(size);
+
+        if (size > 0) {
+            TodoItem item = Data.getInstance().getHistoryTodoItems().remove(size - 1);
+            Data.getInstance().getActiveTodoItems().add(item);
+
+            if (size == 1) {
+                btnUndoDelete.setVisible(false);
+                btnUndoDelete.setManaged(false);
+            }
+        }
     }
 
     @FXML
