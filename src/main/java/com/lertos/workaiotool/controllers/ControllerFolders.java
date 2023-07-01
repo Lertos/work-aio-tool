@@ -57,7 +57,6 @@ public class ControllerFolders {
                             label.setWrapText(true);
                             label.setText(item != null ? item.getDescription() : "");
 
-                            //TODO: Add edit button (you already have graphic)
                             //Set the button's image to the same size of the button, preserving the aspect ratio
                             Helper.addImageToButton(buttonEdit, ivEdit);
                             Helper.addImageToButton(buttonDelete, ivDelete);
@@ -95,8 +94,22 @@ public class ControllerFolders {
             hbox.setSpacing(4);
             hbox.setHgrow(pane, Priority.ALWAYS); //Puts the label to the left and grows the pane so the button(s) will be push to the far right
 
-            buttonDelete.setOnAction(event -> System.out.println(getItem().getDescription() + " : delete button clicked: " + event));
-            buttonEdit.setOnAction(event -> System.out.println(getItem().getDescription() + " : edit button clicked: " + event));
+            buttonDelete.setOnAction(event -> {
+                if (getItem() == null)
+                    return;
+
+                FolderItem item = getItem();
+
+                Data.getInstance().getActiveFolderItems().remove(item);
+                Data.getInstance().getHistoryFolderItems().add(item);
+            });
+            buttonEdit.setOnAction(event -> {
+                if (getItem() == null)
+                    return;
+
+                FolderItem item = getItem();
+                //TODO: Open a new popup and check if edited, if so refresh
+            });
 
             //========================
             //Set the onDrag events
