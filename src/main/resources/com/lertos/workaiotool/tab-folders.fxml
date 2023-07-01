@@ -7,7 +7,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vboxFolderButtons" alignment="CENTER" spacing="6.0"
       xmlns="http://javafx.com/javafx/19" fx:controller="com.lertos.workaiotool.controllers.ControllerFolders">
     <Label text="Click a label to open the folder"/>
-    <Button fx:id="btnAddNew" text="Add New"/>
+    <Button fx:id="btnAddNew" onAction="#onAddClicked" text="Add"/>
     <Button fx:id="btnUndoDelete" text="Undo Delete"/>
     <padding>
         <Insets bottom="10.0" top="6.0"/>
