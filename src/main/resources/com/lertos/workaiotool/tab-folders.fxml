@@ -8,7 +8,7 @@
       xmlns="http://javafx.com/javafx/19" fx:controller="com.lertos.workaiotool.controllers.ControllerFolders">
     <Label text="Click a label to open the folder"/>
     <Button fx:id="btnAddNew" onAction="#onAddClicked" text="Add"/>
-    <Button fx:id="btnUndoDelete" text="Undo Delete"/>
+    <Button fx:id="btnUndoDelete" onAction="#onUndoDeleteClicked" text="Undo Delete"/>
     <padding>
         <Insets bottom="10.0" top="6.0"/>
     </padding>

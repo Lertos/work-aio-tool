@@ -77,6 +77,8 @@ public class ControllerFolders {
         vboxFolderButtons.widthProperty().addListener((obs, oldVal, newVal) -> {
             itemsListView.refresh();
         });
+
+        setUndoDeleteVisibility();
     }
 
     @FXML
@@ -89,6 +91,29 @@ public class ControllerFolders {
 
         if (updated)
             itemsListView.refresh();
+    }
+
+    @FXML
+    private void onUndoDeleteClicked() {
+        int size = Data.getInstance().getHistoryFolderItems().size();
+
+        if (size > 0) {
+            FolderItem item = Data.getInstance().getHistoryFolderItems().remove(size - 1);
+            Data.getInstance().getActiveFolderItems().add(item);
+
+            if (size == 1)
+                setUndoDeleteVisibility();
+        }
+    }
+
+    private void setUndoDeleteVisibility() {
+        if (Data.getInstance().getHistoryFolderItems().size() > 0) {
+            btnUndoDelete.setVisible(true);
+            btnUndoDelete.setManaged(true);
+        } else {
+            btnUndoDelete.setVisible(false);
+            btnUndoDelete.setManaged(false);
+        }
     }
 
     private class FolderItemCell extends ListCell<FolderItem> {
@@ -115,6 +140,8 @@ public class ControllerFolders {
 
                 Data.getInstance().getActiveFolderItems().remove(item);
                 Data.getInstance().getHistoryFolderItems().add(item);
+
+                setUndoDeleteVisibility();
             });
 
             buttonEdit.setOnAction(event -> {
