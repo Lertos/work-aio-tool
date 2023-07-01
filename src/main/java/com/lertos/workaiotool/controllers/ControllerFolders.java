@@ -3,6 +3,7 @@ package com.lertos.workaiotool.controllers;
 import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.FolderItem;
+import com.lertos.workaiotool.popups.FolderPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -78,6 +79,18 @@ public class ControllerFolders {
         });
     }
 
+    @FXML
+    private void onAddClicked() {
+        showPopup(-1);
+    }
+
+    private void showPopup(int itemIndex) {
+        boolean updated = FolderPopup.display(itemIndex);
+
+        if (updated)
+            itemsListView.refresh();
+    }
+
     private class FolderItemCell extends ListCell<FolderItem> {
         HBox hbox = new HBox();
         Label label = new Label();
@@ -103,12 +116,16 @@ public class ControllerFolders {
                 Data.getInstance().getActiveFolderItems().remove(item);
                 Data.getInstance().getHistoryFolderItems().add(item);
             });
+
             buttonEdit.setOnAction(event -> {
                 if (getItem() == null)
                     return;
 
                 FolderItem item = getItem();
-                //TODO: Open a new popup and check if edited, if so refresh
+                int index = Data.getInstance().getActiveFolderItems().indexOf(item);
+
+                if (index != -1)
+                    showPopup(index);
             });
 
             //========================
