@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.controllers;
 
+import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
@@ -57,14 +58,7 @@ public class ControllerCopy {
                             label.setText(item != null ? item.getDescription() : "");
 
                             //Set the button's image to the same size of the button, preserving the aspect ratio
-                            double totalButtonSize = BUTTON_ICON_SIZE + BUTTON_PADDING_SIZE;
-
-                            button.setMinSize(totalButtonSize, totalButtonSize);
-                            button.setMaxSize(totalButtonSize, totalButtonSize);
-
-                            imageView.setPreserveRatio(true);
-                            imageView.setFitWidth(BUTTON_ICON_SIZE);
-                            imageView.setFitHeight(BUTTON_ICON_SIZE);
+                            Helper.addImageToButton(button, imageView);
 
                             button.setGraphic(imageView);
 

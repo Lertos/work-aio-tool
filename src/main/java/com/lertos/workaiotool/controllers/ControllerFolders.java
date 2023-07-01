@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.controllers;
 
+import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.FolderItem;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class ControllerFolders {
 
     @FXML
     public void initialize() {
-        //Setup and create the list of TodoItems
+        //Setup and create the list of FolderItems
         itemsListView = new ListView<>(Data.getInstance().getActiveFolderItems());
 
         itemsListView.setCellFactory(param -> {
@@ -56,17 +57,9 @@ public class ControllerFolders {
                             label.setWrapText(true);
                             label.setText(item != null ? item.getDescription() : "");
 
+                            //TODO: Add edit button (you already have graphic)
                             //Set the button's image to the same size of the button, preserving the aspect ratio
-                            double totalButtonSize = Data.getInstance().BUTTON_ICON_SIZE + Data.getInstance().BUTTON_PADDING_SIZE;
-
-                            button.setMinSize(totalButtonSize, totalButtonSize);
-                            button.setMaxSize(totalButtonSize, totalButtonSize);
-
-                            imageView.setPreserveRatio(true);
-                            imageView.setFitWidth(Data.getInstance().BUTTON_ICON_SIZE);
-                            imageView.setFitHeight(Data.getInstance().BUTTON_ICON_SIZE);
-
-                            button.setGraphic(imageView);
+                            Helper.addImageToButton(button, imageView);
 
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
                             setGraphic(hbox);
