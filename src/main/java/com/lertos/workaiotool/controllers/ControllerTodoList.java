@@ -81,6 +81,8 @@ public class ControllerTodoList {
         vboxTodoList.widthProperty().addListener((obs, oldVal, newVal) -> {
             itemsListView.refresh();
         });
+
+        setUndoDeleteVisibility();
     }
 
     //Enables deleting of rows simply by clicking the rows
@@ -125,13 +127,16 @@ public class ControllerTodoList {
                 iter.remove();
             }
         }
-        showUndoButtonIfEntriesExist();
+        setUndoDeleteVisibility();
     }
 
-    private void showUndoButtonIfEntriesExist() {
+    private void setUndoDeleteVisibility() {
         if (Data.getInstance().getHistoryTodoItems().size() > 0) {
             btnUndoDelete.setVisible(true);
             btnUndoDelete.setManaged(true);
+        } else {
+            btnUndoDelete.setVisible(false);
+            btnUndoDelete.setManaged(false);
         }
     }
 
@@ -186,7 +191,7 @@ public class ControllerTodoList {
                     Data.getInstance().getHistoryTodoItems().add(getItem());
                     Data.getInstance().getActiveTodoItems().remove(getItem());
 
-                    showUndoButtonIfEntriesExist();
+                    setUndoDeleteVisibility();
                 }
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
