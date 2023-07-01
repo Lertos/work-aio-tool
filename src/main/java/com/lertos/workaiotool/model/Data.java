@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.model;
 
+import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,8 @@ public class Data {
 
     private ObservableList<TodoItem> activeTodoItems;
     private ObservableList<TodoItem> historyTodoItems;
+    private ObservableList<FolderItem> activeFolderItems;
+    private ObservableList<FolderItem> historyFolderItems;
 
     public final Color TEXT_ACTIVE = Color.BLACK;
     public final Color TEXT_INACTIVE = Color.DARKGRAY;
@@ -53,5 +56,29 @@ public class Data {
             historyTodoItems = FXCollections.observableArrayList();
         }
         return historyTodoItems;
+    }
+
+    public ObservableList<FolderItem> getActiveFolderItems() {
+        //If list is empty, load it
+        if (activeFolderItems == null) {
+            //TODO: Load this from a save/data file; if no file is found, load an empty list
+            activeFolderItems = FXCollections.observableArrayList();
+
+            //TODO: These are simply for testing
+            activeFolderItems.add(new FolderItem("First button", "C:\\Users"));
+            activeFolderItems.add(new FolderItem("Second button", "C:\\Users\\Public"));
+            activeFolderItems.add(new FolderItem("Third button", "C:\\Users\\Public\\Documents"));
+            activeFolderItems.add(new FolderItem("Fourth button", "C:\\Users\\Public\\Music"));
+        }
+        return activeFolderItems;
+    }
+
+    public ObservableList<FolderItem> getHistoryFolderItems() {
+        //If list is empty, load it
+        if (historyFolderItems == null) {
+            //TODO: Load this from a save/data file; if no file is found, load an empty list
+            historyFolderItems = FXCollections.observableArrayList();
+        }
+        return historyFolderItems;
     }
 }
