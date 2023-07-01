@@ -2,10 +2,8 @@ package com.lertos.workaiotool;
 
 import com.lertos.workaiotool.model.Data;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -62,6 +60,19 @@ public class Helper {
                 }
             }
         };
+    }
+
+    public static void addImageToButton(Button button, ImageView imageView) {
+        double totalButtonSize = Data.getInstance().BUTTON_ICON_SIZE + Data.getInstance().BUTTON_PADDING_SIZE;
+
+        button.setMinSize(totalButtonSize, totalButtonSize);
+        button.setMaxSize(totalButtonSize, totalButtonSize);
+
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(Data.getInstance().BUTTON_ICON_SIZE);
+        imageView.setFitHeight(Data.getInstance().BUTTON_ICON_SIZE);
+
+        button.setGraphic(imageView);
     }
 
 }
