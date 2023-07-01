@@ -11,7 +11,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,8 +23,6 @@ public class ControllerFolders {
 
     @FXML
     private VBox vboxFolderButtons;
-    @FXML
-    private FlowPane flowPaneButtons;
     @FXML
     private Button btnAddNew;
     @FXML
