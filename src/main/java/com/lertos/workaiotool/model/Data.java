@@ -24,6 +24,9 @@ public class Data {
     public final double DEFAULT_GRID_PANE_SPACING = 10;
     public final double DEFAULT_CONTROL_SPACING = 10;
     public final double DEFAULT_CONTAINER_SPACING = 10;
+    public final double BUTTON_ICON_SIZE = 18.0;
+    public final double BUTTON_PADDING_SIZE = 4.0;
+    public final double SPACING_BUFFER = 20.0;
 
     private Data() {
     }

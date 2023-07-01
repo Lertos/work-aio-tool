@@ -33,7 +33,6 @@ public class ControllerTodoList {
     private ListView<TodoItem> itemsListView;
     private boolean isDeleteModeEnabled;
     private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-todo-item");
-    private final double SPACING_BUFFER = 20.0;
 
     @FXML
     public void initialize() {
@@ -54,8 +53,8 @@ public class ControllerTodoList {
                     setGraphic(null);
                 } else {
                     //Make sure the HBox never gets squishes off the screen
-                    hbox.setPrefWidth(param.getWidth() - SPACING_BUFFER);
-                    hbox.setMaxWidth(param.getWidth() - SPACING_BUFFER);
+                    hbox.setPrefWidth(param.getWidth() - Data.getInstance().SPACING_BUFFER);
+                    hbox.setMaxWidth(param.getWidth() - Data.getInstance().SPACING_BUFFER);
 
                     //Make the label wrap the text so the entire text can be seen
                     label.setWrapText(true);
