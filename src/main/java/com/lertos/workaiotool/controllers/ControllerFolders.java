@@ -1,15 +1,20 @@
 package com.lertos.workaiotool.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.VBox;
 
 public class ControllerFolders {
 
     @FXML
-    private Label welcomeText;
-
+    private VBox vboxFolderButtons;
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application from " + this.getClass().getSimpleName());
-    }
+    private FlowPane flowPaneButtons;
+    @FXML
+    private Button btnAddNew;
+    @FXML
+    private Button btnUndoDelete;
+
+
 }
