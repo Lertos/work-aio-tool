@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.model;
 
+import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;

@@ -1,7 +1,7 @@
 package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.model.Data;
-import com.lertos.workaiotool.model.TodoItem;
+import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

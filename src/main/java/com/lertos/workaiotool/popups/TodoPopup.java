@@ -2,7 +2,7 @@ package com.lertos.workaiotool.popups;
 
 import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Data;
-import com.lertos.workaiotool.model.TodoItem;
+import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

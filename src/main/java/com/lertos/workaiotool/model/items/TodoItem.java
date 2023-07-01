@@ -1,4 +1,4 @@
-package com.lertos.workaiotool.model;
+package com.lertos.workaiotool.model.items;
 
 import java.io.Serializable;
 import java.util.Objects;
