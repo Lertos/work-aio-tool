@@ -59,7 +59,8 @@ public class ControllerFolders {
 
                             //TODO: Add edit button (you already have graphic)
                             //Set the button's image to the same size of the button, preserving the aspect ratio
-                            Helper.addImageToButton(button, imageView);
+                            Helper.addImageToButton(buttonEdit, ivEdit);
+                            Helper.addImageToButton(buttonDelete, ivDelete);
 
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
                             setGraphic(hbox);
@@ -82,17 +83,20 @@ public class ControllerFolders {
         HBox hbox = new HBox();
         Label label = new Label();
         Pane pane = new Pane();
-        ImageView imageView = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
-        Button button = new Button();
+        ImageView ivDelete = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
+        ImageView ivEdit = new ImageView(new Image(new FileInputStream(Data.getInstance().EDIT_BUTTON_PATH)));
+        Button buttonDelete = new Button();
+        Button buttonEdit = new Button();
 
         public FolderItemCell() throws FileNotFoundException {
             super();
 
-            hbox.getChildren().addAll(label, pane, button);
+            hbox.getChildren().addAll(label, pane, buttonEdit, buttonDelete);
             hbox.setSpacing(4);
             hbox.setHgrow(pane, Priority.ALWAYS); //Puts the label to the left and grows the pane so the button(s) will be push to the far right
 
-            button.setOnAction(event -> System.out.println(getItem().getDescription() + " : button clicked: " + event));
+            buttonDelete.setOnAction(event -> System.out.println(getItem().getDescription() + " : delete button clicked: " + event));
+            buttonEdit.setOnAction(event -> System.out.println(getItem().getDescription() + " : edit button clicked: " + event));
 
             //========================
             //Set the onDrag events
