@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.Helper;
+import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.popups.FolderPopup;
@@ -48,8 +49,8 @@ public class ControllerFolders {
                             setGraphic(null);
                         } else {
                             //Make sure the HBox never gets squishes off the screen
-                            hbox.setPrefWidth(param.getWidth() - Data.getInstance().BUTTON_ICON_SIZE);
-                            hbox.setMaxWidth(param.getWidth() - Data.getInstance().BUTTON_ICON_SIZE);
+                            hbox.setPrefWidth(param.getWidth() - Config.getInstance().BUTTON_ICON_SIZE);
+                            hbox.setMaxWidth(param.getWidth() - Config.getInstance().BUTTON_ICON_SIZE);
 
                             //Make the label wrap the text so the entire text can be seen
                             label.setWrapText(true);
@@ -118,8 +119,8 @@ public class ControllerFolders {
         HBox hbox = new HBox();
         Label label = new Label();
         Pane pane = new Pane();
-        ImageView ivDelete = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
-        ImageView ivEdit = new ImageView(new Image(new FileInputStream(Data.getInstance().EDIT_BUTTON_PATH)));
+        ImageView ivDelete = new ImageView(new Image(new FileInputStream(Config.getInstance().DELETE_BUTTON_PATH)));
+        ImageView ivEdit = new ImageView(new Image(new FileInputStream(Config.getInstance().EDIT_BUTTON_PATH)));
         Button buttonDelete = new Button();
         Button buttonEdit = new Button();
 

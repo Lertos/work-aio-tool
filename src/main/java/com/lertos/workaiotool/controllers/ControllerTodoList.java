@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.controllers;
 
+import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.TodoItem;
 import com.lertos.workaiotool.popups.TodoPopup;
@@ -53,8 +54,8 @@ public class ControllerTodoList {
                     setGraphic(null);
                 } else {
                     //Make sure the HBox never gets squishes off the screen
-                    hbox.setPrefWidth(param.getWidth() - Data.getInstance().SPACING_BUFFER);
-                    hbox.setMaxWidth(param.getWidth() - Data.getInstance().SPACING_BUFFER);
+                    hbox.setPrefWidth(param.getWidth() - Config.getInstance().SPACING_BUFFER);
+                    hbox.setMaxWidth(param.getWidth() - Config.getInstance().SPACING_BUFFER);
 
                     //Make the label wrap the text so the entire text can be seen
                     label.setWrapText(true);
@@ -64,10 +65,10 @@ public class ControllerTodoList {
                     //When checked, the item is completed; otherwise it's still active
                     if (item.isDone()) {
                         checkBox.setSelected(true);
-                        label.setTextFill(Data.getInstance().TEXT_INACTIVE);
+                        label.setTextFill(Config.getInstance().TEXT_INACTIVE);
                     } else {
                         checkBox.setSelected(false);
-                        label.setTextFill(Data.getInstance().TEXT_ACTIVE);
+                        label.setTextFill(Config.getInstance().TEXT_ACTIVE);
                     }
 
                     //This will make sure the row is shown as expected, with each element in the right order horizontally
@@ -92,10 +93,10 @@ public class ControllerTodoList {
         //Set the hint label to the text that makes sense for the current state
         if (value) {
             lblClickHint.setText("To DELETE, click the text of a row");
-            lblClickHint.setTextFill(Data.getInstance().TEXT_ERROR);
+            lblClickHint.setTextFill(Config.getInstance().TEXT_ERROR);
         } else {
             lblClickHint.setText("To EDIT, click the text of a row");
-            lblClickHint.setTextFill(Data.getInstance().TEXT_ACTIVE);
+            lblClickHint.setTextFill(Config.getInstance().TEXT_ACTIVE);
         }
 
         //Setting visible so the button is hidden; setting managed to false when the button shouldn't take space when hidden
@@ -204,9 +205,9 @@ public class ControllerTodoList {
             //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
                 if (getItem().isDone())
-                    label.setTextFill(Data.getInstance().TEXT_ACTIVE);
+                    label.setTextFill(Config.getInstance().TEXT_ACTIVE);
                 else
-                    label.setTextFill(Data.getInstance().TEXT_INACTIVE);
+                    label.setTextFill(Config.getInstance().TEXT_INACTIVE);
                 getItem().setDone(!getItem().isDone());
             });
 

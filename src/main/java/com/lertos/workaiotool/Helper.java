@@ -1,6 +1,6 @@
 package com.lertos.workaiotool;
 
-import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.Config;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -18,7 +18,7 @@ public class Helper {
         TextField textField = new TextField();
 
         hBox.getChildren().addAll(label, textField);
-        hBox.setSpacing(Data.getInstance().DEFAULT_CONTROL_SPACING);
+        hBox.setSpacing(Config.getInstance().DEFAULT_CONTROL_SPACING);
 
         return hBox;
     }
@@ -63,14 +63,14 @@ public class Helper {
     }
 
     public static void addImageToButton(Button button, ImageView imageView) {
-        double totalButtonSize = Data.getInstance().BUTTON_ICON_SIZE + Data.getInstance().BUTTON_PADDING_SIZE;
+        double totalButtonSize = Config.getInstance().BUTTON_ICON_SIZE + Config.getInstance().BUTTON_PADDING_SIZE;
 
         button.setMinSize(totalButtonSize, totalButtonSize);
         button.setMaxSize(totalButtonSize, totalButtonSize);
 
         imageView.setPreserveRatio(true);
-        imageView.setFitWidth(Data.getInstance().BUTTON_ICON_SIZE);
-        imageView.setFitHeight(Data.getInstance().BUTTON_ICON_SIZE);
+        imageView.setFitWidth(Config.getInstance().BUTTON_ICON_SIZE);
+        imageView.setFitHeight(Config.getInstance().BUTTON_ICON_SIZE);
 
         button.setGraphic(imageView);
     }

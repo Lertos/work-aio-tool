@@ -1,7 +1,7 @@
 package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.Helper;
-import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,10 +65,10 @@ public class ControllerCopy {
                             //When checked, the item is completed; otherwise it's still active
                             if (item.isDone()) {
                                 checkBox.setSelected(true);
-                                label.setTextFill(Data.getInstance().TEXT_INACTIVE);
+                                label.setTextFill(Config.getInstance().TEXT_INACTIVE);
                             } else {
                                 checkBox.setSelected(false);
-                                label.setTextFill(Data.getInstance().TEXT_ACTIVE);
+                                label.setTextFill(Config.getInstance().TEXT_ACTIVE);
                             }
 
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
@@ -93,7 +93,7 @@ public class ControllerCopy {
         CheckBox checkBox = new CheckBox();
         Label label = new Label();
         Pane pane = new Pane();
-        ImageView imageView = new ImageView(new Image(new FileInputStream(Data.getInstance().DELETE_BUTTON_PATH)));
+        ImageView imageView = new ImageView(new Image(new FileInputStream(Config.getInstance().DELETE_BUTTON_PATH)));
         Button button = new Button();
 
         public TodoItemCell() throws FileNotFoundException {
@@ -108,9 +108,9 @@ public class ControllerCopy {
             //When checked, the item is completed; otherwise it's still active
             checkBox.setOnAction(event -> {
                 if (getItem().isDone())
-                    label.setTextFill(Data.getInstance().TEXT_ACTIVE);
+                    label.setTextFill(Config.getInstance().TEXT_ACTIVE);
                 else
-                    label.setTextFill(Data.getInstance().TEXT_INACTIVE);
+                    label.setTextFill(Config.getInstance().TEXT_INACTIVE);
                 getItem().setDone(!getItem().isDone());
             });
 

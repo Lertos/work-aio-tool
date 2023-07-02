@@ -4,7 +4,6 @@ import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
 
 public class Data {
 
@@ -14,20 +13,6 @@ public class Data {
     private ObservableList<TodoItem> historyTodoItems;
     private ObservableList<FolderItem> activeFolderItems;
     private ObservableList<FolderItem> historyFolderItems;
-
-    public final Color TEXT_ACTIVE = Color.BLACK;
-    public final Color TEXT_INACTIVE = Color.DARKGRAY;
-    public final Color TEXT_ERROR = Color.RED;
-    public final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
-    public final String EDIT_BUTTON_PATH = "./src/main/resources/images/edit.png";
-    //Giving different options for spacing throughout the system to keep the look consistent
-    public final double DEFAULT_BUTTON_SPACING = 10;
-    public final double DEFAULT_GRID_PANE_SPACING = 10;
-    public final double DEFAULT_CONTROL_SPACING = 10;
-    public final double DEFAULT_CONTAINER_SPACING = 10;
-    public final double BUTTON_ICON_SIZE = 18.0;
-    public final double BUTTON_PADDING_SIZE = 4.0;
-    public final double SPACING_BUFFER = 20.0;
 
     private Data() {
     }

@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.popups;
 
 import com.lertos.workaiotool.Helper;
+import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.TodoItem;
 import javafx.geometry.HPos;
@@ -35,7 +36,7 @@ public class TodoPopup {
         popupWindow.initModality(Modality.APPLICATION_MODAL);
 
         //Create the controls
-        VBox layout = new VBox(Data.getInstance().DEFAULT_CONTROL_SPACING);
+        VBox layout = new VBox(Config.getInstance().DEFAULT_CONTROL_SPACING);
 
         GridPane gridPane = new GridPane();
 
@@ -75,8 +76,8 @@ public class TodoPopup {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
 
         //Set the vertical and horizontal gaps between the columns
-        gridPane.setVgap(Data.getInstance().DEFAULT_GRID_PANE_SPACING);
-        gridPane.setHgap(Data.getInstance().DEFAULT_GRID_PANE_SPACING);
+        gridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
+        gridPane.setHgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
 
         //Set the alignments
         layout.setAlignment(Pos.CENTER);
@@ -87,7 +88,7 @@ public class TodoPopup {
         GridPane.setHalignment(txtAdditionalText, HPos.RIGHT);
 
         //Set spacing
-        buttonHBox.setSpacing(Data.getInstance().DEFAULT_BUTTON_SPACING);
+        buttonHBox.setSpacing(Config.getInstance().DEFAULT_BUTTON_SPACING);
 
         //Set other attributes
         taAdditionalText.setWrapText(true);
