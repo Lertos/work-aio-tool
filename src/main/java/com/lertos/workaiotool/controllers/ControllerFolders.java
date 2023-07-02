@@ -6,10 +6,7 @@ import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.popups.FolderPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
@@ -57,6 +54,7 @@ public class ControllerFolders {
                             //Make the label wrap the text so the entire text can be seen
                             label.setWrapText(true);
                             label.setText(item != null ? item.getDescription() : "");
+                            label.setTooltip(new Tooltip(item.getPathToOpen()));
 
                             //Set the button's image to the same size of the button, preserving the aspect ratio
                             Helper.addImageToButton(buttonEdit, ivEdit);
