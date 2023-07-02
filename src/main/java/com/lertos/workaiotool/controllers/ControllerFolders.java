@@ -18,15 +18,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ControllerFolders {
 
     @FXML
     private VBox vboxFolderButtons;
-    @FXML
-    private Button btnAddNew;
     @FXML
     private Button btnUndoDelete;
 
@@ -153,6 +153,26 @@ public class ControllerFolders {
 
                 if (index != -1)
                     showPopup(index);
+            });
+
+            //Add the label listener to open the folder
+            hbox.setOnMouseClicked(event -> {
+                if (getItem() == null)
+                    return;
+
+                File f = new File(getItem().getPathToOpen());
+
+                if (!f.isDirectory()) {
+                    Helper.showAlert("The folder does not exist");
+                    return;
+                }
+
+                try {
+                    Runtime.getRuntime().exec("cmd.exe /c start explorer.exe " + f.getAbsolutePath());
+                } catch (IOException e) {
+                    Helper.showAlert("The folder could not be opened");
+                    e.printStackTrace();
+                }
             });
 
             //========================
