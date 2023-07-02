@@ -34,7 +34,7 @@ public class ControllerFolders {
     @FXML
     public void initialize() {
         //Setup and create the list of FolderItems
-        itemsListView = new ListView<>(Data.getInstance().getActiveFolderItems());
+        itemsListView = new ListView<>(Data.getInstance().folderItems.getActiveItems());
 
         itemsListView.setCellFactory(param -> {
             try {
@@ -94,11 +94,11 @@ public class ControllerFolders {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().getHistoryFolderItems().size();
+        int size = Data.getInstance().folderItems.getHistoryItems().size();
 
         if (size > 0) {
-            FolderItem item = Data.getInstance().getHistoryFolderItems().remove(size - 1);
-            Data.getInstance().getActiveFolderItems().add(item);
+            FolderItem item = Data.getInstance().folderItems.getHistoryItems().remove(size - 1);
+            Data.getInstance().folderItems.getActiveItems().add(item);
 
             if (size == 1)
                 setUndoDeleteVisibility();
@@ -106,7 +106,7 @@ public class ControllerFolders {
     }
 
     private void setUndoDeleteVisibility() {
-        if (Data.getInstance().getHistoryFolderItems().size() > 0) {
+        if (Data.getInstance().folderItems.getHistoryItems().size() > 0) {
             btnUndoDelete.setVisible(true);
             btnUndoDelete.setManaged(true);
         } else {
@@ -137,8 +137,8 @@ public class ControllerFolders {
 
                 FolderItem item = getItem();
 
-                Data.getInstance().getActiveFolderItems().remove(item);
-                Data.getInstance().getHistoryFolderItems().add(item);
+                Data.getInstance().folderItems.getActiveItems().remove(item);
+                Data.getInstance().folderItems.getHistoryItems().add(item);
 
                 setUndoDeleteVisibility();
             });
@@ -148,7 +148,7 @@ public class ControllerFolders {
                     return;
 
                 FolderItem item = getItem();
-                int index = Data.getInstance().getActiveFolderItems().indexOf(item);
+                int index = Data.getInstance().folderItems.getActiveItems().indexOf(item);
 
                 if (index != -1)
                     showPopup(index);
@@ -229,9 +229,9 @@ public class ControllerFolders {
                     int draggedIdx = items.indexOf(droppedFolderItem);
                     int thisIdx = items.indexOf(getItem());
 
-                    FolderItem temp = Data.getInstance().getActiveFolderItems().get(draggedIdx);
-                    Data.getInstance().getActiveFolderItems().set(draggedIdx, Data.getInstance().getActiveFolderItems().get(thisIdx));
-                    Data.getInstance().getActiveFolderItems().set(thisIdx, temp);
+                    FolderItem temp = Data.getInstance().folderItems.getActiveItems().get(draggedIdx);
+                    Data.getInstance().folderItems.getActiveItems().set(draggedIdx, Data.getInstance().folderItems.getActiveItems().get(thisIdx));
+                    Data.getInstance().folderItems.getActiveItems().set(thisIdx, temp);
 
                     success = true;
                 }

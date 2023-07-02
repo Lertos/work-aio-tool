@@ -28,8 +28,8 @@ public class FolderPopup {
         //Get the item info
         FolderItem item = null;
 
-        if (itemIndex != -1 && itemIndex < Data.getInstance().getActiveFolderItems().size())
-            item = Data.getInstance().getActiveFolderItems().get(itemIndex);
+        if (itemIndex != -1 && itemIndex < Data.getInstance().folderItems.getActiveItems().size())
+            item = Data.getInstance().folderItems.getActiveItems().get(itemIndex);
 
         //Create the popup window
         Stage popupWindow = new Stage();
@@ -134,12 +134,12 @@ public class FolderPopup {
             if (itemIndex == -1) {
                 FolderItem newItem = new FolderItem(tfDisplayName.getText().trim(), tfPathToOpen.getText().trim());
 
-                Data.getInstance().getActiveFolderItems().add(newItem);
+                Data.getInstance().folderItems.getActiveItems().add(newItem);
             }
             //If updating an existing FolderItem
             else {
-                Data.getInstance().getActiveFolderItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
-                Data.getInstance().getActiveFolderItems().get(itemIndex).setPathToOpen(tfPathToOpen.getText().trim());
+                Data.getInstance().folderItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
+                Data.getInstance().folderItems.getActiveItems().get(itemIndex).setPathToOpen(tfPathToOpen.getText().trim());
             }
 
             popupWindow.close();

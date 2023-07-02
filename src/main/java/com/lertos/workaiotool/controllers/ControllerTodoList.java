@@ -41,7 +41,7 @@ public class ControllerTodoList {
         enableDeletionMode(false);
 
         //Setup and create the list of TodoItems
-        itemsListView = new ListView<>(Data.getInstance().getActiveTodoItems());
+        itemsListView = new ListView<>(Data.getInstance().todoItems.getActiveItems());
 
         itemsListView.setCellFactory(param -> new TodoItemCell() {
             @Override
@@ -118,13 +118,13 @@ public class ControllerTodoList {
 
     @FXML
     private void onDeleteCheckedClicked() {
-        ListIterator<TodoItem> iter = Data.getInstance().getActiveTodoItems().listIterator();
+        ListIterator<TodoItem> iter = Data.getInstance().todoItems.getActiveItems().listIterator();
 
         while (iter.hasNext()) {
             TodoItem item = iter.next();
 
             if (item.isDone()) {
-                Data.getInstance().getHistoryTodoItems().add(item);
+                Data.getInstance().todoItems.getHistoryItems().add(item);
                 iter.remove();
             }
         }
@@ -132,7 +132,7 @@ public class ControllerTodoList {
     }
 
     private void setUndoDeleteVisibility() {
-        if (Data.getInstance().getHistoryTodoItems().size() > 0) {
+        if (Data.getInstance().todoItems.getHistoryItems().size() > 0) {
             btnUndoDelete.setVisible(true);
             btnUndoDelete.setManaged(true);
         } else {
@@ -143,11 +143,11 @@ public class ControllerTodoList {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().getHistoryTodoItems().size();
+        int size = Data.getInstance().todoItems.getHistoryItems().size();
 
         if (size > 0) {
-            TodoItem item = Data.getInstance().getHistoryTodoItems().remove(size - 1);
-            Data.getInstance().getActiveTodoItems().add(item);
+            TodoItem item = Data.getInstance().todoItems.getHistoryItems().remove(size - 1);
+            Data.getInstance().todoItems.getActiveItems().add(item);
 
             if (size == 1) {
                 btnUndoDelete.setVisible(false);
@@ -189,15 +189,15 @@ public class ControllerTodoList {
             hbox.setOnMouseClicked(event -> {
                 //If delete mode is ON - a click means delete the item and add it to the history queue
                 if (isDeleteModeEnabled) {
-                    Data.getInstance().getHistoryTodoItems().add(getItem());
-                    Data.getInstance().getActiveTodoItems().remove(getItem());
+                    Data.getInstance().todoItems.getHistoryItems().add(getItem());
+                    Data.getInstance().todoItems.getActiveItems().remove(getItem());
 
                     setUndoDeleteVisibility();
                 }
                 //If delete mode is OFF - a (secondary) click means they wish to edit the text, so show a dialogue to change it
                 else {
                     if (event.getButton().toString().equals("SECONDARY")) {
-                        showPopup(Data.getInstance().getActiveTodoItems().indexOf(getItem()));
+                        showPopup(Data.getInstance().todoItems.getActiveItems().indexOf(getItem()));
                     }
                 }
             });
@@ -266,9 +266,9 @@ public class ControllerTodoList {
                     int draggedIdx = items.indexOf(droppedTodoItem);
                     int thisIdx = items.indexOf(getItem());
 
-                    TodoItem temp = Data.getInstance().getActiveTodoItems().get(draggedIdx);
-                    Data.getInstance().getActiveTodoItems().set(draggedIdx, Data.getInstance().getActiveTodoItems().get(thisIdx));
-                    Data.getInstance().getActiveTodoItems().set(thisIdx, temp);
+                    TodoItem temp = Data.getInstance().todoItems.getActiveItems().get(draggedIdx);
+                    Data.getInstance().todoItems.getActiveItems().set(draggedIdx, Data.getInstance().todoItems.getActiveItems().get(thisIdx));
+                    Data.getInstance().todoItems.getActiveItems().set(thisIdx, temp);
 
                     success = true;
                 }

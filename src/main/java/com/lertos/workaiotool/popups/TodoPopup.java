@@ -27,8 +27,8 @@ public class TodoPopup {
         //Get the item info
         TodoItem item = null;
 
-        if (itemIndex != -1 && itemIndex < Data.getInstance().getActiveTodoItems().size())
-            item = Data.getInstance().getActiveTodoItems().get(itemIndex);
+        if (itemIndex != -1 && itemIndex < Data.getInstance().todoItems.getActiveItems().size())
+            item = Data.getInstance().todoItems.getActiveItems().get(itemIndex);
 
         //Create the popup window
         Stage popupWindow = new Stage();
@@ -118,12 +118,12 @@ public class TodoPopup {
             if (itemIndex == -1) {
                 TodoItem newItem = new TodoItem(false, tfDisplayName.getText().trim(), taAdditionalText.getText().trim());
 
-                Data.getInstance().getActiveTodoItems().add(newItem);
+                Data.getInstance().todoItems.getActiveItems().add(newItem);
             }
             //If updating an existing TodoItem
             else {
-                Data.getInstance().getActiveTodoItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
-                Data.getInstance().getActiveTodoItems().get(itemIndex).setAdditionalText(taAdditionalText.getText().trim());
+                Data.getInstance().todoItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
+                Data.getInstance().todoItems.getActiveItems().get(itemIndex).setAdditionalText(taAdditionalText.getText().trim());
             }
 
             popupWindow.close();
