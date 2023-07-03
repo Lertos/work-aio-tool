@@ -26,6 +26,10 @@ public class Data {
         folderItems.getActiveItems().add(new FolderItem("Second button", "C:\\Users\\Public"));
         folderItems.getActiveItems().add(new FolderItem("Third button", "C:\\Users\\Public\\Documents"));
         folderItems.getActiveItems().add(new FolderItem("Fourth button", "C:\\Users\\Public\\Music"));
+
+        copyItems.getActiveItems().add(new CopyItem("Copy button 1", "Text to copy 1"));
+        copyItems.getActiveItems().add(new CopyItem("Copy button 2", "Text to copy 2"));
+        copyItems.getActiveItems().add(new CopyItem("Copy button 3", "Text to copy 3"));
     }
 
     public static Data getInstance() {
