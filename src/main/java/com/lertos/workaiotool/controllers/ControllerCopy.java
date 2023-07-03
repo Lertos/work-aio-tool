@@ -2,8 +2,9 @@ package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Config;
-import com.lertos.workaiotool.model.items.TodoItem;
-import javafx.collections.FXCollections;
+import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.items.CopyItem;
+import com.lertos.workaiotool.popups.CopyPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,28 +21,23 @@ import java.io.FileNotFoundException;
 
 public class ControllerCopy {
 
-    private static final ObservableList<TodoItem> todoItems = FXCollections.observableArrayList(
-            new TodoItem(false, "First line", ""),
-            new TodoItem(false, "Second line", ""),
-            new TodoItem(false, "Third line", ""),
-            new TodoItem(false, "Fourth line", "")
-    );
-    private final DataFormat TODO_ITEM_DATA_FORMAT = new DataFormat("format-copy-item");
-    private final double SPACING_BUFFER = 20.0;
-    private final double BUTTON_ICON_SIZE = 18.0;
-    private final double BUTTON_PADDING_SIZE = 4.0;
+    private final DataFormat COPY_ITEM_DATA_FORMAT = new DataFormat("format-copy-item");
     @FXML
-    private VBox vboxCopyList;
+    private VBox vboxCopyButtons;
+    @FXML
+    private Button btnUndoDelete;
+    private ListView<CopyItem> itemsListView;
 
     @FXML
     public void initialize() {
-        ListView<TodoItem> itemsListView = new ListView<>(todoItems);
+        //Setup and create the list of CopyItems
+        itemsListView = new ListView<>(Data.getInstance().copyItems.getActiveItems());
 
         itemsListView.setCellFactory(param -> {
             try {
-                return new ControllerCopy.TodoItemCell() {
+                return new ControllerCopy.CopyItemCell() {
                     @Override
-                    protected void updateItem(TodoItem item, boolean empty) {
+                    protected void updateItem(CopyItem item, boolean empty) {
                         super.updateItem(item, empty);
 
                         setText(null);
@@ -50,26 +46,17 @@ public class ControllerCopy {
                             setGraphic(null);
                         } else {
                             //Make sure the HBox never gets squishes off the screen
-                            hbox.setPrefWidth(param.getWidth() - SPACING_BUFFER);
-                            hbox.setMaxWidth(param.getWidth() - SPACING_BUFFER);
+                            hbox.setPrefWidth(param.getWidth() - Config.getInstance().BUTTON_ICON_SIZE);
+                            hbox.setMaxWidth(param.getWidth() - Config.getInstance().BUTTON_ICON_SIZE);
 
                             //Make the label wrap the text so the entire text can be seen
                             label.setWrapText(true);
                             label.setText(item != null ? item.getDescription() : "");
+                            label.setTooltip(new Tooltip(item.getTextToCopy()));
 
                             //Set the button's image to the same size of the button, preserving the aspect ratio
-                            Helper.addImageToButton(button, imageView);
-
-                            button.setGraphic(imageView);
-
-                            //When checked, the item is completed; otherwise it's still active
-                            if (item.isDone()) {
-                                checkBox.setSelected(true);
-                                label.setTextFill(Config.getInstance().TEXT_INACTIVE);
-                            } else {
-                                checkBox.setSelected(false);
-                                label.setTextFill(Config.getInstance().TEXT_ACTIVE);
-                            }
+                            Helper.addImageToButton(buttonEdit, ivEdit);
+                            Helper.addImageToButton(buttonDelete, ivDelete);
 
                             //This will make sure the row is shown as expected, with each element in the right order horizontally
                             setGraphic(hbox);
@@ -80,38 +67,96 @@ public class ControllerCopy {
                 throw new RuntimeException(e);
             }
         });
-        vboxCopyList.getChildren().add(0, itemsListView);
+        vboxCopyButtons.getChildren().add(0, itemsListView);
 
         //Refresh the list so the new cell dimensions are updated from the "current getWidth()" call in the updateItem method
-        vboxCopyList.widthProperty().addListener((obs, oldVal, newVal) -> {
+        vboxCopyButtons.widthProperty().addListener((obs, oldVal, newVal) -> {
             itemsListView.refresh();
         });
+
+        setUndoDeleteVisibility();
     }
 
-    private class TodoItemCell extends ListCell<TodoItem> {
+    @FXML
+    private void onAddClicked() {
+        showPopup(-1);
+    }
+
+    private void showPopup(int itemIndex) {
+        boolean updated = CopyPopup.display(itemIndex);
+
+        if (updated)
+            itemsListView.refresh();
+    }
+
+    @FXML
+    private void onUndoDeleteClicked() {
+        int size = Data.getInstance().copyItems.getHistoryItems().size();
+
+        if (size > 0) {
+            CopyItem item = Data.getInstance().copyItems.getHistoryItems().remove(size - 1);
+            Data.getInstance().copyItems.getActiveItems().add(item);
+
+            if (size == 1)
+                setUndoDeleteVisibility();
+        }
+    }
+
+    private void setUndoDeleteVisibility() {
+        if (Data.getInstance().copyItems.getHistoryItems().size() > 0) {
+            btnUndoDelete.setVisible(true);
+            btnUndoDelete.setManaged(true);
+        } else {
+            btnUndoDelete.setVisible(false);
+            btnUndoDelete.setManaged(false);
+        }
+    }
+
+    private class CopyItemCell extends ListCell<CopyItem> {
         HBox hbox = new HBox();
-        CheckBox checkBox = new CheckBox();
         Label label = new Label();
         Pane pane = new Pane();
-        ImageView imageView = new ImageView(new Image(new FileInputStream(Config.getInstance().DELETE_BUTTON_PATH)));
-        Button button = new Button();
+        ImageView ivDelete = new ImageView(new Image(new FileInputStream(Config.getInstance().DELETE_BUTTON_PATH)));
+        ImageView ivEdit = new ImageView(new Image(new FileInputStream(Config.getInstance().EDIT_BUTTON_PATH)));
+        Button buttonDelete = new Button();
+        Button buttonEdit = new Button();
 
-        public TodoItemCell() throws FileNotFoundException {
+        public CopyItemCell() throws FileNotFoundException {
             super();
 
-            hbox.getChildren().addAll(checkBox, label, pane, button);
+            hbox.getChildren().addAll(label, pane, buttonEdit, buttonDelete);
             hbox.setSpacing(4);
             hbox.setHgrow(pane, Priority.ALWAYS); //Puts the label to the left and grows the pane so the button(s) will be push to the far right
 
-            button.setOnAction(event -> System.out.println(getItem().getDescription() + " : button clicked: " + event));
+            buttonDelete.setOnAction(event -> {
+                if (getItem() == null)
+                    return;
 
-            //When checked, the item is completed; otherwise it's still active
-            checkBox.setOnAction(event -> {
-                if (getItem().isDone())
-                    label.setTextFill(Config.getInstance().TEXT_ACTIVE);
-                else
-                    label.setTextFill(Config.getInstance().TEXT_INACTIVE);
-                getItem().setDone(!getItem().isDone());
+                CopyItem item = getItem();
+
+                Data.getInstance().copyItems.getActiveItems().remove(item);
+                Data.getInstance().copyItems.getHistoryItems().add(item);
+
+                setUndoDeleteVisibility();
+            });
+
+            buttonEdit.setOnAction(event -> {
+                if (getItem() == null)
+                    return;
+
+                CopyItem item = getItem();
+                int index = Data.getInstance().copyItems.getActiveItems().indexOf(item);
+
+                if (index != -1)
+                    showPopup(index);
+            });
+
+            //Add the label listener to copy the text to the clipboard
+            hbox.setOnMouseClicked(event -> {
+                if (getItem() == null)
+                    return;
+
+                System.out.println("Heyo");
             });
 
             //========================
@@ -127,7 +172,7 @@ public class ControllerCopy {
                 ClipboardContent content = new ClipboardContent();
 
                 content.putString(getItem().toString());
-                content.put(TODO_ITEM_DATA_FORMAT, getItem());
+                content.put(COPY_ITEM_DATA_FORMAT, getItem());
 
                 dragboard.setContent(content);
 
@@ -136,20 +181,20 @@ public class ControllerCopy {
 
             //Accept an event's dragOver event IFF the dragged element is of the same class type
             setOnDragOver(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(COPY_ITEM_DATA_FORMAT))
                     event.acceptTransferModes(TransferMode.MOVE);
                 event.consume();
             });
 
             //When the source element is hovering over another row, give the row some opacity to show where it is
             setOnDragEntered(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(COPY_ITEM_DATA_FORMAT))
                     setOpacity(0.3);
             });
 
             //When the row is not being hovered on, set the opacity back to normal
             setOnDragExited(event -> {
-                if (event.getGestureSource() != this && event.getDragboard().hasContent(TODO_ITEM_DATA_FORMAT))
+                if (event.getGestureSource() != this && event.getDragboard().hasContent(COPY_ITEM_DATA_FORMAT))
                     setOpacity(1);
             });
 
@@ -163,15 +208,15 @@ public class ControllerCopy {
                 boolean success = false;
 
                 //Check if the item dropped on is another item
-                if (db.hasContent(TODO_ITEM_DATA_FORMAT)) {
-                    TodoItem droppedTodoItem = (TodoItem) db.getContent(TODO_ITEM_DATA_FORMAT);
-                    ObservableList<TodoItem> items = getListView().getItems();
-                    int draggedIdx = items.indexOf(droppedTodoItem);
+                if (db.hasContent(COPY_ITEM_DATA_FORMAT)) {
+                    CopyItem droppedCopyItem = (CopyItem) db.getContent(COPY_ITEM_DATA_FORMAT);
+                    ObservableList<CopyItem> items = getListView().getItems();
+                    int draggedIdx = items.indexOf(droppedCopyItem);
                     int thisIdx = items.indexOf(getItem());
 
-                    TodoItem temp = todoItems.get(draggedIdx);
-                    todoItems.set(draggedIdx, todoItems.get(thisIdx));
-                    todoItems.set(thisIdx, temp);
+                    CopyItem temp = Data.getInstance().copyItems.getActiveItems().get(draggedIdx);
+                    Data.getInstance().copyItems.getActiveItems().set(draggedIdx, Data.getInstance().copyItems.getActiveItems().get(thisIdx));
+                    Data.getInstance().copyItems.getActiveItems().set(thisIdx, temp);
 
                     success = true;
                 }
