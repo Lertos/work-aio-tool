@@ -12,6 +12,7 @@ public class Main extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view-tab-pane.fxml"));
+        //TODO: Get the "last used dimensions" from the save file and put it in below when loading the app
         Scene scene = new Scene(fxmlLoader.load(), 400, 500);
 
         ControllerMain controllerMain = fxmlLoader.getController();
