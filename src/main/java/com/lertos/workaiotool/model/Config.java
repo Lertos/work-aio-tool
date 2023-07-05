@@ -24,6 +24,9 @@ public class Config {
     public final double BUTTON_PADDING_SIZE = 4.0;
     public final double SPACING_BUFFER = 20.0;
 
+    //Other
+    public final long SAVE_TIMER_WINDOW = 3000; //How long the system waits until saving new window dimensions
+
     private Config() {
     }
 
