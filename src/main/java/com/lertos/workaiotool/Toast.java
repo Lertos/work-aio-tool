@@ -38,10 +38,23 @@ public final class Toast {
         toastStage.setScene(scene);
         toastStage.show();
 
-        Timeline fadeInTimeline = new Timeline();
-        KeyFrame fadeInKey1 = new KeyFrame(Duration.millis(FADE_IN_TIME), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 1));
+        //Position the popup in the center of the parent window
+        double ownerWidth = ownerStage.getWidth();
+        double toastWidth = toastStage.getWidth();
+        double centerX = ownerWidth / 2.0 - toastWidth / 2.0;
 
-        fadeInTimeline.getKeyFrames().add(fadeInKey1);
+        double ownerHeight = ownerStage.getHeight();
+        double toastHeight = toastStage.getHeight();
+        double centerY = ownerHeight / 2.0 - toastHeight / 2.0;
+
+        toastStage.setX(ownerStage.getX() + centerX);
+        toastStage.setY(ownerStage.getY() + centerY);
+
+        //Set up the animations for fading in and out
+        Timeline fadeInTimeline = new Timeline();
+        KeyFrame fadeInKey = new KeyFrame(Duration.millis(FADE_IN_TIME), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 1));
+
+        fadeInTimeline.getKeyFrames().add(fadeInKey);
         fadeInTimeline.setOnFinished((ae) -> {
             new Thread(() -> {
                 try {
@@ -51,9 +64,9 @@ public final class Toast {
                 }
 
                 Timeline fadeOutTimeline = new Timeline();
-                KeyFrame fadeOutKey1 = new KeyFrame(Duration.millis(FADE_OUT_TIME), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 0));
+                KeyFrame fadeOutKey = new KeyFrame(Duration.millis(FADE_OUT_TIME), new KeyValue(toastStage.getScene().getRoot().opacityProperty(), 0));
 
-                fadeOutTimeline.getKeyFrames().add(fadeOutKey1);
+                fadeOutTimeline.getKeyFrames().add(fadeOutKey);
                 fadeOutTimeline.setOnFinished((aeb) -> toastStage.close());
                 fadeOutTimeline.play();
             }).start();
