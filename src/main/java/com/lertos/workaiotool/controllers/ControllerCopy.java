@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.Helper;
+import com.lertos.workaiotool.Toast;
 import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.CopyItem;
@@ -15,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -156,7 +158,14 @@ public class ControllerCopy {
                 if (getItem() == null)
                     return;
 
-                System.out.println("Heyo");
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+
+                content.putString(getItem().getTextToCopy());
+
+                clipboard.setContent(content);
+
+                Toast.makeText((Stage) vboxCopyButtons.getScene().getWindow(), "Text Copied to Clipboard");
             });
 
             //========================
