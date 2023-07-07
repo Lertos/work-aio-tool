@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vboxFolderButtons" alignment="CENTER" spacing="6.0"
-      xmlns="http://javafx.com/javafx/19" fx:controller="com.lertos.workaiotool.controllers.ControllerFolders">
+      xmlns="http://javafx.com/javafx/17" fx:controller="com.lertos.workaiotool.controllers.ControllerFolders">
     <Label text="Click a label to open the folder"/>
     <Button fx:id="btnAddNew" onAction="#onAddClicked" text="Add"/>
     <Button fx:id="btnUndoDelete" onAction="#onUndoDeleteClicked" text="Undo Delete"/>
