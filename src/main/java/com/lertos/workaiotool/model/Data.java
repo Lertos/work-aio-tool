@@ -34,7 +34,7 @@ public class Data {
         copyItems.getActiveItems().add(new CopyItem("Copy button 2", "Text to copy 2"));
         copyItems.getActiveItems().add(new CopyItem("Copy button 3", "Text to copy 3"));
 
-        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.TransferTypes.FILES_WITH_SAME_NAMES_DIFFERENT_PLACES, PromoteItem.PathTypes.BOTH_KNOWN, PromoteItem.PromoteType.COPY));
+        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.TransferTypes.RAW_ABSOLUTE_PATHS, PromoteItem.PathTypes.BOTH_KNOWN, PromoteItem.PromoteType.COPY));
     }
 
     public static Data getInstance() {
