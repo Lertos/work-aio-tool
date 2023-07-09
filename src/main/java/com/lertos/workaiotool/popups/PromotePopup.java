@@ -40,9 +40,9 @@ public class PromotePopup {
         Text txtTransferType = new Text("Transfer Type");
         Text txtPathTypes = new Text("Path Type");
         Text txtPromoteType = new Text("Promote Type");
-        Text txtFilesToPromote = new Text("Files To Promote");
-        Text txtOriginPaths = new Text("Origin Paths");
-        Text txtDestinationPaths = new Text("Destination Paths");
+        Text txtFilesToPromote = new Text("Files To Promote (1 per line)");
+        Text txtOriginPaths = new Text("Origin Paths (1 per line)");
+        Text txtDestinationPaths = new Text("Destination Paths (1 per line)");
 
         TextField tfDisplayName = new TextField();
 
