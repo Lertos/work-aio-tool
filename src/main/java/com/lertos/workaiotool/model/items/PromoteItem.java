@@ -78,19 +78,37 @@ public class PromoteItem implements Serializable {
     }
 
     public enum TransferTypes {
-        FILES_WITH_SAME_NAMES_DIFFERENT_PLACES,
-        RAW_ABSOLUTE_PATHS
+        FILES_WITH_SAME_NAMES_DIFFERENT_PLACES("Files with the same names"),
+        RAW_ABSOLUTE_PATHS("Both sides have different file names");
+
+        public final String label;
+
+        private TransferTypes(String label) {
+            this.label = label;
+        }
     }
 
     public enum PathTypes {
-        BOTH_UNKNOWN,
-        ORIGIN_KNOWN_DEST_UNKNOWN,
-        ORIGIN_UNKNOWN_DEST_KNOWN,
-        BOTH_KNOWN
+        BOTH_UNKNOWN("Both Unknown"),
+        ORIGIN_KNOWN_DEST_UNKNOWN("Origin Known, Destination Unknown"),
+        ORIGIN_UNKNOWN_DEST_KNOWN("Origin Unknown, Destination Known"),
+        BOTH_KNOWN("Both Known");
+
+        public final String label;
+
+        private PathTypes(String label) {
+            this.label = label;
+        }
     }
 
     public enum PromoteType {
-        COPY,
-        MOVE
+        COPY("Copy"),
+        MOVE("Move");
+
+        public final String label;
+
+        private PromoteType(String label) {
+            this.label = label;
+        }
     }
 }
