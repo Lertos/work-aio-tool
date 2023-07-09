@@ -2,6 +2,7 @@ package com.lertos.workaiotool.model;
 
 import com.lertos.workaiotool.model.items.CopyItem;
 import com.lertos.workaiotool.model.items.FolderItem;
+import com.lertos.workaiotool.model.items.PromoteItem;
 import com.lertos.workaiotool.model.items.TodoItem;
 
 public class Data {
@@ -11,11 +12,13 @@ public class Data {
     public ItemList<TodoItem> todoItems;
     public ItemList<FolderItem> folderItems;
     public ItemList<CopyItem> copyItems;
+    public ItemList<PromoteItem> promoteItems;
 
     private Data() {
         todoItems = new ItemList<>();
         folderItems = new ItemList<>();
         copyItems = new ItemList<>();
+        promoteItems = new ItemList<>();
 
         todoItems.getActiveItems().add(new TodoItem(false, "First line", "Additional text 1"));
         todoItems.getActiveItems().add(new TodoItem(false, "Second line", "Additional text 2"));
@@ -30,6 +33,8 @@ public class Data {
         copyItems.getActiveItems().add(new CopyItem("Copy button 1", "Text to copy 1"));
         copyItems.getActiveItems().add(new CopyItem("Copy button 2", "Text to copy 2"));
         copyItems.getActiveItems().add(new CopyItem("Copy button 3", "Text to copy 3"));
+
+        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.TransferTypes.FILES_WITH_SAME_NAMES_DIFFERENT_PLACES, PromoteItem.PathTypes.BOTH_KNOWN, PromoteItem.PromoteType.COPY));
     }
 
     public static Data getInstance() {
