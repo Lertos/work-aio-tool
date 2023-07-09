@@ -138,6 +138,10 @@ public class PromotePopup {
         taDestinationPaths.setPrefRowCount(prefRowCount);
         taDestinationPaths.setPrefColumnCount(prefColCount);
 
+        taFilesToPromote.setPromptText("Leave blank to choose the files each time");
+        taOriginPaths.setPromptText("Leave blank to choose the origin paths each time");
+        taDestinationPaths.setPromptText("Leave blank to choose the destination paths each time");
+
         //Set spacing
         buttonHBox.setSpacing(Config.getInstance().DEFAULT_BUTTON_SPACING);
 
