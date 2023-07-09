@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.popups;
 
+import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.PromoteItem;
@@ -149,6 +150,54 @@ public class PromotePopup {
         taOriginPaths.setPromptText("Leave blank to choose the origin paths each time");
         taDestinationPaths.setPromptText("Leave blank to choose the destination paths each time");
 
+        //Set listeners
+        btnCancel.setOnAction(e -> {
+            updated = false;
+
+            popupWindow.close();
+        });
+
+        btnSave.setOnAction(e -> {
+            updated = true;
+
+            //First check the validations
+            if (tfDisplayName.getText().trim().isEmpty()) {
+                Helper.showAlert("'Display Name' cannot be empty");
+                return;
+            }
+
+            //If adding a new item
+            if (itemIndex == -1) {
+                PromoteItem.TransferTypes transferType = getEnumFromText(PromoteItem.TransferTypes.values(), ((RadioButton) groupTransferType.getSelectedToggle()).getText());
+                PromoteItem.PathTypes pathTypes = getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
+                PromoteItem.PromoteType promoteType = getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
+
+                PromoteItem newItem = new PromoteItem(tfDisplayName.getText().trim(), transferType, pathTypes, promoteType);
+
+                addLinesToList(false, newItem.getFileNames(), taFilesToPromote.getText());
+                addLinesToList(false, newItem.getOriginPaths(), taOriginPaths.getText());
+                addLinesToList(false, newItem.getDestinationPaths(), taDestinationPaths.getText());
+
+                Data.getInstance().promoteItems.getActiveItems().add(newItem);
+            }
+            //If updating an existing FolderItem
+            else {
+                PromoteItem existingItem = Data.getInstance().promoteItems.getActiveItems().get(itemIndex);
+
+                existingItem.setDescription(tfDisplayName.getText().trim());
+
+                existingItem.setTransferType(getEnumFromText(PromoteItem.TransferTypes.values(), ((RadioButton) groupTransferType.getSelectedToggle()).getText()));
+                existingItem.setPathType(getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText()));
+                existingItem.setPromoteType(getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText()));
+
+                addLinesToList(true, existingItem.getFileNames(), taFilesToPromote.getText());
+                addLinesToList(true, existingItem.getOriginPaths(), taOriginPaths.getText());
+                addLinesToList(true, existingItem.getDestinationPaths(), taDestinationPaths.getText());
+            }
+
+            popupWindow.close();
+        });
+
         //Set spacing
         buttonHBox.setSpacing(Config.getInstance().DEFAULT_BUTTON_SPACING);
 
@@ -172,11 +221,29 @@ public class PromotePopup {
         return vbox;
     }
 
+    private static <T extends Enum & PromoteItem.EnumWithLabel> T getEnumFromText(T[] enumValues, String text) {
+        for (T e : enumValues) {
+            if (e.getLabel().equalsIgnoreCase(text))
+                return e;
+        }
+        return null;
+    }
+
     private static String getLinesAsString(ArrayList<String> lines) {
         StringBuilder sb = new StringBuilder();
 
         for (String line : lines)
             sb.append(line).append('\n');
         return sb.toString();
+    }
+
+    private static void addLinesToList(boolean clearListFirst, ArrayList<String> list, String rawText) {
+        String[] lines = rawText.split("\n");
+
+        if (clearListFirst)
+            list.clear();
+
+        for (String line : lines)
+            list.add(line);
     }
 }
