@@ -10,9 +10,9 @@ public class PromoteItem implements Serializable {
     private TransferTypes transferType;
     private PathTypes pathType;
     private PromoteType promoteType;
-    private ArrayList<String> fileNames;
-    private ArrayList<String> originPaths;
-    private ArrayList<String> destinationPaths;
+    private ArrayList<String> fileNames = new ArrayList<>();
+    private ArrayList<String> originPaths = new ArrayList<>();
+    private ArrayList<String> destinationPaths = new ArrayList<>();
 
     public PromoteItem(String description, TransferTypes transferType, PathTypes pathType, PromoteType promoteType) {
         this.description = description;
