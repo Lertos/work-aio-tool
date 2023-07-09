@@ -58,8 +58,10 @@ public class PromotePopup {
         ToggleGroup groupPromoteType = new ToggleGroup();
         VBox vboxPromoteType = getEnumRadioButtons(PromoteItem.PromoteType.values(), groupPromoteType);
 
-        //
-        TextArea taTextToCopy = new TextArea();
+        //Text Areas
+        TextArea taFilesToPromote = new TextArea();
+        TextArea taOriginPaths = new TextArea();
+        TextArea taDestinationPaths = new TextArea();
 
         //Buttons
         Button btnCancel = new Button("Cancel");
@@ -76,6 +78,8 @@ public class PromotePopup {
         if (item != null) {
             tfDisplayName.setText(item.getDescription());
             groupTransferType.selectToggle(groupTransferType.getToggles().get(item.getTransferType().ordinal()));
+            groupPathTypes.selectToggle(groupPathTypes.getToggles().get(item.getPathType().ordinal()));
+            groupPromoteType.selectToggle(groupPromoteType.getToggles().get(item.getPromoteType().ordinal()));
         }
 
         //Add children
@@ -90,6 +94,12 @@ public class PromotePopup {
         gridPane.add(vboxPathTypes, 1, 2);
         gridPane.add(txtPromoteType, 0, 3);
         gridPane.add(vboxPromoteType, 1, 3);
+        gridPane.add(txtFilesToPromote, 0, 4);
+        gridPane.add(taFilesToPromote, 1, 4);
+        gridPane.add(txtOriginPaths, 0, 5);
+        gridPane.add(taOriginPaths, 1, 5);
+        gridPane.add(txtDestinationPaths, 0, 6);
+        gridPane.add(taDestinationPaths, 1, 6);
 
         //Set the padding
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -113,9 +123,20 @@ public class PromotePopup {
         GridPane.setHalignment(txtDestinationPaths, HPos.RIGHT);
 
         //Set other attributes
-        taTextToCopy.setWrapText(true);
-        taTextToCopy.setPrefRowCount(4);
-        taTextToCopy.setPrefColumnCount(tfDisplayName.getPrefColumnCount() * 2);
+        int prefColCount = tfDisplayName.getPrefColumnCount() * 2;
+        int prefRowCount = 3;
+
+        taFilesToPromote.setWrapText(true);
+        taFilesToPromote.setPrefRowCount(prefRowCount);
+        taFilesToPromote.setPrefColumnCount(prefColCount);
+
+        taOriginPaths.setWrapText(true);
+        taOriginPaths.setPrefRowCount(prefRowCount);
+        taOriginPaths.setPrefColumnCount(prefColCount);
+
+        taDestinationPaths.setWrapText(true);
+        taDestinationPaths.setPrefRowCount(prefRowCount);
+        taDestinationPaths.setPrefColumnCount(prefColCount);
 
         //Set spacing
         buttonHBox.setSpacing(Config.getInstance().DEFAULT_BUTTON_SPACING);
