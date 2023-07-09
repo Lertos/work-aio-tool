@@ -15,6 +15,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class PromotePopup {
 
     private static boolean updated = false;
@@ -77,9 +79,14 @@ public class PromotePopup {
         //Set the values of the text fields from the item info
         if (item != null) {
             tfDisplayName.setText(item.getDescription());
+
             groupTransferType.selectToggle(groupTransferType.getToggles().get(item.getTransferType().ordinal()));
             groupPathTypes.selectToggle(groupPathTypes.getToggles().get(item.getPathType().ordinal()));
             groupPromoteType.selectToggle(groupPromoteType.getToggles().get(item.getPromoteType().ordinal()));
+
+            taFilesToPromote.setText(getLinesAsString(item.getFileNames()));
+            taOriginPaths.setText(getLinesAsString(item.getOriginPaths()));
+            taDestinationPaths.setText(getLinesAsString(item.getDestinationPaths()));
         }
 
         //Add children
@@ -163,5 +170,13 @@ public class PromotePopup {
             vbox.getChildren().add(rb);
         }
         return vbox;
+    }
+
+    private static String getLinesAsString(ArrayList<String> lines) {
+        StringBuilder sb = new StringBuilder();
+
+        for (String line : lines)
+            sb.append(line).append('\n');
+        return sb.toString();
     }
 }
