@@ -89,6 +89,11 @@ public class ControllerPromoter {
         showEditPopup(-1);
     }
 
+    @FXML
+    private void onOneOffClicked() {
+        PromoteRunPopup.display(-1, true);
+    }
+
     private void showEditPopup(int itemIndex) {
         boolean updated = PromotePopup.display(itemIndex);
 
