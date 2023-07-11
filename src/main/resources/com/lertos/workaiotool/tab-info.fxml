@@ -1,38 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vboxInfoList" xmlns="http://javafx.com/javafx/17"
-      fx:controller="com.lertos.workaiotool.controllers.ControllerInfo">
-    <children>
-        <Separator prefWidth="200.0"/>
-        <Label fx:id="lblClickHint" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308"
-               text="Click on a row to edit the data"/>
-        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
-            <children>
-                <Button fx:id="btnDeleteMultiple" mnemonicParsing="false" onAction="#onDeleteMultipleClicked"
-                        text="Delete Multiple"/>
-                <Button fx:id="btnDeleteChecked" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                        onAction="#onDeleteCheckedClicked" text="Delete Checked"/>
-                <Button fx:id="btnAdd" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onAction="#onAddClicked"
-                        text="Add"/>
-                <Button fx:id="btnFinishDeleting" layoutX="181.0" layoutY="16.0" mnemonicParsing="false"
-                        onAction="#onFinishDeletingClicked" text="Finish Deleting" visible="false"/>
-            </children>
-            <padding>
-                <Insets left="6.0" right="6.0" top="6.0"/>
-            </padding>
-        </HBox>
-        <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="30.0" prefHeight="100.0" prefWidth="200.0" spacing="6.0">
-            <children>
-                <Button fx:id="btnUndoDelete" layoutX="181.0" layoutY="16.0" mnemonicParsing="false"
-                        onAction="#onUndoDeleteClicked" text="Undo Delete"/>
-            </children>
-            <padding>
-                <Insets bottom="6.0" left="6.0" right="6.0" top="6.0"/>
-            </padding>
-        </HBox>
-    </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="vboxInfoList" alignment="CENTER" spacing="6.0"
+      xmlns="http://javafx.com/javafx/17" fx:controller="com.lertos.workaiotool.controllers.ControllerInfo">
+    <Label text="Click a row to edit"/>
+    <Button fx:id="btnAddNew" onAction="#onAddClicked" text="Add"/>
+    <Button fx:id="btnUndoDelete" onAction="#onUndoDeleteClicked" text="Undo Delete"/>
+    <padding>
+        <Insets bottom="10.0" top="6.0"/>
+    </padding>
 </VBox>
