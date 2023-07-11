@@ -5,6 +5,7 @@ import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.PromoteItem;
 import com.lertos.workaiotool.popups.PromotePopup;
+import com.lertos.workaiotool.popups.PromoteRunPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -85,10 +86,10 @@ public class ControllerPromoter {
 
     @FXML
     private void onAddClicked() {
-        showPopup(-1);
+        showEditPopup(-1);
     }
 
-    private void showPopup(int itemIndex) {
+    private void showEditPopup(int itemIndex) {
         boolean updated = PromotePopup.display(itemIndex);
 
         if (updated)
@@ -276,7 +277,7 @@ public class ControllerPromoter {
                 int index = Data.getInstance().promoteItems.getActiveItems().indexOf(item);
 
                 if (index != -1)
-                    showPopup(index);
+                    showEditPopup(index);
             });
 
             //Add the label listener to open the folder
@@ -288,7 +289,7 @@ public class ControllerPromoter {
                 if (!doPathsExist(true, getItem().getPathType(), getItem().getOriginPaths()) || !doPathsExist(false, getItem().getPathType(), getItem().getDestinationPaths()))
                     return;
 
-                promoteFiles(getItem());
+                PromoteRunPopup.display(Data.getInstance().promoteItems.getActiveItems().indexOf(getItem()), false);
             });
 
             //========================
