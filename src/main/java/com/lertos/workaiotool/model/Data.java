@@ -34,7 +34,7 @@ public class Data {
         copyItems.getActiveItems().add(new CopyItem("Copy button 2", "Text to copy 2"));
         copyItems.getActiveItems().add(new CopyItem("Copy button 3", "Text to copy 3"));
 
-        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.TransferTypes.RAW_ABSOLUTE_PATHS, PromoteItem.PathTypes.ORIGIN_KNOWN_DEST_UNKNOWN, PromoteItem.PromoteType.MOVE));
+        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.PathTypes.ORIGIN_KNOWN_DEST_UNKNOWN, PromoteItem.PromoteType.MOVE));
         promoteItems.getActiveItems().get(0).getOriginPaths().add("/my/path/here");
         promoteItems.getActiveItems().get(0).getOriginPaths().add("/my/second/path/here");
     }

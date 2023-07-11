@@ -7,16 +7,14 @@ import java.util.ArrayList;
 public class PromoteItem implements Serializable {
 
     private String description;
-    private TransferTypes transferType;
     private PathTypes pathType;
     private PromoteType promoteType;
     private ArrayList<String> fileNames = new ArrayList<>();
     private ArrayList<String> originPaths = new ArrayList<>();
     private ArrayList<String> destinationPaths = new ArrayList<>();
 
-    public PromoteItem(String description, TransferTypes transferType, PathTypes pathType, PromoteType promoteType) {
+    public PromoteItem(String description, PathTypes pathType, PromoteType promoteType) {
         this.description = description;
-        this.transferType = transferType;
         this.pathType = pathType;
         this.promoteType = promoteType;
     }
@@ -27,14 +25,6 @@ public class PromoteItem implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public TransferTypes getTransferType() {
-        return transferType;
-    }
-
-    public void setTransferType(TransferTypes transferType) {
-        this.transferType = transferType;
     }
 
     public PathTypes getPathType() {
@@ -63,21 +53,6 @@ public class PromoteItem implements Serializable {
 
     public ArrayList<String> getDestinationPaths() {
         return destinationPaths;
-    }
-
-    public enum TransferTypes implements EnumWithLabel {
-        FILES_WITH_SAME_NAMES_DIFFERENT_PLACES("Files with the same names"),
-        RAW_ABSOLUTE_PATHS("Both sides have different file names");
-
-        final String label;
-
-        public String getLabel() {
-            return label;
-        }
-
-        TransferTypes(String label) {
-            this.label = label;
-        }
     }
 
     public enum PathTypes implements EnumWithLabel {

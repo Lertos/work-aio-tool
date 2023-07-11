@@ -40,7 +40,6 @@ public class PromotePopup {
         GridPane gridPane = new GridPane();
 
         Text txtDisplayName = new Text("Display Text");
-        Text txtTransferType = new Text("Transfer Type");
         Text txtPathTypes = new Text("Path Type");
         Text txtPromoteType = new Text("Promote Type");
         Text txtFilesToPromote = new Text("Files To Promote (1 per line)");
@@ -48,10 +47,6 @@ public class PromotePopup {
         Text txtDestinationPaths = new Text("Destination Paths (1 per line)");
 
         TextField tfDisplayName = new TextField();
-
-        //Transfer Type
-        ToggleGroup groupTransferType = new ToggleGroup();
-        VBox vboxTransferType = getEnumRadioButtons(PromoteItem.TransferTypes.values(), groupTransferType);
 
         //Path Types
         ToggleGroup groupPathTypes = new ToggleGroup();
@@ -81,7 +76,6 @@ public class PromotePopup {
         if (item != null) {
             tfDisplayName.setText(item.getDescription());
 
-            groupTransferType.selectToggle(groupTransferType.getToggles().get(item.getTransferType().ordinal()));
             groupPathTypes.selectToggle(groupPathTypes.getToggles().get(item.getPathType().ordinal()));
             groupPromoteType.selectToggle(groupPromoteType.getToggles().get(item.getPromoteType().ordinal()));
 
@@ -90,7 +84,6 @@ public class PromotePopup {
             taDestinationPaths.setText(getLinesAsString(item.getDestinationPaths()));
         } else {
             //Set defaults
-            groupTransferType.selectToggle(groupTransferType.getToggles().get(0));
             groupPathTypes.selectToggle(groupPathTypes.getToggles().get(0));
             groupPromoteType.selectToggle(groupPromoteType.getToggles().get(0));
         }
@@ -101,18 +94,16 @@ public class PromotePopup {
         //Arranging all the nodes in the grid
         gridPane.add(txtDisplayName, 0, 0);
         gridPane.add(tfDisplayName, 1, 0);
-        gridPane.add(txtTransferType, 0, 1);
-        gridPane.add(vboxTransferType, 1, 1);
-        gridPane.add(txtPathTypes, 0, 2);
-        gridPane.add(vboxPathTypes, 1, 2);
-        gridPane.add(txtPromoteType, 0, 3);
-        gridPane.add(vboxPromoteType, 1, 3);
-        gridPane.add(txtFilesToPromote, 0, 4);
-        gridPane.add(taFilesToPromote, 1, 4);
-        gridPane.add(txtOriginPaths, 0, 5);
-        gridPane.add(taOriginPaths, 1, 5);
-        gridPane.add(txtDestinationPaths, 0, 6);
-        gridPane.add(taDestinationPaths, 1, 6);
+        gridPane.add(txtPathTypes, 0, 1);
+        gridPane.add(vboxPathTypes, 1, 1);
+        gridPane.add(txtPromoteType, 0, 2);
+        gridPane.add(vboxPromoteType, 1, 2);
+        gridPane.add(txtFilesToPromote, 0, 3);
+        gridPane.add(taFilesToPromote, 1, 3);
+        gridPane.add(txtOriginPaths, 0, 4);
+        gridPane.add(taOriginPaths, 1, 4);
+        gridPane.add(txtDestinationPaths, 0, 5);
+        gridPane.add(taDestinationPaths, 1, 5);
 
         //Set the padding
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -128,7 +119,6 @@ public class PromotePopup {
         buttonHBox.setAlignment(Pos.CENTER);
 
         GridPane.setHalignment(txtDisplayName, HPos.RIGHT);
-        GridPane.setHalignment(txtTransferType, HPos.RIGHT);
         GridPane.setHalignment(txtPathTypes, HPos.RIGHT);
         GridPane.setHalignment(txtPromoteType, HPos.RIGHT);
         GridPane.setHalignment(txtFilesToPromote, HPos.RIGHT);
@@ -173,11 +163,10 @@ public class PromotePopup {
 
             //If adding a new item
             if (itemIndex == -1) {
-                PromoteItem.TransferTypes transferType = getEnumFromText(PromoteItem.TransferTypes.values(), ((RadioButton) groupTransferType.getSelectedToggle()).getText());
                 PromoteItem.PathTypes pathTypes = getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
                 PromoteItem.PromoteType promoteType = getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
 
-                PromoteItem newItem = new PromoteItem(tfDisplayName.getText().trim(), transferType, pathTypes, promoteType);
+                PromoteItem newItem = new PromoteItem(tfDisplayName.getText().trim(), pathTypes, promoteType);
 
                 addLinesToList(false, newItem.getFileNames(), taFilesToPromote.getText());
                 addLinesToList(false, newItem.getOriginPaths(), taOriginPaths.getText());
@@ -191,7 +180,6 @@ public class PromotePopup {
 
                 existingItem.setDescription(tfDisplayName.getText().trim());
 
-                existingItem.setTransferType(getEnumFromText(PromoteItem.TransferTypes.values(), ((RadioButton) groupTransferType.getSelectedToggle()).getText()));
                 existingItem.setPathType(getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText()));
                 existingItem.setPromoteType(getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText()));
 
