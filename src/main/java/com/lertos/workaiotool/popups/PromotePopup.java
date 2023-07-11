@@ -88,6 +88,11 @@ public class PromotePopup {
             taFilesToPromote.setText(getLinesAsString(item.getFileNames()));
             taOriginPaths.setText(getLinesAsString(item.getOriginPaths()));
             taDestinationPaths.setText(getLinesAsString(item.getDestinationPaths()));
+        } else {
+            //Set defaults
+            groupTransferType.selectToggle(groupTransferType.getToggles().get(0));
+            groupPathTypes.selectToggle(groupPathTypes.getToggles().get(0));
+            groupPromoteType.selectToggle(groupPromoteType.getToggles().get(0));
         }
 
         //Add children
