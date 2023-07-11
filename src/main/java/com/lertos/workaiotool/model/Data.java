@@ -34,11 +34,17 @@ public class Data {
         copyItems.getActiveItems().add(new CopyItem("Copy button 2", "Text to copy 2"));
         copyItems.getActiveItems().add(new CopyItem("Copy button 3", "Text to copy 3"));
 
-        promoteItems.getActiveItems().add(new PromoteItem("Promote item 1", PromoteItem.PathTypes.ORIGIN_KNOWN_DEST_UNKNOWN, PromoteItem.PromoteType.COPY));
+        promoteItems.getActiveItems().add(new PromoteItem("Promote Item 1", PromoteItem.PathTypes.PROVIDE_FILE_NAMES_SEPARATELY, PromoteItem.PromoteType.COPY));
         promoteItems.getActiveItems().get(0).getOriginPaths().add("C:/Users/Dylan/Downloads/one");
         promoteItems.getActiveItems().get(0).getDestinationPaths().add("C:/Users/Dylan/Downloads/two");
         promoteItems.getActiveItems().get(0).getFileNames().add("1.txt");
         promoteItems.getActiveItems().get(0).getFileNames().add("2.txt");
+
+        promoteItems.getActiveItems().add(new PromoteItem("Promote Item 2", PromoteItem.PathTypes.PROVIDE_FILE_NAMES_IN_PATHS, PromoteItem.PromoteType.MOVE));
+        promoteItems.getActiveItems().get(1).getOriginPaths().add("C:/Users/Dylan/Downloads/one/1.txt");
+        promoteItems.getActiveItems().get(1).getOriginPaths().add("C:/Users/Dylan/Downloads/one/2.txt");
+        promoteItems.getActiveItems().get(1).getDestinationPaths().add("C:/Users/Dylan/Downloads/two/1.txt");
+        promoteItems.getActiveItems().get(1).getDestinationPaths().add("C:/Users/Dylan/Downloads/two/2.txt");
     }
 
     public static Data getInstance() {
