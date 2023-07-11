@@ -91,7 +91,10 @@ public class ControllerPromoter {
 
     @FXML
     private void onOneOffClicked() {
-        PromoteRunPopup.display(-1, true);
+        PromoteItem item = PromoteRunPopup.display(-1, true);
+
+        if (item != null)
+            promoteFiles(item);
     }
 
     private void showEditPopup(int itemIndex) {
@@ -294,7 +297,11 @@ public class ControllerPromoter {
                 if (!doPathsExist(true, getItem().getPathType(), getItem().getOriginPaths()) || !doPathsExist(false, getItem().getPathType(), getItem().getDestinationPaths()))
                     return;
 
-                PromoteRunPopup.display(Data.getInstance().promoteItems.getActiveItems().indexOf(getItem()), false);
+                //Get the item to promote and get any last minute changes/details
+                PromoteItem item = PromoteRunPopup.display(Data.getInstance().promoteItems.getActiveItems().indexOf(getItem()), false);
+
+                if (item != null)
+                    promoteFiles(item);
             });
 
             //========================
