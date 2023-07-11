@@ -56,10 +56,8 @@ public class PromoteItem implements Serializable {
     }
 
     public enum PathTypes implements EnumWithLabel {
-        BOTH_UNKNOWN("Both Unknown"),
-        ORIGIN_KNOWN_DEST_UNKNOWN("Origin Known, Destination Unknown"),
-        ORIGIN_UNKNOWN_DEST_KNOWN("Origin Unknown, Destination Known"),
-        BOTH_KNOWN("Both Known");
+        PROVIDE_FILE_NAMES_IN_PATHS("Provide File Names In Paths"),
+        PROVIDE_FILE_NAMES_SEPARATELY("Provide File Names Separately");
 
         final String label;
 
