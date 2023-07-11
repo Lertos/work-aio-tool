@@ -19,7 +19,9 @@ import java.util.ArrayList;
 
 public class PromoteRunPopup {
 
-    public static void display(int itemIndex, boolean isOneOff) {
+    private static PromoteItem itemToPromote;
+
+    public static PromoteItem display(int itemIndex, boolean isOneOff) {
         //Get the item info
         PromoteItem item = null;
 
@@ -133,10 +135,6 @@ public class PromoteRunPopup {
         taDestinationPaths.setPrefRowCount(prefRowCount);
         taDestinationPaths.setPrefColumnCount(prefColCount);
 
-        taFilesToPromote.setPromptText("Leave blank to choose the files each time");
-        taOriginPaths.setPromptText("Leave blank to choose the origin paths each time");
-        taDestinationPaths.setPromptText("Leave blank to choose the destination paths each time");
-
         tfDisplayName.setDisable(true);
 
         //Set listeners
@@ -145,34 +143,14 @@ public class PromoteRunPopup {
         });
 
         btnPromote.setOnAction(e -> {
-            //TODO: Create a tempPromoteItem in Data class and set it below. Then in the promote logic, use that item and then delete it right after
+            PromoteItem.PathTypes pathTypes = getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
+            PromoteItem.PromoteType promoteType = getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
 
-            //If adding a new item
-            if (itemIndex == -1) {
-                PromoteItem.PathTypes pathTypes = getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
-                PromoteItem.PromoteType promoteType = getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
+            itemToPromote = new PromoteItem(tfDisplayName.getText().trim(), pathTypes, promoteType);
 
-                PromoteItem newItem = new PromoteItem(tfDisplayName.getText().trim(), pathTypes, promoteType);
-
-                addLinesToList(false, newItem.getFileNames(), taFilesToPromote.getText());
-                addLinesToList(false, newItem.getOriginPaths(), taOriginPaths.getText());
-                addLinesToList(false, newItem.getDestinationPaths(), taDestinationPaths.getText());
-
-                Data.getInstance().promoteItems.getActiveItems().add(newItem);
-            }
-            //If updating an existing FolderItem
-            else {
-                PromoteItem existingItem = Data.getInstance().promoteItems.getActiveItems().get(itemIndex);
-
-                existingItem.setDescription(tfDisplayName.getText().trim());
-
-                existingItem.setPathType(getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText()));
-                existingItem.setPromoteType(getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText()));
-
-                addLinesToList(true, existingItem.getFileNames(), taFilesToPromote.getText());
-                addLinesToList(true, existingItem.getOriginPaths(), taOriginPaths.getText());
-                addLinesToList(true, existingItem.getDestinationPaths(), taDestinationPaths.getText());
-            }
+            addLinesToList(true, itemToPromote.getFileNames(), taFilesToPromote.getText());
+            addLinesToList(true, itemToPromote.getOriginPaths(), taOriginPaths.getText());
+            addLinesToList(true, itemToPromote.getDestinationPaths(), taDestinationPaths.getText());
 
             popupWindow.close();
         });
@@ -185,6 +163,8 @@ public class PromoteRunPopup {
 
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
+
+        return itemToPromote;
     }
 
     private static <T extends Enum & PromoteItem.EnumWithLabel> VBox getEnumRadioButtons(T[] enumValues, ToggleGroup toggleGroup) {
