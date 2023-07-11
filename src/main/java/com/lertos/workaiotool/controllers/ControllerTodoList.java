@@ -95,7 +95,7 @@ public class ControllerTodoList {
             lblClickHint.setText("To DELETE, click the text of a row");
             lblClickHint.setTextFill(Config.getInstance().TEXT_ERROR);
         } else {
-            lblClickHint.setText("To EDIT, click the text of a row");
+            lblClickHint.setText("To EDIT, right-click the text of a row");
             lblClickHint.setTextFill(Config.getInstance().TEXT_ACTIVE);
         }
 
