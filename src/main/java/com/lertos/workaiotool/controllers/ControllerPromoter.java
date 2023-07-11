@@ -118,13 +118,38 @@ public class ControllerPromoter {
         }
     }
 
-    private boolean doPathsExist(ArrayList<String> list) {
+    private boolean doPathsExist(boolean isOrigin, PromoteItem.PathTypes pathType, ArrayList<String> list) {
         for (String path : list) {
-            File f = new File(path);
+            File file = new File(path);
 
-            if (!f.isDirectory()) {
-                Helper.showAlert("The folder '" + path + "' does not exist");
-                return false;
+            //Only check that the paths are valid absolute paths
+            if (pathType == PromoteItem.PathTypes.PROVIDE_FILE_NAMES_SEPARATELY) {
+                if (!file.isDirectory()) {
+                    if (isOrigin)
+                        Helper.showAlert("The origin folder '" + path + "' does not exist");
+                    else
+                        Helper.showAlert("The destination folder '" + path + "' does not exist");
+                    return false;
+                }
+            }
+            //If files are included, it's a bit more tricky
+            else {
+                //If it's an origin file then it must exist or the promotion will fail
+                if (isOrigin) {
+                    if (!file.isFile()) {
+                        Helper.showAlert("The origin file '" + path + "' does not exist");
+                        return false;
+                    }
+                }
+                //If it's a destination file, just check that the parent folder exists
+                else {
+                    File parentFile = file.getParentFile();
+
+                    if (!parentFile.isDirectory()) {
+                        Helper.showAlert("The destination folder '" + path + "' does not exist");
+                        return false;
+                    }
+                }
             }
         }
         return true;
@@ -137,6 +162,43 @@ public class ControllerPromoter {
             case MOVE -> "move";
         };
 
+        if (item.getPathType() == PromoteItem.PathTypes.PROVIDE_FILE_NAMES_SEPARATELY)
+            buildPathsWithoutFileNamesIncluded(item, command);
+        else
+            buildPathsWithFileNamesIncluded(item, command);
+    }
+
+    private void buildPathsWithFileNamesIncluded(PromoteItem item, String command) {
+        StringBuilder sb = new StringBuilder();
+
+        for (String originPath : item.getOriginPaths()) {
+            for (String destinationPath : item.getDestinationPaths()) {
+                sb.setLength(0);
+
+                //Build the start of the command
+                sb.append("cmd.exe /c ");
+                sb.append(command);
+                sb.append(" ");
+
+                //Build the origin section
+                sb.append(originPath.replace('/', '\\'));
+                sb.append(" ");
+
+                //Build the destination section
+                sb.append(destinationPath.replace('/', '\\'));
+
+                //Run the command
+                try {
+                    Runtime.getRuntime().exec(sb.toString());
+                } catch (IOException e) {
+                    Helper.showAlert("The file could not be promoted: (" + originPath + ")");
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void buildPathsWithoutFileNamesIncluded(PromoteItem item, String command) {
         StringBuilder sb = new StringBuilder();
 
         for (String originPath : item.getOriginPaths()) {
@@ -170,7 +232,7 @@ public class ControllerPromoter {
                     try {
                         Runtime.getRuntime().exec(sb.toString());
                     } catch (IOException e) {
-                        Helper.showAlert("The file could not be promoted: " + originPath + " || " + fileName);
+                        Helper.showAlert("The file could not be promoted: (" + originPath + " || " + fileName + ")");
                         e.printStackTrace();
                     }
                 }
@@ -223,7 +285,7 @@ public class ControllerPromoter {
                     return;
 
                 //Check that every path exists before promoting anything
-                if (!doPathsExist(getItem().getOriginPaths()) || !doPathsExist(getItem().getDestinationPaths()))
+                if (!doPathsExist(true, getItem().getPathType(), getItem().getOriginPaths()) || !doPathsExist(false, getItem().getPathType(), getItem().getDestinationPaths()))
                     return;
 
                 promoteFiles(getItem());
