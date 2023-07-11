@@ -26,11 +26,12 @@ import java.io.IOException;
 
 public class ControllerPromoter {
 
-    private final DataFormat PROMOTER_ITEM_DATA_FORMAT = new DataFormat("promoter-folder-item");
     @FXML
     private VBox vboxPromoterButtons;
     @FXML
     private Button btnUndoDelete;
+
+    private final DataFormat PROMOTER_ITEM_DATA_FORMAT = new DataFormat("promoter-folder-item");
     private ListView<PromoteItem> itemsListView;
 
     @FXML
