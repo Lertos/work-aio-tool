@@ -130,6 +130,54 @@ public class ControllerPromoter {
         return true;
     }
 
+    private void promoteFiles(PromoteItem item) {
+        //Get the command to use
+        String command = switch (item.getPromoteType()) {
+            case COPY -> "copy";
+            case MOVE -> "move";
+        };
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String originPath : item.getOriginPaths()) {
+            for (String destinationPath : item.getDestinationPaths()) {
+                for (String fileName : item.getFileNames()) {
+                    sb.setLength(0);
+
+                    //Build the start of the command
+                    sb.append("cmd.exe /c ");
+                    sb.append(command);
+                    sb.append(" ");
+
+                    //Build the origin section
+                    sb.append(originPath.replace('/', '\\'));
+
+                    if (!originPath.substring(originPath.length() - 1).equalsIgnoreCase("/"))
+                        sb.append("\\");
+
+                    sb.append(fileName);
+                    sb.append(" ");
+
+                    //Build the destination section
+                    sb.append(destinationPath.replace('/', '\\'));
+
+                    if (!destinationPath.substring(destinationPath.length() - 1).equalsIgnoreCase("/"))
+                        sb.append("\\");
+
+                    sb.append(fileName);
+
+                    //Run the command
+                    try {
+                        Runtime.getRuntime().exec(sb.toString());
+                    } catch (IOException e) {
+                        Helper.showAlert("The file could not be promoted: " + originPath + " || " + fileName);
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
     private class PromoteItemCell extends ListCell<PromoteItem> {
         HBox hbox = new HBox();
         Label label = new Label();
@@ -178,19 +226,7 @@ public class ControllerPromoter {
                 if (!doPathsExist(getItem().getOriginPaths()) || !doPathsExist(getItem().getDestinationPaths()))
                     return;
 
-                //Get the command to use
-                String command = switch (getItem().getPromoteType()) {
-                    case COPY -> "copy";
-                    case MOVE -> "move";
-                };
-
-                try {
-                    //TODO: Do the windows copy/move command base on type
-                    Runtime.getRuntime().exec("cmd.exe /c copy TODO");
-                } catch (IOException e) {
-                    Helper.showAlert("The folder could not be opened");
-                    e.printStackTrace();
-                }
+                promoteFiles(getItem());
             });
 
             //========================
