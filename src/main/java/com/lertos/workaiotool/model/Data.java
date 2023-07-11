@@ -1,9 +1,6 @@
 package com.lertos.workaiotool.model;
 
-import com.lertos.workaiotool.model.items.CopyItem;
-import com.lertos.workaiotool.model.items.FolderItem;
-import com.lertos.workaiotool.model.items.PromoteItem;
-import com.lertos.workaiotool.model.items.TodoItem;
+import com.lertos.workaiotool.model.items.*;
 
 public class Data {
 
@@ -13,12 +10,14 @@ public class Data {
     public ItemList<FolderItem> folderItems;
     public ItemList<CopyItem> copyItems;
     public ItemList<PromoteItem> promoteItems;
+    public ItemList<InfoItem> infoItems;
 
     private Data() {
         todoItems = new ItemList<>();
         folderItems = new ItemList<>();
         copyItems = new ItemList<>();
         promoteItems = new ItemList<>();
+        infoItems = new ItemList<>();
 
         todoItems.getActiveItems().add(new TodoItem(false, "First line", "Additional text 1"));
         todoItems.getActiveItems().add(new TodoItem(false, "Second line", "Additional text 2"));
@@ -45,6 +44,9 @@ public class Data {
         promoteItems.getActiveItems().get(1).getOriginPaths().add("C:/Users/Dylan/Downloads/one/2.txt");
         promoteItems.getActiveItems().get(1).getDestinationPaths().add("C:/Users/Dylan/Downloads/two/1.txt");
         promoteItems.getActiveItems().get(1).getDestinationPaths().add("C:/Users/Dylan/Downloads/two/2.txt");
+
+        infoItems.getActiveItems().add(new InfoItem("First Info Item", "Additional Text 1"));
+        infoItems.getActiveItems().add(new InfoItem("Second Info Item", "Additional Text 2"));
     }
 
     public static Data getInstance() {
