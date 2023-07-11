@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ControllerPromoter {
 
@@ -117,6 +118,18 @@ public class ControllerPromoter {
         }
     }
 
+    private boolean doPathsExist(ArrayList<String> list) {
+        for (String path : list) {
+            File f = new File(path);
+
+            if (!f.isDirectory()) {
+                Helper.showAlert("The folder '" + path + "' does not exist");
+                return false;
+            }
+        }
+        return true;
+    }
+
     private class PromoteItemCell extends ListCell<PromoteItem> {
         HBox hbox = new HBox();
         Label label = new Label();
@@ -161,19 +174,15 @@ public class ControllerPromoter {
                 if (getItem() == null)
                     return;
 
+                //Check that every path exists before promoting anything
+                if (!doPathsExist(getItem().getOriginPaths()) || !doPathsExist(getItem().getDestinationPaths()))
+                    return;
+
                 //Get the command to use
                 String command = switch (getItem().getPromoteType()) {
                     case COPY -> "copy";
                     case MOVE -> "move";
                 };
-
-                //TODO: New method - one for each case. Iterate over all files and paths and do the copy/move
-                File f = new File("");
-
-                if (!f.isDirectory()) {
-                    Helper.showAlert("The folder does not exist");
-                    return;
-                }
 
                 try {
                     //TODO: Do the windows copy/move command base on type
