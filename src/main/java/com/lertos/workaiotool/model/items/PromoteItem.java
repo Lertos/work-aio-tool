@@ -57,26 +57,13 @@ public class PromoteItem implements Serializable {
         return fileNames;
     }
 
-    public void setFileNames(ArrayList<String> fileNames) {
-        this.fileNames = fileNames;
-    }
-
     public ArrayList<String> getOriginPaths() {
         return originPaths;
-    }
-
-    public void setOriginPaths(ArrayList<String> originPaths) {
-        this.originPaths = originPaths;
     }
 
     public ArrayList<String> getDestinationPaths() {
         return destinationPaths;
     }
-
-    public void setDestinationPaths(ArrayList<String> destinationPaths) {
-        this.destinationPaths = destinationPaths;
-    }
-
 
     public enum TransferTypes implements EnumWithLabel {
         FILES_WITH_SAME_NAMES_DIFFERENT_PLACES("Files with the same names"),
@@ -88,7 +75,7 @@ public class PromoteItem implements Serializable {
             return label;
         }
 
-        private TransferTypes(String label) {
+        TransferTypes(String label) {
             this.label = label;
         }
     }
@@ -105,7 +92,7 @@ public class PromoteItem implements Serializable {
             return label;
         }
 
-        private PathTypes(String label) {
+        PathTypes(String label) {
             this.label = label;
         }
     }
@@ -120,7 +107,7 @@ public class PromoteItem implements Serializable {
             return label;
         }
 
-        private PromoteType(String label) {
+        PromoteType(String label) {
             this.label = label;
         }
     }
