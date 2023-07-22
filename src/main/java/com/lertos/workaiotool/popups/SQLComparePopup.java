@@ -70,8 +70,9 @@ public class SQLComparePopup {
         //Set the values of the text fields from the item info
         if (item != null) {
             tfDisplayName.setText(item.getDescription());
-            //TODO: Set the SQL type
             tfProcedureName.setText(item.getProcedureName());
+
+            groupSQLTypes.selectToggle(groupSQLTypes.getToggles().get(item.getSqlType().ordinal()));
         }
 
         //Arranging all the nodes in the grid
