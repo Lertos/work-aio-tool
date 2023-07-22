@@ -6,11 +6,10 @@ import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.SQLCompareItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -41,7 +40,7 @@ public class SQLComparePopup {
         GridPane gridPane = new GridPane();
 
         Text txtDisplayName = new Text("Display Text");
-        Text txtPathToOpen = new Text("SQL Type");
+        Text txtSQLType = new Text("SQL Type");
         Text txtProcedureName = new Text("Procedure Name");
 
         TextField tfDisplayName = new TextField();
@@ -69,32 +68,84 @@ public class SQLComparePopup {
         //Arranging all the nodes in the grid
         gridPane.add(txtDisplayName, 0, 0);
         gridPane.add(tfDisplayName, 1, 0);
-        gridPane.add(txtPathToOpen, 0, 1);
+        gridPane.add(txtSQLType, 0, 1);
         gridPane.add(vboxSQLTypes, 1, 1);
         gridPane.add(txtProcedureName, 0, 2);
         gridPane.add(tfProcedureName, 1, 2);
 
+        Separator separator = new Separator(Orientation.HORIZONTAL);
+
+        //Set up the dynamic server list
+        GridPane serverGridPane = new GridPane();
+
+        Text txtConnectionStringLbl = new Text("CONNECTION STRING DETAILS");
+        Text txtHost = new Text("Host");
+        Text txtPort = new Text("Port");
+        Text txtUsername = new Text("Username");
+        Text txtPassword = new Text("Password");
+        Text txtDatabases = new Text("Databases");
+
+        TextField tfHost = new TextField();
+        TextField tfPort = new TextField();
+        TextField tfUsername = new TextField();
+        TextField tfPassword = new TextField();
+
+        TextArea taDatabases = new TextArea();
+
+        //Arranging all the nodes in the grid
+        serverGridPane.add(txtConnectionStringLbl, 0, 0, 2, 1);
+        serverGridPane.add(txtHost, 0, 1);
+        serverGridPane.add(tfHost, 1, 1);
+        serverGridPane.add(txtPort, 0, 2);
+        serverGridPane.add(tfPort, 1, 2);
+        serverGridPane.add(txtUsername, 0, 3);
+        serverGridPane.add(tfUsername, 1, 3);
+        serverGridPane.add(txtPassword, 0, 4);
+        serverGridPane.add(tfPassword, 1, 4);
+        serverGridPane.add(txtDatabases, 0, 5);
+        serverGridPane.add(taDatabases, 1, 5);
+
         //Add children
-        layout.getChildren().addAll(gridPane, buttonHBox);
+        layout.getChildren().addAll(gridPane, separator, serverGridPane, buttonHBox);
 
         //Set the padding
         layout.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setPadding(new Insets(10, 10, 10, 10));
+        serverGridPane.setPadding(new Insets(10, 10, 10, 10));
 
         //Set the vertical and horizontal gaps between the columns
         gridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
         gridPane.setHgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
 
+        serverGridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
+        serverGridPane.setHgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
+
         //Set the alignments
         layout.setAlignment(Pos.CENTER);
         gridPane.setAlignment(Pos.CENTER);
+        serverGridPane.setAlignment(Pos.CENTER);
         buttonHBox.setAlignment(Pos.CENTER);
 
         GridPane.setHalignment(txtDisplayName, HPos.RIGHT);
-        GridPane.setHalignment(txtPathToOpen, HPos.RIGHT);
+        GridPane.setHalignment(txtSQLType, HPos.RIGHT);
+        GridPane.setHalignment(txtProcedureName, HPos.RIGHT);
+        GridPane.setHalignment(txtConnectionStringLbl, HPos.CENTER);
+        GridPane.setHalignment(txtHost, HPos.RIGHT);
+        GridPane.setHalignment(txtPort, HPos.RIGHT);
+        GridPane.setHalignment(txtUsername, HPos.RIGHT);
+        GridPane.setHalignment(txtPassword, HPos.RIGHT);
+        GridPane.setHalignment(txtDatabases, HPos.RIGHT);
 
         //Set spacing
         buttonHBox.setSpacing(Config.getInstance().DEFAULT_BUTTON_SPACING);
+
+        //Set other attributes
+        int prefColCount = tfDisplayName.getPrefColumnCount() * 2;
+        int prefRowCount = 3;
+
+        taDatabases.setWrapText(true);
+        taDatabases.setPrefRowCount(prefRowCount);
+        taDatabases.setPrefColumnCount(prefColCount);
 
         //Set listeners
         btnCancel.setOnAction(e -> {
