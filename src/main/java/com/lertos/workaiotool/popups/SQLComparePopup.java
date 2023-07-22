@@ -75,10 +75,11 @@ public class SQLComparePopup {
 
         Separator separator = new Separator(Orientation.HORIZONTAL);
 
+        TabPane tabPane = new TabPane();
+
         //Set up the dynamic server list
         GridPane serverGridPane = new GridPane();
 
-        Text txtConnectionStringLbl = new Text("CONNECTION STRING DETAILS");
         Text txtHost = new Text("Host");
         Text txtPort = new Text("Port");
         Text txtUsername = new Text("Username");
@@ -93,7 +94,6 @@ public class SQLComparePopup {
         TextArea taDatabases = new TextArea();
 
         //Arranging all the nodes in the grid
-        serverGridPane.add(txtConnectionStringLbl, 0, 0, 2, 1);
         serverGridPane.add(txtHost, 0, 1);
         serverGridPane.add(tfHost, 1, 1);
         serverGridPane.add(txtPort, 0, 2);
@@ -105,8 +105,10 @@ public class SQLComparePopup {
         serverGridPane.add(txtDatabases, 0, 5);
         serverGridPane.add(taDatabases, 1, 5);
 
+        tabPane.getTabs().add(new Tab("Test Tab", serverGridPane));
+
         //Add children
-        layout.getChildren().addAll(gridPane, separator, serverGridPane, buttonHBox);
+        layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(), tabPane, buttonHBox);
 
         //Set the padding
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -129,7 +131,6 @@ public class SQLComparePopup {
         GridPane.setHalignment(txtDisplayName, HPos.RIGHT);
         GridPane.setHalignment(txtSQLType, HPos.RIGHT);
         GridPane.setHalignment(txtProcedureName, HPos.RIGHT);
-        GridPane.setHalignment(txtConnectionStringLbl, HPos.CENTER);
         GridPane.setHalignment(txtHost, HPos.RIGHT);
         GridPane.setHalignment(txtPort, HPos.RIGHT);
         GridPane.setHalignment(txtUsername, HPos.RIGHT);
@@ -179,6 +180,26 @@ public class SQLComparePopup {
         popupWindow.showAndWait();
 
         return updated;
+    }
+
+    private static HBox createAddNewServerHBox() {
+        TextField tfTabName = new TextField();
+        Button btnAddServer = new Button("Add Server Tab");
+
+        tfTabName.setPromptText("Tab Name");
+
+        btnAddServer.setOnMouseClicked(mouseEvent -> {
+            if (tfTabName.getText().isEmpty()) {
+                Helper.showAlert("'Tab Name' must not be empty=");
+                return;
+            }
+
+            //TODO: Add a new tab - will need to make the TabPane accessible to this method
+
+            tfTabName.setText("");
+        });
+
+        return new HBox(tfTabName, btnAddServer);
     }
 
 }
