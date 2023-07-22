@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.model.items;
 
+import com.lertos.workaiotool.model.EnumWithLabel;
 import com.lertos.workaiotool.model.ItemSQL;
 
 import java.io.Serializable;
@@ -50,7 +51,7 @@ public class SQLCompareItem implements Serializable {
         this.itemSQL = itemSQL;
     }
 
-    public enum SQLType {
+    public enum SQLType implements EnumWithLabel {
         MYSQL("MySQL"),
         TRANSACT_SQL("Transact SQL");
 
