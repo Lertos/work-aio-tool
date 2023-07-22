@@ -161,6 +161,9 @@ public class SQLComparePopup {
             if (tfDisplayName.getText().trim().isEmpty()) {
                 Helper.showAlert("'Display Name' cannot be empty");
                 return;
+            } else if (groupSQLTypes.getSelectedToggle() == null) {
+                Helper.showAlert("'SQL Type' must be selected");
+                return;
             } else if (tfProcedureName.getText().trim().isEmpty()) {
                 Helper.showAlert("'Procedure Name' cannot be empty");
                 return;
