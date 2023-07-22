@@ -4,6 +4,7 @@ import com.lertos.workaiotool.model.EnumWithLabel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class PromoteItem implements Serializable {
@@ -57,9 +58,24 @@ public class PromoteItem implements Serializable {
         return destinationPaths;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PromoteItem promoteItem = (PromoteItem) o;
+
+        return Objects.equals(description, promoteItem.description) & Objects.equals(pathType, promoteItem.pathType) & Objects.equals(promoteType, promoteItem.promoteType) & Objects.equals(fileNames, promoteItem.fileNames) & Objects.equals(originPaths, promoteItem.originPaths) & Objects.equals(destinationPaths, promoteItem.destinationPaths);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, pathType, promoteType, fileNames, originPaths, destinationPaths);
+    }
+
     public enum PathTypes implements EnumWithLabel {
-        PROVIDE_FILE_NAMES_IN_PATHS("Provide File Names In Paths"),
-        PROVIDE_FILE_NAMES_SEPARATELY("Provide File Names Separately");
+        PROVIDE_FILE_NAMES_IN_PATHS("Provide File Names In Paths"), PROVIDE_FILE_NAMES_SEPARATELY("Provide File Names Separately");
 
         final String label;
 
@@ -73,8 +89,7 @@ public class PromoteItem implements Serializable {
     }
 
     public enum PromoteType implements EnumWithLabel {
-        COPY("Copy"),
-        MOVE("Move");
+        COPY("Copy"), MOVE("Move");
 
         final String label;
 
