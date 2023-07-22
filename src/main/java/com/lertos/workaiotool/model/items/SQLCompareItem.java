@@ -4,19 +4,20 @@ import com.lertos.workaiotool.model.EnumWithLabel;
 import com.lertos.workaiotool.model.ItemSQL;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class SQLCompareItem implements Serializable {
 
     private String description;
     private String procedureName;
     private SQLType sqlType;
-    private ItemSQL itemSQL;
+    private ArrayList<ItemSQL> itemsSQL;
 
-    public SQLCompareItem(String description, String procedureName, SQLType sqlType, ItemSQL itemSQL) {
+    public SQLCompareItem(String description, String procedureName, SQLType sqlType, ArrayList<ItemSQL> itemsSQL) {
         this.description = description;
         this.procedureName = procedureName;
         this.sqlType = sqlType;
-        this.itemSQL = itemSQL;
+        this.itemsSQL = itemsSQL;
     }
 
     public String getDescription() {
@@ -43,12 +44,12 @@ public class SQLCompareItem implements Serializable {
         this.sqlType = sqlType;
     }
 
-    public ItemSQL getItemSQL() {
-        return itemSQL;
+    public ArrayList<ItemSQL> getItemsSQL() {
+        return itemsSQL;
     }
 
-    public void setItemSQL(ItemSQL itemSQL) {
-        this.itemSQL = itemSQL;
+    public void setItemsSQL(ArrayList<ItemSQL> itemsSQL) {
+        this.itemsSQL = itemsSQL;
     }
 
     public enum SQLType implements EnumWithLabel {

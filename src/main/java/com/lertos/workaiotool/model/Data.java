@@ -54,8 +54,10 @@ public class Data {
 
         ArrayList<String> databases = new ArrayList<>();
         databases.add("testworld");
+        ArrayList<ItemSQL> itemsSQL = new ArrayList<>();
         ItemSQL itemSQL = new ItemSQL("localhost", -1, "root", "", databases);
-        SQLCompareItem sqlCompareItem = new SQLCompareItem("Test Compare", "dummy_proc", SQLCompareItem.SQLType.MYSQL, itemSQL);
+        itemsSQL.add(itemSQL);
+        SQLCompareItem sqlCompareItem = new SQLCompareItem("Test Compare", "dummy_proc", SQLCompareItem.SQLType.MYSQL, itemsSQL);
         sqlCompareItems.getActiveItems().add(sqlCompareItem);
     }
 
