@@ -1,13 +1,17 @@
 package com.lertos.workaiotool;
 
 import com.lertos.workaiotool.model.Config;
+import com.lertos.workaiotool.model.EnumWithLabel;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.robot.Robot;
+
+import java.util.ArrayList;
 
 public class Helper {
 
@@ -73,6 +77,43 @@ public class Helper {
         imageView.setFitHeight(Config.getInstance().BUTTON_ICON_SIZE);
 
         button.setGraphic(imageView);
+    }
+
+    public static <T extends Enum & EnumWithLabel> VBox getEnumRadioButtons(T[] enumValues, ToggleGroup toggleGroup) {
+        VBox vbox = new VBox();
+
+        for (T e : enumValues) {
+            RadioButton rb = new RadioButton(e.getLabel());
+            rb.setToggleGroup(toggleGroup);
+            vbox.getChildren().add(rb);
+        }
+        return vbox;
+    }
+
+    public static <T extends Enum & EnumWithLabel> T getEnumFromText(T[] enumValues, String text) {
+        for (T e : enumValues) {
+            if (e.getLabel().equalsIgnoreCase(text))
+                return e;
+        }
+        return null;
+    }
+
+    public static String getLinesAsString(ArrayList<String> lines) {
+        StringBuilder sb = new StringBuilder();
+
+        for (String line : lines)
+            sb.append(line).append('\n');
+        return sb.toString();
+    }
+
+    public static void addLinesToList(boolean clearListFirst, ArrayList<String> list, String rawText) {
+        String[] lines = rawText.split("\n");
+
+        if (clearListFirst)
+            list.clear();
+
+        for (String line : lines)
+            list.add(line);
     }
 
 }

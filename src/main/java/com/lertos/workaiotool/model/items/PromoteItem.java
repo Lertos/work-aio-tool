@@ -1,5 +1,7 @@
 package com.lertos.workaiotool.model.items;
 
+import com.lertos.workaiotool.model.EnumWithLabel;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -83,9 +85,5 @@ public class PromoteItem implements Serializable {
         PromoteType(String label) {
             this.label = label;
         }
-    }
-
-    public interface EnumWithLabel {
-        String getLabel();
     }
 }

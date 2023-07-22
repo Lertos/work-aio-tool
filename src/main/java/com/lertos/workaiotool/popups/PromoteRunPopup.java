@@ -1,5 +1,6 @@
 package com.lertos.workaiotool.popups;
 
+import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.PromoteItem;
@@ -14,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 public class PromoteRunPopup {
 
@@ -49,11 +48,11 @@ public class PromoteRunPopup {
 
         //Path Types
         ToggleGroup groupPathTypes = new ToggleGroup();
-        VBox vboxPathTypes = getEnumRadioButtons(PromoteItem.PathTypes.values(), groupPathTypes);
+        VBox vboxPathTypes = Helper.getEnumRadioButtons(PromoteItem.PathTypes.values(), groupPathTypes);
 
         //Promote Type
         ToggleGroup groupPromoteType = new ToggleGroup();
-        VBox vboxPromoteType = getEnumRadioButtons(PromoteItem.PromoteType.values(), groupPromoteType);
+        VBox vboxPromoteType = Helper.getEnumRadioButtons(PromoteItem.PromoteType.values(), groupPromoteType);
 
         //Text Areas
         TextArea taFilesToPromote = new TextArea();
@@ -73,9 +72,9 @@ public class PromoteRunPopup {
             groupPathTypes.selectToggle(groupPathTypes.getToggles().get(item.getPathType().ordinal()));
             groupPromoteType.selectToggle(groupPromoteType.getToggles().get(item.getPromoteType().ordinal()));
 
-            taFilesToPromote.setText(getLinesAsString(item.getFileNames()));
-            taOriginPaths.setText(getLinesAsString(item.getOriginPaths()));
-            taDestinationPaths.setText(getLinesAsString(item.getDestinationPaths()));
+            taFilesToPromote.setText(Helper.getLinesAsString(item.getFileNames()));
+            taOriginPaths.setText(Helper.getLinesAsString(item.getOriginPaths()));
+            taDestinationPaths.setText(Helper.getLinesAsString(item.getDestinationPaths()));
         } else {
             //Set defaults
             groupPathTypes.selectToggle(groupPathTypes.getToggles().get(0));
@@ -143,14 +142,14 @@ public class PromoteRunPopup {
         });
 
         btnPromote.setOnAction(e -> {
-            PromoteItem.PathTypes pathTypes = getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
-            PromoteItem.PromoteType promoteType = getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
+            PromoteItem.PathTypes pathTypes = Helper.getEnumFromText(PromoteItem.PathTypes.values(), ((RadioButton) groupPathTypes.getSelectedToggle()).getText());
+            PromoteItem.PromoteType promoteType = Helper.getEnumFromText(PromoteItem.PromoteType.values(), ((RadioButton) groupPromoteType.getSelectedToggle()).getText());
 
             itemToPromote = new PromoteItem(tfDisplayName.getText().trim(), pathTypes, promoteType);
 
-            addLinesToList(true, itemToPromote.getFileNames(), taFilesToPromote.getText());
-            addLinesToList(true, itemToPromote.getOriginPaths(), taOriginPaths.getText());
-            addLinesToList(true, itemToPromote.getDestinationPaths(), taDestinationPaths.getText());
+            Helper.addLinesToList(true, itemToPromote.getFileNames(), taFilesToPromote.getText());
+            Helper.addLinesToList(true, itemToPromote.getOriginPaths(), taOriginPaths.getText());
+            Helper.addLinesToList(true, itemToPromote.getDestinationPaths(), taDestinationPaths.getText());
 
             popupWindow.close();
         });
@@ -165,42 +164,5 @@ public class PromoteRunPopup {
         popupWindow.showAndWait();
 
         return itemToPromote;
-    }
-
-    private static <T extends Enum & PromoteItem.EnumWithLabel> VBox getEnumRadioButtons(T[] enumValues, ToggleGroup toggleGroup) {
-        VBox vbox = new VBox();
-
-        for (T e : enumValues) {
-            RadioButton rb = new RadioButton(e.getLabel());
-            rb.setToggleGroup(toggleGroup);
-            vbox.getChildren().add(rb);
-        }
-        return vbox;
-    }
-
-    private static <T extends Enum & PromoteItem.EnumWithLabel> T getEnumFromText(T[] enumValues, String text) {
-        for (T e : enumValues) {
-            if (e.getLabel().equalsIgnoreCase(text))
-                return e;
-        }
-        return null;
-    }
-
-    private static String getLinesAsString(ArrayList<String> lines) {
-        StringBuilder sb = new StringBuilder();
-
-        for (String line : lines)
-            sb.append(line).append('\n');
-        return sb.toString();
-    }
-
-    private static void addLinesToList(boolean clearListFirst, ArrayList<String> list, String rawText) {
-        String[] lines = rawText.split("\n");
-
-        if (clearListFirst)
-            list.clear();
-
-        for (String line : lines)
-            list.add(line);
     }
 }
