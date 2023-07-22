@@ -2,6 +2,8 @@ package com.lertos.workaiotool.model;
 
 import com.lertos.workaiotool.model.items.*;
 
+import java.util.ArrayList;
+
 public class Data {
 
     private static Data instance;
@@ -11,6 +13,7 @@ public class Data {
     public ItemList<CopyItem> copyItems;
     public ItemList<PromoteItem> promoteItems;
     public ItemList<InfoItem> infoItems;
+    public ItemList<SQLCompareItem> sqlCompareItems;
 
     private Data() {
         todoItems = new ItemList<>();
@@ -18,6 +21,7 @@ public class Data {
         copyItems = new ItemList<>();
         promoteItems = new ItemList<>();
         infoItems = new ItemList<>();
+        sqlCompareItems = new ItemList<>();
 
         todoItems.getActiveItems().add(new TodoItem(false, "First line", "Additional text 1"));
         todoItems.getActiveItems().add(new TodoItem(false, "Second line", "Additional text 2"));
@@ -47,6 +51,12 @@ public class Data {
 
         infoItems.getActiveItems().add(new InfoItem("First Info Item", "Additional Text 1"));
         infoItems.getActiveItems().add(new InfoItem("Second Info Item", "Additional Text 2"));
+
+        ArrayList<String> databases = new ArrayList<>();
+        databases.add("testworld");
+        ItemSQL itemSQL = new ItemSQL("localhost", -1, "root", "", databases);
+        SQLCompareItem sqlCompareItem = new SQLCompareItem("Test Compare", "dummy_proc", SQLCompareItem.SQLType.MYSQL, itemSQL);
+        sqlCompareItems.getActiveItems().add(sqlCompareItem);
     }
 
     public static Data getInstance() {
