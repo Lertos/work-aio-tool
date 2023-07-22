@@ -89,8 +89,8 @@ public class SQLComparePopup {
         layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(), tabPane, buttonHBox);
 
         //Set the padding
-        layout.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        layout.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
+        gridPane.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
 
         //Set the vertical and horizontal gaps between the columns
         gridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
@@ -210,7 +210,7 @@ public class SQLComparePopup {
         GridPane.setHalignment(txtDatabases, HPos.RIGHT);
 
         //Set other attributes
-        serverGridPane.setPadding(new Insets(10, 10, 10, 10));
+        serverGridPane.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
 
         serverGridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
         serverGridPane.setHgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
