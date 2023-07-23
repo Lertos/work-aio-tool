@@ -3,13 +3,14 @@ package com.lertos.workaiotool.model;
 import com.lertos.workaiotool.Helper;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public abstract class DatabaseAccess {
 
     protected ItemSQL itemSQL;
     protected String procedureName;
     protected String driverString;
-    protected String connectionString;
+    protected ArrayList<String> connectionStringList;
     protected String statementString;
     protected String returnedColumnName;
     protected Connection connect = null;
@@ -21,11 +22,11 @@ public abstract class DatabaseAccess {
         this.procedureName = procedureName;
         this.driverString = driverString;
         this.returnedColumnName = returnedColumnName;
-        this.connectionString = buildConnectionString();
+        this.connectionStringList = buildConnectionStrings();
         this.statementString = buildStatementString();
     }
 
-    protected abstract String buildConnectionString();
+    protected abstract ArrayList<String> buildConnectionStrings();
 
     protected abstract String buildStatementString();
 
@@ -34,7 +35,8 @@ public abstract class DatabaseAccess {
             //This will load the driver; each SQL type has its own driver
             Class.forName(driverString);
 
-            connect = DriverManager.getConnection(connectionString);
+            //TODO: Loop through all of the connection strings
+            connect = DriverManager.getConnection(connectionStringList.get(0));
             statement = connect.createStatement();
 
             resultSet = statement.executeQuery(statementString);
