@@ -35,11 +35,11 @@ public class ItemSQL implements Serializable {
         this.port = port;
     }
 
-    public ArrayList<String> getDatabaseName() {
+    public ArrayList<String> getDatabaseNames() {
         return databaseNames;
     }
 
-    public void setDatabaseName(ArrayList<String> databaseNames) {
+    public void setDatabaseNames(ArrayList<String> databaseNames) {
         this.databaseNames = databaseNames;
     }
 
