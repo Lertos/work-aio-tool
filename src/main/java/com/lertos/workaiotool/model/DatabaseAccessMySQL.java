@@ -32,9 +32,6 @@ public class DatabaseAccessMySQL extends DatabaseAccess {
         if (itemSQL.getHost() == null || itemSQL.getHost().isEmpty()) {
             Helper.showAlert("The value given for 'host' is empty or cannot be found");
             return false;
-        } else if (itemSQL.getPort() < 0) {
-            Helper.showAlert("The value given for 'port' is incorrect");
-            return false;
         } else if (itemSQL.getUsername() == null || itemSQL.getUsername().isEmpty()) {
             Helper.showAlert("The value given for 'username' is empty or cannot be found");
             return false;
