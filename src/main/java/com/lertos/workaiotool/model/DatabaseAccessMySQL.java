@@ -18,7 +18,28 @@ public class DatabaseAccessMySQL extends DatabaseAccess {
         if (isValidConnectionString()) {
             StringBuilder sb = new StringBuilder();
 
-            connectionStrings.add(sb.toString());
+            //First build the main string and add a wildcard to replace the database name with
+            String databaseWildcard = "<database>";
+
+            sb.append("jdbc:mysql://");
+            sb.append(itemSQL.getHost());
+
+            if (itemSQL.getPort() > -2) {
+                sb.append(":");
+                sb.append(itemSQL.getPort());
+            }
+
+            sb.append("/");
+            sb.append(databaseWildcard);
+            sb.append("?");
+            sb.append("user=");
+            sb.append(itemSQL.getUsername());
+            sb.append("&password=");
+            sb.append(itemSQL.getPassword());
+
+            //Build a new connection string for each database, using the initial string and replacing the wildcard
+            for (String databaseName : itemSQL.getDatabaseNames())
+                connectionStrings.add(sb.toString().replace(databaseWildcard, databaseName));
         }
         return connectionStrings;
     }
