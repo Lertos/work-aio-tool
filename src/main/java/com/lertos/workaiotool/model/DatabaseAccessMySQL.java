@@ -1,15 +1,26 @@
 package com.lertos.workaiotool.model;
 
+import com.lertos.workaiotool.Helper;
+
+import java.util.ArrayList;
+
 public class DatabaseAccessMySQL extends DatabaseAccess {
 
     public DatabaseAccessMySQL(ItemSQL itemSQL, String procedureName) {
         super(itemSQL, procedureName, "com.mysql.cj.jdbc.Driver", "routine_definition");
     }
 
+    //MYSQL: "jdbc:mysql://<host>/<database>?user=<username>&password=<password>";
     @Override
-    protected String buildConnectionString() {
-        return "";
-        //"jdbc:mysql://<host>/<database>?user=<username>&password=<password>";
+    protected ArrayList<String> buildConnectionStrings() {
+        ArrayList<String> connectionStrings = new ArrayList<>();
+
+        if (isValidConnectionString()) {
+            StringBuilder sb = new StringBuilder();
+
+            connectionStrings.add(sb.toString());
+        }
+        return connectionStrings;
     }
 
     @Override
