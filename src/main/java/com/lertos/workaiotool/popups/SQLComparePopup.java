@@ -125,12 +125,17 @@ public class SQLComparePopup {
                 GridPane newTabPane = createServerTab(itemSQL.getTabName());
 
                 try {
-                    //The math of the get() is because the grid pane is always Text label then TextField field; so we need to double each index and subtract 1 for zero-based
-                    ((TextField) newTabPane.getChildren().get((INDEX_HOST_FIELD + 1) * 2 - 1)).setText(itemSQL.getHost());
-                    ((TextField) newTabPane.getChildren().get((INDEX_PORT_FIELD + 1) * 2 - 1)).setText(String.valueOf(itemSQL.getPort()));
-                    ((TextField) newTabPane.getChildren().get((INDEX_USERNAME_FIELD + 1) * 2 - 1)).setText(itemSQL.getUsername());
-                    ((PasswordField) newTabPane.getChildren().get((INDEX_PASSWORD_FIELD + 1) * 2 - 1)).setText(itemSQL.getPassword());
-                    ((TextArea) newTabPane.getChildren().get((INDEX_DATABASES_FIELD + 1) * 2 - 1)).setText(Helper.getLinesAsString(itemSQL.getDatabaseNames()));
+                    TextField tfHost = (TextField) getGridInputField(newTabPane, INDEX_HOST_FIELD);
+                    TextField tfPort = (TextField) getGridInputField(newTabPane, INDEX_PORT_FIELD);
+                    TextField tfUsername = (TextField) getGridInputField(newTabPane, INDEX_USERNAME_FIELD);
+                    PasswordField tfPassword = (PasswordField) getGridInputField(newTabPane, INDEX_PASSWORD_FIELD);
+                    TextArea taDatabases = (TextArea) getGridInputField(newTabPane, INDEX_DATABASES_FIELD);
+
+                    tfHost.setText(itemSQL.getHost());
+                    tfPort.setText(String.valueOf(itemSQL.getPort()));
+                    tfUsername.setText(itemSQL.getUsername());
+                    tfPassword.setText(itemSQL.getPassword());
+                    taDatabases.setText(Helper.getLinesAsString(itemSQL.getDatabaseNames()));
                 } catch (ClassCastException e) {
                     Helper.showAlert("The creation of the tab is incorrect. Please consult the developer.");
                 }
@@ -171,7 +176,13 @@ public class SQLComparePopup {
         return updated;
     }
 
-    private static HBox createAddNewServerHBox() {
+    //The math of the get() is because the grid pane has the Text node in the first column, then the Input node in the second,
+    //so we need to double each index and subtract 1 for zero-based
+    private static Node getGridInputField(GridPane gridPane, int fieldIndex) {
+        return gridPane.getChildren().get((fieldIndex + 1) * 2 - 1);
+    }
+
+    private static HBox createAddNewServerHBox(ArrayList<ItemSQL> itemsSQL) {
         TextField tfTabName = new TextField();
         Button btnAddServer = new Button("Add Server Tab");
 
@@ -181,6 +192,16 @@ public class SQLComparePopup {
             if (tfTabName.getText().isEmpty()) {
                 Helper.showAlert("'Tab Name' must not be empty");
                 return;
+            } else {
+                String newTabName = tfTabName.getText();
+
+                //Check if there is an existing tab with the same name - if so, don't allow it
+                for (ItemSQL itemSQL : itemsSQL) {
+                    if (newTabName.equalsIgnoreCase(itemSQL.getTabName())) {
+                        Helper.showAlert("'Tab Name' must be unique");
+                        return;
+                    }
+                }
             }
 
             createServerTab(tfTabName.getText());
