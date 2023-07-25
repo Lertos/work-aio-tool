@@ -97,7 +97,7 @@ public class SQLComparePopup {
         Separator separator = new Separator(Orientation.HORIZONTAL);
 
         //Add children
-        layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(item.getItemsSQL()), tabPane, buttonHBox);
+        layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(), tabPane, buttonHBox);
 
         //Set the padding
         layout.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
@@ -252,7 +252,7 @@ public class SQLComparePopup {
         return gridPane.getChildren().get((fieldIndex + 1) * 2 - 1);
     }
 
-    private static HBox createAddNewServerHBox(ArrayList<ItemSQL> itemsSQL) {
+    private static HBox createAddNewServerHBox() {
         TextField tfTabName = new TextField();
         Button btnAddServer = new Button("Add Server Tab");
 
@@ -266,8 +266,8 @@ public class SQLComparePopup {
                 String newTabName = tfTabName.getText();
 
                 //Check if there is an existing tab with the same name - if so, don't allow it
-                for (ItemSQL itemSQL : itemsSQL) {
-                    if (newTabName.equalsIgnoreCase(itemSQL.getTabName())) {
+                for (Tab tab : tabPane.getTabs()) {
+                    if (newTabName.equalsIgnoreCase(tab.getText())) {
                         Helper.showAlert("'Tab Name' must be unique");
                         return;
                     }
