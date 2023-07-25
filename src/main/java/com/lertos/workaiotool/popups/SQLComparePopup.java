@@ -9,6 +9,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -17,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class SQLComparePopup {
 
@@ -165,6 +168,70 @@ public class SQLComparePopup {
             } else if (procedureName.isEmpty()) {
                 Helper.showAlert("'Procedure Name' cannot be empty");
                 return;
+            }
+
+            ArrayList<ItemSQL> newListItemSQL = new ArrayList<>();
+
+            //Validate each tab to make sure they pass all validations
+            for (Tab tab : tabPane.getTabs()) {
+                GridPane tabGridPane = (GridPane) tab.getContent();
+
+                TextField tfHost = (TextField) getGridInputField(tabGridPane, INDEX_HOST_FIELD);
+                TextField tfPort = (TextField) getGridInputField(tabGridPane, INDEX_PORT_FIELD);
+                TextField tfUsername = (TextField) getGridInputField(tabGridPane, INDEX_USERNAME_FIELD);
+                PasswordField tfPassword = (PasswordField) getGridInputField(tabGridPane, INDEX_PASSWORD_FIELD);
+                TextArea taDatabases = (TextArea) getGridInputField(tabGridPane, INDEX_DATABASES_FIELD);
+
+                String host = tfHost.getText();
+                String port = tfPort.getText();
+                String username = tfUsername.getText();
+                String password = tfPassword.getText();
+                ArrayList<String> databases = Helper.getLinesToList(taDatabases.getText());
+
+                if (host.isEmpty()) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'host' field is empty");
+                    return;
+                } else if (port.isEmpty()) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'port' field is empty");
+                    return;
+                } else if (username.isEmpty()) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'username' field is empty");
+                    return;
+                } else if (password.isEmpty()) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'password' field is empty");
+                    return;
+                } else if (databases.isEmpty()) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'databases' field is empty");
+                    return;
+                }
+
+                int portAsInt;
+
+                try {
+                    portAsInt = Integer.parseInt(port);
+                } catch (NumberFormatException nfe) {
+                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'port' value is not a valid integer");
+                    return;
+                }
+
+                newListItemSQL.add(new ItemSQL(tab.getText(), host, portAsInt, username, password, databases));
+            }
+
+            //If this is a new item, create a new item
+            if (itemIndex == -1) {
+                SQLCompareItem.SQLType sqlType = Helper.getEnumFromText(SQLCompareItem.SQLType.values(), ((RadioButton) groupSQLTypes.getSelectedToggle()).getText());
+                SQLCompareItem newItem = new SQLCompareItem(displayName, procedureName, sqlType, newListItemSQL);
+
+                Data.getInstance().sqlCompareItems.getActiveItems().add(newItem);
+            }
+            //If it is an existing item, update the fields
+            else {
+                SQLCompareItem existingItem = Data.getInstance().sqlCompareItems.getActiveItems().get(itemIndex);
+
+                existingItem.setDescription(displayName);
+                existingItem.setSqlType(Helper.getEnumFromText(SQLCompareItem.SQLType.values(), ((RadioButton) groupSQLTypes.getSelectedToggle()).getText()));
+                existingItem.setProcedureName(procedureName);
+                existingItem.setItemsSQL(newListItemSQL);
             }
 
             popupWindow.close();
