@@ -202,7 +202,7 @@ public class SQLComparePopup {
                 } else if (password.isEmpty()) {
                     Helper.showAlert("Tab: [" + tabName + "] - the 'password' field is empty");
                     return;
-                } else if (databases.isEmpty()) {
+                } else if (taDatabases.getText().trim().isEmpty()) {
                     Helper.showAlert("Tab: [" + tabName + "] - the 'databases' field is empty");
                     return;
                 }
