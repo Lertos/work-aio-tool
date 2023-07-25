@@ -94,7 +94,7 @@ public class SQLComparePopup {
         Separator separator = new Separator(Orientation.HORIZONTAL);
 
         //Add children
-        layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(), tabPane, buttonHBox);
+        layout.getChildren().addAll(gridPane, separator, createAddNewServerHBox(item.getItemsSQL()), tabPane, buttonHBox);
 
         //Set the padding
         layout.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
