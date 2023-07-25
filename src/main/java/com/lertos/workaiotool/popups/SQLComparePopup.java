@@ -3,6 +3,7 @@ package com.lertos.workaiotool.popups;
 import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.ItemSQL;
 import com.lertos.workaiotool.model.items.SQLCompareItem;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,6 +19,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class SQLComparePopup {
+
+    private static final int INDEX_HOST_FIELD = 0;
+    private static final int INDEX_PORT_FIELD = 1;
+    private static final int INDEX_USERNAME_FIELD = 2;
+    private static final int INDEX_PASSWORD_FIELD = 3;
+    private static final int INDEX_DATABASES_FIELD = 4;
 
     private static boolean updated = false;
     private static TabPane tabPane;
@@ -114,7 +121,20 @@ public class SQLComparePopup {
 
         //Create each tab for each SQLItem
         if (itemIndex != -1) {
-            //TODO - create tabs
+            for (ItemSQL itemSQL : item.getItemsSQL()) {
+                GridPane newTabPane = createServerTab(itemSQL.getTabName());
+
+                try {
+                    //The math of the get() is because the grid pane is always Text label then TextField field; so we need to double each index and subtract 1 for zero-based
+                    ((TextField) newTabPane.getChildren().get((INDEX_HOST_FIELD + 1) * 2 - 1)).setText(itemSQL.getHost());
+                    ((TextField) newTabPane.getChildren().get((INDEX_PORT_FIELD + 1) * 2 - 1)).setText(String.valueOf(itemSQL.getPort()));
+                    ((TextField) newTabPane.getChildren().get((INDEX_USERNAME_FIELD + 1) * 2 - 1)).setText(itemSQL.getUsername());
+                    ((TextField) newTabPane.getChildren().get((INDEX_PASSWORD_FIELD + 1) * 2 - 1)).setText(itemSQL.getPassword());
+                    ((TextArea) newTabPane.getChildren().get((INDEX_DATABASES_FIELD + 1) * 2 - 1)).setText(Helper.getLinesAsString(itemSQL.getDatabaseNames()));
+                } catch (ClassCastException e) {
+                    Helper.showAlert("The creation of the tab is incorrect. Please consult the developer.");
+                }
+            }
         }
 
         //Set listeners
@@ -171,7 +191,7 @@ public class SQLComparePopup {
         return new HBox(tfTabName, btnAddServer);
     }
 
-    private static void createServerTab(String tabName) {
+    private static GridPane createServerTab(String tabName) {
         GridPane serverGridPane = new GridPane();
 
         Text txtHost = new Text("Host");
@@ -190,16 +210,16 @@ public class SQLComparePopup {
         taDatabases.setPromptText("Each line is a new database");
 
         //Arranging all the nodes in the grid
-        serverGridPane.add(txtHost, 0, 1);
-        serverGridPane.add(tfHost, 1, 1);
-        serverGridPane.add(txtPort, 0, 2);
-        serverGridPane.add(tfPort, 1, 2);
-        serverGridPane.add(txtUsername, 0, 3);
-        serverGridPane.add(tfUsername, 1, 3);
-        serverGridPane.add(txtPassword, 0, 4);
-        serverGridPane.add(tfPassword, 1, 4);
-        serverGridPane.add(txtDatabases, 0, 5);
-        serverGridPane.add(taDatabases, 1, 5);
+        serverGridPane.add(txtHost, 0, INDEX_HOST_FIELD);
+        serverGridPane.add(tfHost, 1, INDEX_HOST_FIELD);
+        serverGridPane.add(txtPort, 0, INDEX_PORT_FIELD);
+        serverGridPane.add(tfPort, 1, INDEX_PORT_FIELD);
+        serverGridPane.add(txtUsername, 0, INDEX_USERNAME_FIELD);
+        serverGridPane.add(tfUsername, 1, INDEX_USERNAME_FIELD);
+        serverGridPane.add(txtPassword, 0, INDEX_PASSWORD_FIELD);
+        serverGridPane.add(tfPassword, 1, INDEX_PASSWORD_FIELD);
+        serverGridPane.add(txtDatabases, 0, INDEX_DATABASES_FIELD);
+        serverGridPane.add(taDatabases, 1, INDEX_DATABASES_FIELD);
 
         //Set the alignments
         serverGridPane.setAlignment(Pos.CENTER);
@@ -221,6 +241,8 @@ public class SQLComparePopup {
         taDatabases.setPrefColumnCount(prefColCount);
 
         tabPane.getTabs().add(new Tab(tabName, serverGridPane));
+
+        return serverGridPane;
     }
 
 }
