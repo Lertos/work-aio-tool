@@ -336,7 +336,9 @@ public class SQLComparePopup {
         taDatabases.setPrefRowCount(3);
         taDatabases.setPrefColumnCount(prefColCount);
 
+        //Add the newly created tab and open it
         tabPane.getTabs().add(new Tab(tabName, serverGridPane));
+        tabPane.getSelectionModel().select(tabPane.getTabs().size() - 1);
 
         return serverGridPane;
     }
