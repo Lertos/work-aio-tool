@@ -129,7 +129,7 @@ public class SQLComparePopup {
                     ((TextField) newTabPane.getChildren().get((INDEX_HOST_FIELD + 1) * 2 - 1)).setText(itemSQL.getHost());
                     ((TextField) newTabPane.getChildren().get((INDEX_PORT_FIELD + 1) * 2 - 1)).setText(String.valueOf(itemSQL.getPort()));
                     ((TextField) newTabPane.getChildren().get((INDEX_USERNAME_FIELD + 1) * 2 - 1)).setText(itemSQL.getUsername());
-                    ((TextField) newTabPane.getChildren().get((INDEX_PASSWORD_FIELD + 1) * 2 - 1)).setText(itemSQL.getPassword());
+                    ((PasswordField) newTabPane.getChildren().get((INDEX_PASSWORD_FIELD + 1) * 2 - 1)).setText(itemSQL.getPassword());
                     ((TextArea) newTabPane.getChildren().get((INDEX_DATABASES_FIELD + 1) * 2 - 1)).setText(Helper.getLinesAsString(itemSQL.getDatabaseNames()));
                 } catch (ClassCastException e) {
                     Helper.showAlert("The creation of the tab is incorrect. Please consult the developer.");
@@ -203,7 +203,7 @@ public class SQLComparePopup {
         TextField tfHost = new TextField();
         TextField tfPort = new TextField();
         TextField tfUsername = new TextField();
-        TextField tfPassword = new TextField();
+        PasswordField tfPassword = new PasswordField();
 
         TextArea taDatabases = new TextArea();
 
