@@ -152,14 +152,17 @@ public class SQLComparePopup {
         btnSave.setOnAction(e -> {
             updated = true;
 
+            String displayName = tfDisplayName.getText().trim();
+            String procedureName = tfProcedureName.getText().trim();
+
             //First check the validations
-            if (tfDisplayName.getText().trim().isEmpty()) {
+            if (displayName.isEmpty()) {
                 Helper.showAlert("'Display Name' cannot be empty");
                 return;
             } else if (groupSQLTypes.getSelectedToggle() == null) {
                 Helper.showAlert("'SQL Type' must be selected");
                 return;
-            } else if (tfProcedureName.getText().trim().isEmpty()) {
+            } else if (procedureName.isEmpty()) {
                 Helper.showAlert("'Procedure Name' cannot be empty");
                 return;
             }
