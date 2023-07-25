@@ -116,4 +116,14 @@ public class Helper {
             list.add(line);
     }
 
+    public static ArrayList<String> getLinesToList(String rawText) {
+        ArrayList<String> newList = new ArrayList<>();
+        String[] lines = rawText.split("\n");
+
+        for (String line : lines)
+            newList.add(line);
+
+        return newList;
+    }
+
 }
