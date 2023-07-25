@@ -6,6 +6,7 @@ import com.lertos.workaiotool.model.Data;
 import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.model.items.SQLCompareItem;
 import com.lertos.workaiotool.popups.SQLComparePopup;
+import com.lertos.workaiotool.popups.SQLCompareRunPopup;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -159,7 +160,11 @@ public class ControllerSQLCompare {
                 if (getItem() == null)
                     return;
 
-                //TODO: Make the SQL call and compare
+                //Get the item to promote and get any last minute changes/details
+                SQLCompareItem item = SQLCompareRunPopup.display(Data.getInstance().sqlCompareItems.getActiveItems().indexOf(getItem()));
+
+                if (item != null)
+                    System.out.println("Got the item!");
             });
 
             //========================
