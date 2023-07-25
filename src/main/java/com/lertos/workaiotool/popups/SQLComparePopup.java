@@ -207,6 +207,7 @@ public class SQLComparePopup {
                     return;
                 }
 
+                //Check to see if the port is a correct number
                 int portAsInt;
 
                 try {
@@ -275,7 +276,7 @@ public class SQLComparePopup {
                     }
                 }
             }
-
+            //If all validations pass, create the new server tab and then clear the tab name text field
             createServerTab(tfTabName.getText());
 
             tfTabName.setText("");
@@ -324,6 +325,8 @@ public class SQLComparePopup {
         GridPane.setHalignment(txtDatabases, HPos.RIGHT);
 
         //Set other attributes
+        tfPort.setPromptText("Use -1 to assign no port");
+
         serverGridPane.setPadding(new Insets(Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING, Config.getInstance().DEFAULT_CONTROL_SPACING));
 
         serverGridPane.setVgap(Config.getInstance().DEFAULT_GRID_PANE_SPACING);
