@@ -182,26 +182,28 @@ public class SQLComparePopup {
                 PasswordField tfPassword = (PasswordField) getGridInputField(tabGridPane, INDEX_PASSWORD_FIELD);
                 TextArea taDatabases = (TextArea) getGridInputField(tabGridPane, INDEX_DATABASES_FIELD);
 
-                String host = tfHost.getText();
-                String port = tfPort.getText();
-                String username = tfUsername.getText();
-                String password = tfPassword.getText();
-                ArrayList<String> databases = Helper.getLinesToList(taDatabases.getText());
+                String host = tfHost.getText().trim();
+                String port = tfPort.getText().trim();
+                String username = tfUsername.getText().trim();
+                String password = tfPassword.getText().trim();
+                ArrayList<String> databases = Helper.getLinesToList(taDatabases.getText().trim());
+
+                String tabName = tab.getText().trim();
 
                 if (host.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'host' field is empty");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'host' field is empty");
                     return;
                 } else if (port.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'port' field is empty");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'port' field is empty");
                     return;
                 } else if (username.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'username' field is empty");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'username' field is empty");
                     return;
                 } else if (password.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'password' field is empty");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'password' field is empty");
                     return;
                 } else if (databases.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'databases' field is empty");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'databases' field is empty");
                     return;
                 }
 
@@ -210,7 +212,7 @@ public class SQLComparePopup {
                 try {
                     portAsInt = Integer.parseInt(port);
                 } catch (NumberFormatException nfe) {
-                    Helper.showAlert("Tab: [" + tab.getText() + "] - the 'port' value is not a valid integer");
+                    Helper.showAlert("Tab: [" + tabName + "] - the 'port' value is not a valid integer");
                     return;
                 }
 
