@@ -3,6 +3,8 @@ package com.lertos.workaiotool.controllers;
 import com.lertos.workaiotool.Helper;
 import com.lertos.workaiotool.model.Config;
 import com.lertos.workaiotool.model.Data;
+import com.lertos.workaiotool.model.DatabaseAccessMySQL;
+import com.lertos.workaiotool.model.ItemSQL;
 import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.model.items.SQLCompareItem;
 import com.lertos.workaiotool.popups.SQLComparePopup;
@@ -116,6 +118,32 @@ public class ControllerSQLCompare {
         }
     }
 
+    private void startComparison(SQLCompareItem sqlCompareItem) {
+        String procedureName = sqlCompareItem.getProcedureName();
+        DatabaseAccessMySQL dbo;
+        String definitionToCompare = null;
+        String newDefinitionToCompare;
+
+        for (ItemSQL itemSQL : sqlCompareItem.getItemsSQL()) {
+            dbo = new DatabaseAccessMySQL(itemSQL, procedureName);
+
+            newDefinitionToCompare = dbo.getProcedureDefinition();
+
+            //If null is returned, it means the definitions inside the single server failed
+            if (newDefinitionToCompare == null) {
+                Helper.showAlert("The definitions don't match inside the server: [" + itemSQL.getHost() + "]");
+                return;
+            }
+
+            //If definitions between servers do not match
+            if (definitionToCompare != null && !newDefinitionToCompare.equalsIgnoreCase(definitionToCompare)) {
+                Helper.showAlert("Definitions do not match across servers");
+                return;
+            }
+        }
+        Helper.showAlert("All definitions match");
+    }
+
     private class SQLCompareItemCell extends ListCell<SQLCompareItem> {
         HBox hbox = new HBox();
         Label label = new Label();
@@ -163,8 +191,12 @@ public class ControllerSQLCompare {
                 //Get the item to promote and get any last minute changes/details
                 SQLCompareItem item = SQLCompareRunPopup.display(Data.getInstance().sqlCompareItems.getActiveItems().indexOf(getItem()));
 
-                if (item != null)
-                    System.out.println("Got the item!");
+                if (item == null) {
+                    Helper.showAlert("Something is wrong with your setup for this item");
+                    return;
+                }
+
+                startComparison(item);
             });
 
             //========================
