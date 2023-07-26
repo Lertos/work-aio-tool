@@ -33,6 +33,7 @@ public abstract class DatabaseAccess {
             Class.forName(driverString);
         } catch (Exception e) {
             Helper.showAlert("Cannot find or load the SQL driver");
+            return null;
         }
 
         //Iterate over each connection string, get the result, and save it
