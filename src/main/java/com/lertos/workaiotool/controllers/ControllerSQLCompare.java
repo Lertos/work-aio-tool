@@ -118,13 +118,22 @@ public class ControllerSQLCompare {
 
     private void startComparison(SQLCompareItem sqlCompareItem) {
         String procedureName = sqlCompareItem.getProcedureName();
-        DatabaseAccessMySQL dbo;
+        DatabaseAccess dbo = null;
         Pair<ReturnType, String> returnedValue;
         String definitionToCompare = null;
         String newDefinitionToCompare;
 
         for (ItemSQL itemSQL : sqlCompareItem.getItemsSQL()) {
-            dbo = new DatabaseAccessMySQL(itemSQL, procedureName);
+            switch (sqlCompareItem.getSqlType()) {
+                case MYSQL -> dbo = new DatabaseAccessMySQL(itemSQL, procedureName);
+                case TRANSACT_SQL -> dbo = new DatabaseAccessTSQL(itemSQL, procedureName);
+            }
+
+            //If the dbo object is still null, something fishy is happening - return!
+            if (dbo == null) {
+                Helper.showAlert("Something is wrong with the setup. The SQL type is incorrect.");
+                return;
+            }
 
             returnedValue = dbo.getProcedureDefinition();
             newDefinitionToCompare = returnedValue.getValue();
