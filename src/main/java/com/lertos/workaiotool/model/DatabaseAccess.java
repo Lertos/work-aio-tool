@@ -1,6 +1,7 @@
 package com.lertos.workaiotool.model;
 
 import com.lertos.workaiotool.Helper;
+import javafx.util.Pair;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public abstract class DatabaseAccess {
     protected abstract String buildStatementString(String databaseName);
 
     //Returns NULL if definitions do not match, or the definition string if they all match
-    public String getProcedureDefinition() {
+    public Pair<ReturnType, String> getProcedureDefinition() {
         //This will load the driver; each SQL type has its own driver
         try {
             Class.forName(driverString);
@@ -48,7 +49,8 @@ public abstract class DatabaseAccess {
 
                 results.add(getResult(resultSet));
             } catch (SQLException sqlException) {
-                Helper.showAlert(sqlException.getMessage());
+                close();
+                return new Pair(ReturnType.ERROR, sqlException.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -67,12 +69,12 @@ public abstract class DatabaseAccess {
             if (definitionToCompare == null)
                 definitionToCompare = trimmedDefinition;
             else {
-                //If the previous definition and the current definition do not match, then we already found our answer
+                //If the previous definition and the current definition do not match, then we already know there is a mismatch
                 if (!trimmedDefinition.equalsIgnoreCase(definitionToCompare))
-                    return null;
+                    return new Pair(ReturnType.VALUE, null);
             }
         }
-        return definitionToCompare;
+        return new Pair(ReturnType.VALUE, definitionToCompare);
     }
 
     private String getResult(ResultSet resultSet) throws SQLException {
