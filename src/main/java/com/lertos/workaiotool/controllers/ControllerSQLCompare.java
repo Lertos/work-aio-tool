@@ -1,10 +1,7 @@
 package com.lertos.workaiotool.controllers;
 
 import com.lertos.workaiotool.Helper;
-import com.lertos.workaiotool.model.Config;
-import com.lertos.workaiotool.model.Data;
-import com.lertos.workaiotool.model.DatabaseAccessMySQL;
-import com.lertos.workaiotool.model.ItemSQL;
+import com.lertos.workaiotool.model.*;
 import com.lertos.workaiotool.model.items.FolderItem;
 import com.lertos.workaiotool.model.items.SQLCompareItem;
 import com.lertos.workaiotool.popups.SQLComparePopup;
@@ -22,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -121,13 +119,21 @@ public class ControllerSQLCompare {
     private void startComparison(SQLCompareItem sqlCompareItem) {
         String procedureName = sqlCompareItem.getProcedureName();
         DatabaseAccessMySQL dbo;
+        Pair<ReturnType, String> returnedValue;
         String definitionToCompare = null;
         String newDefinitionToCompare;
 
         for (ItemSQL itemSQL : sqlCompareItem.getItemsSQL()) {
             dbo = new DatabaseAccessMySQL(itemSQL, procedureName);
 
-            newDefinitionToCompare = dbo.getProcedureDefinition();
+            returnedValue = dbo.getProcedureDefinition();
+            newDefinitionToCompare = returnedValue.getValue();
+
+            //If there were any SQL errors, show the error and then halt this method
+            if (returnedValue.getKey() == ReturnType.ERROR) {
+                Helper.showAlert(returnedValue.getValue());
+                return;
+            }
 
             //If null is returned, it means the definitions inside the single server failed
             if (newDefinitionToCompare == null) {
