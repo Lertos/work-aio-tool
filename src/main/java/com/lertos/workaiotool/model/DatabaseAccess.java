@@ -106,4 +106,18 @@ public abstract class DatabaseAccess {
         }
     }
 
+    protected boolean isValidConnectionString() {
+        if (itemSQL.getHost() == null || itemSQL.getHost().isEmpty()) {
+            Helper.showAlert("The value given for 'host' is empty or cannot be found");
+            return false;
+        } else if (itemSQL.getUsername() == null || itemSQL.getUsername().isEmpty()) {
+            Helper.showAlert("The value given for 'username' is empty or cannot be found");
+            return false;
+        } else if (itemSQL.getPassword() == null || itemSQL.getPassword().isEmpty()) {
+            Helper.showAlert("The value given for 'password' is empty or cannot be found");
+            return false;
+        }
+        return true;
+    }
+
 }
