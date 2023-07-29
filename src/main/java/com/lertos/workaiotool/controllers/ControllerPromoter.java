@@ -106,15 +106,8 @@ public class ControllerPromoter {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().promoteItems.getHistoryItems().size();
-
-        if (size > 0) {
-            PromoteItem item = Data.getInstance().promoteItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().promoteItems.getActiveItems().add(item);
-
-            if (size == 1)
-                setUndoDeleteVisibility();
-        }
+        if (Data.getInstance().promoteItems.restoreItemFromHistory() == 0)
+            setUndoDeleteVisibility();
     }
 
     private void setUndoDeleteVisibility() {
@@ -271,8 +264,7 @@ public class ControllerPromoter {
 
                 PromoteItem item = getItem();
 
-                Data.getInstance().promoteItems.getActiveItems().remove(item);
-                Data.getInstance().promoteItems.getHistoryItems().add(item);
+                Data.getInstance().promoteItems.moveItemToHistory(item);
 
                 setUndoDeleteVisibility();
             });
