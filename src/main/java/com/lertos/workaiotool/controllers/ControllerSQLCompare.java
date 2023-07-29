@@ -95,15 +95,8 @@ public class ControllerSQLCompare {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().sqlCompareItems.getHistoryItems().size();
-
-        if (size > 0) {
-            SQLCompareItem item = Data.getInstance().sqlCompareItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().sqlCompareItems.getActiveItems().add(item);
-
-            if (size == 1)
-                setUndoDeleteVisibility();
-        }
+        if (Data.getInstance().sqlCompareItems.restoreItemFromHistory() == 0)
+            setUndoDeleteVisibility();
     }
 
     private void setUndoDeleteVisibility() {
@@ -181,8 +174,7 @@ public class ControllerSQLCompare {
 
                 SQLCompareItem item = getItem();
 
-                Data.getInstance().sqlCompareItems.getActiveItems().remove(item);
-                Data.getInstance().sqlCompareItems.getHistoryItems().add(item);
+                Data.getInstance().sqlCompareItems.moveItemToHistory(item);
 
                 setUndoDeleteVisibility();
             });
