@@ -47,5 +47,14 @@ public class ItemList<T> {
         Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
     }
 
-    //TODO: Create a method to undo a delete - find logic elsewhere on the flow
+    //Returns the size of the history list after the movement
+    public int restoreItemFromHistory() {
+        if (historyItems.size() > 0) {
+            T item = historyItems.remove(historyItems.size() - 1);
+            activeItems.add(item);
+
+            return historyItems.size();
+        }
+        return 0;
+    }
 }
