@@ -94,15 +94,8 @@ public class ControllerFolders {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().folderItems.getHistoryItems().size();
-
-        if (size > 0) {
-            FolderItem item = Data.getInstance().folderItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().folderItems.getActiveItems().add(item);
-
-            if (size == 1)
-                setUndoDeleteVisibility();
-        }
+        if (Data.getInstance().folderItems.restoreItemFromHistory() == 0)
+            setUndoDeleteVisibility();
     }
 
     private void setUndoDeleteVisibility() {
@@ -137,8 +130,7 @@ public class ControllerFolders {
 
                 FolderItem item = getItem();
 
-                Data.getInstance().folderItems.getActiveItems().remove(item);
-                Data.getInstance().folderItems.getHistoryItems().add(item);
+                Data.getInstance().folderItems.moveItemToHistory(item);
 
                 setUndoDeleteVisibility();
             });
