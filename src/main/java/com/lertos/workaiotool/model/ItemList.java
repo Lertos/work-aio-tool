@@ -33,23 +33,6 @@ public class ItemList<T> implements Serializable {
         saveFile();
     }
 
-    public void removeItem(T item) {
-        historyItems.add(item);
-        activeItems.remove(item);
-
-        saveFile();
-    }
-
-    public void removeItem(int index) {
-        if (index >= activeItems.size())
-            return;
-
-        historyItems.add(activeItems.get(index));
-        activeItems.remove(index);
-
-        saveFile();
-    }
-
     public void moveItemToHistory(T item) {
         activeItems.remove(item);
         historyItems.add(item);

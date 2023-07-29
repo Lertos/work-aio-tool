@@ -7,37 +7,12 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.robot.Robot;
 
 import java.util.ArrayList;
 
 public class Helper {
-
-    //Uses the default spacing
-    public static HBox createTextFieldWithLabel(String labelText) {
-        HBox hBox = new HBox();
-        Label label = new Label(labelText);
-        TextField textField = new TextField();
-
-        hBox.getChildren().addAll(label, textField);
-        hBox.setSpacing(Config.getInstance().DEFAULT_CONTROL_SPACING);
-
-        return hBox;
-    }
-
-    //Uses a spacing desired by the user
-    public static HBox createTextFieldWithLabel(String labelText, double spacing) {
-        HBox hBox = new HBox();
-        Label label = new Label(labelText);
-        TextField textField = new TextField();
-
-        hBox.getChildren().addAll(label, textField);
-        hBox.setSpacing(spacing);
-
-        return hBox;
-    }
 
     //Displays a simple alert with the given text parameter as a string
     public static void showAlert(String text) {
