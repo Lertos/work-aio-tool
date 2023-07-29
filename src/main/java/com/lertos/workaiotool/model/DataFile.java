@@ -34,6 +34,9 @@ public class DataFile {
         } catch (ClassNotFoundException e) {
             System.out.println(fileName + " === CLASS NOT FOUND; LOADING DEFAULT");
             return null;
+        } catch (FileNotFoundException e) {
+            System.out.println(fileName + " === FILE NOT FOUND; LOADING DEFAULT");
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(fileName + " === IOException; LOADING DEFAULT");
