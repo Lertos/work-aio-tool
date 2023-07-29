@@ -47,11 +47,20 @@ public class ItemList<T> {
         Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
     }
 
+    public void moveItemToHistory(T item) {
+        activeItems.remove(item);
+        historyItems.add(item);
+
+        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+    }
+
     //Returns the size of the history list after the movement
     public int restoreItemFromHistory() {
         if (historyItems.size() > 0) {
             T item = historyItems.remove(historyItems.size() - 1);
             activeItems.add(item);
+
+            Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
 
             return historyItems.size();
         }
