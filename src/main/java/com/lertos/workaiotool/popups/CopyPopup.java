@@ -125,6 +125,8 @@ public class CopyPopup {
             else {
                 Data.getInstance().copyItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
                 Data.getInstance().copyItems.getActiveItems().get(itemIndex).setTextToCopy(taTextToCopy.getText().trim());
+
+                Data.getInstance().copyItems.saveFile();
             }
 
             popupWindow.close();

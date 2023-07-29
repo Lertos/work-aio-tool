@@ -124,6 +124,8 @@ public class InfoPopup {
             else {
                 Data.getInstance().infoItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
                 Data.getInstance().infoItems.getActiveItems().get(itemIndex).setAdditionalText(taAdditionalText.getText().trim());
+
+                Data.getInstance().infoItems.saveFile();
             }
 
             popupWindow.close();

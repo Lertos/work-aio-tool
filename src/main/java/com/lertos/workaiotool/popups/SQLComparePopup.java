@@ -235,6 +235,8 @@ public class SQLComparePopup {
                 existingItem.setSqlType(Helper.getEnumFromText(SQLCompareItem.SQLType.values(), ((RadioButton) groupSQLTypes.getSelectedToggle()).getText()));
                 existingItem.setProcedureName(procedureName);
                 existingItem.setItemsSQL(newListItemSQL);
+
+                Data.getInstance().sqlCompareItems.saveFile();
             }
 
             popupWindow.close();

@@ -140,6 +140,8 @@ public class FolderPopup {
             else {
                 Data.getInstance().folderItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
                 Data.getInstance().folderItems.getActiveItems().get(itemIndex).setPathToOpen(tfPathToOpen.getText().trim());
+
+                Data.getInstance().folderItems.saveFile();
             }
 
             popupWindow.close();

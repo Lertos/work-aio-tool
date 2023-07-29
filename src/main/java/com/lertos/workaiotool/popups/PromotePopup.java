@@ -184,6 +184,8 @@ public class PromotePopup {
                 Helper.addLinesToList(true, existingItem.getFileNames(), taFilesToPromote.getText());
                 Helper.addLinesToList(true, existingItem.getOriginPaths(), taOriginPaths.getText());
                 Helper.addLinesToList(true, existingItem.getDestinationPaths(), taDestinationPaths.getText());
+
+                Data.getInstance().promoteItems.saveFile();
             }
 
             popupWindow.close();

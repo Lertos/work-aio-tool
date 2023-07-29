@@ -124,6 +124,8 @@ public class TodoPopup {
             else {
                 Data.getInstance().todoItems.getActiveItems().get(itemIndex).setDescription(tfDisplayName.getText().trim());
                 Data.getInstance().todoItems.getActiveItems().get(itemIndex).setAdditionalText(taAdditionalText.getText().trim());
+
+                Data.getInstance().todoItems.saveFile();
             }
 
             popupWindow.close();
