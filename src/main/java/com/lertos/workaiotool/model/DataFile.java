@@ -10,7 +10,7 @@ public class DataFile {
         this.fileName = fileName;
     }
 
-    public <T extends Serializable> void saveToFile(T obj) {
+    public void saveToFile(ItemList obj) {
         try (FileOutputStream fos = new FileOutputStream(fileName)) {
             ObjectOutput out = new ObjectOutputStream(fos);
 
@@ -23,24 +23,24 @@ public class DataFile {
         System.out.println(fileName + " === FILE SAVED");
     }
 
-    public <T extends Serializable> T loadFromFile() {
-        T obj;
+    public ItemList loadFromFile() {
+        ItemList obj;
 
         try (FileInputStream fis = new FileInputStream(fileName)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
-            obj = (T) ois.readObject();
+            obj = (ItemList) ois.readObject();
             ois.close();
         } catch (ClassNotFoundException e) {
             System.out.println(fileName + " === CLASS NOT FOUND; LOADING DEFAULT");
-            return null;
+            return new ItemList<>(fileName);
         } catch (FileNotFoundException e) {
             System.out.println(fileName + " === FILE NOT FOUND; LOADING DEFAULT");
-            return null;
+            return new ItemList<>(fileName);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(fileName + " === IOException; LOADING DEFAULT");
-            return null;
+            return new ItemList<>(fileName);
         }
         System.out.println(fileName + " === FILE LOADED");
 

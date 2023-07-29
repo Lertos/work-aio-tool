@@ -1,43 +1,21 @@
 package com.lertos.workaiotool.model;
 
+import java.util.HashMap;
+
 public class FileManager {
-    private DataFile todoItemsFile;
-    private DataFile folderItemsFile;
-    private DataFile copyItemsFile;
-    private DataFile promoteItemsFile;
-    private DataFile infoItemsFile;
-    private DataFile sqlCompareItemsFile;
+
+    private HashMap<String, DataFile> dataFiles;
 
     public FileManager() {
-        this.todoItemsFile = new DataFile("todo.ser");
-        this.folderItemsFile = new DataFile("folder.ser");
-        this.copyItemsFile = new DataFile("copy.ser");
-        this.promoteItemsFile = new DataFile("promote.ser");
-        this.infoItemsFile = new DataFile("info.ser");
-        this.sqlCompareItemsFile = new DataFile("sqlCompare.ser");
+        this.dataFiles = new HashMap<>();
     }
 
-    public DataFile getTodoItemsFile() {
-        return todoItemsFile;
+    public void addDataFile(String fileName) {
+        dataFiles.put(fileName, new DataFile(fileName + ".ser"));
     }
 
-    public DataFile getFolderItemsFile() {
-        return folderItemsFile;
+    public DataFile getDataFile(String fileName) {
+        return dataFiles.get(fileName);
     }
 
-    public DataFile getCopyItemsFile() {
-        return copyItemsFile;
-    }
-
-    public DataFile getPromoteItemsFile() {
-        return promoteItemsFile;
-    }
-
-    public DataFile getInfoItemsFile() {
-        return infoItemsFile;
-    }
-
-    public DataFile getSqlCompareItemsFile() {
-        return sqlCompareItemsFile;
-    }
 }

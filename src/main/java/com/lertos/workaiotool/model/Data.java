@@ -15,41 +15,32 @@ public class Data {
     public ItemList<PromoteItem> promoteItems;
     public ItemList<InfoItem> infoItems;
     public ItemList<SQLCompareItem> sqlCompareItems;
+    public final String FILE_NAME_TODO = "todo";
+    public final String FILE_NAME_FOLDER = "folder";
+    public final String FILE_NAME_COPY = "copy";
+    public final String FILE_NAME_PROMOTE = "promote";
+    public final String FILE_NAME_INFO = "info";
+    public final String FILE_NAME_SQL_COMPARE = "sqlCompare";
 
     private Data() {
         fileManager = new FileManager();
 
+        fileManager.addDataFile(FILE_NAME_TODO);
+        fileManager.addDataFile(FILE_NAME_FOLDER);
+        fileManager.addDataFile(FILE_NAME_COPY);
+        fileManager.addDataFile(FILE_NAME_PROMOTE);
+        fileManager.addDataFile(FILE_NAME_INFO);
+        fileManager.addDataFile(FILE_NAME_SQL_COMPARE);
+
         //Load the lists from the files, or provide defaults
-        todoItems = fileManager.getTodoItemsFile().loadFromFile();
+        todoItems = fileManager.getDataFile(FILE_NAME_TODO).loadFromFile();
+        folderItems = fileManager.getDataFile(FILE_NAME_FOLDER).loadFromFile();
+        copyItems = fileManager.getDataFile(FILE_NAME_COPY).loadFromFile();
+        promoteItems = fileManager.getDataFile(FILE_NAME_PROMOTE).loadFromFile();
+        infoItems = fileManager.getDataFile(FILE_NAME_INFO).loadFromFile();
+        sqlCompareItems = fileManager.getDataFile(FILE_NAME_SQL_COMPARE).loadFromFile();
 
-        if (todoItems == null)
-            todoItems = new ItemList<>();
-
-        folderItems = fileManager.getFolderItemsFile().loadFromFile();
-
-        if (folderItems == null)
-            folderItems = new ItemList<>();
-
-        copyItems = fileManager.getCopyItemsFile().loadFromFile();
-
-        if (copyItems == null)
-            copyItems = new ItemList<>();
-
-        promoteItems = fileManager.getPromoteItemsFile().loadFromFile();
-
-        if (promoteItems == null)
-            promoteItems = new ItemList<>();
-
-        infoItems = fileManager.getInfoItemsFile().loadFromFile();
-
-        if (infoItems == null)
-            infoItems = new ItemList<>();
-
-        sqlCompareItems = fileManager.getSqlCompareItemsFile().loadFromFile();
-
-        if (sqlCompareItems == null)
-            sqlCompareItems = new ItemList<>();
-
+        //Testing items
         todoItems.getActiveItems().add(new TodoItem(false, "First line", "Additional text 1"));
         todoItems.getActiveItems().add(new TodoItem(false, "Second line", "Additional text 2"));
         todoItems.getActiveItems().add(new TodoItem(false, "Third line", "Additional text 3"));
@@ -98,4 +89,5 @@ public class Data {
     public FileManager getFileManager() {
         return fileManager;
     }
+
 }
