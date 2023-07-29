@@ -225,7 +225,7 @@ public class SQLComparePopup {
                 SQLCompareItem.SQLType sqlType = Helper.getEnumFromText(SQLCompareItem.SQLType.values(), ((RadioButton) groupSQLTypes.getSelectedToggle()).getText());
                 SQLCompareItem newItem = new SQLCompareItem(displayName, procedureName, sqlType, newListItemSQL);
 
-                Data.getInstance().sqlCompareItems.getActiveItems().add(newItem);
+                Data.getInstance().sqlCompareItems.addItem(newItem);
             }
             //If it is an existing item, update the fields
             else {

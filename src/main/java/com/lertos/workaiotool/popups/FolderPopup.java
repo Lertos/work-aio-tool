@@ -134,7 +134,7 @@ public class FolderPopup {
             if (itemIndex == -1) {
                 FolderItem newItem = new FolderItem(tfDisplayName.getText().trim(), tfPathToOpen.getText().trim());
 
-                Data.getInstance().folderItems.getActiveItems().add(newItem);
+                Data.getInstance().folderItems.addItem(newItem);
             }
             //If updating an existing FolderItem
             else {

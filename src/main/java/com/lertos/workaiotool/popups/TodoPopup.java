@@ -118,7 +118,7 @@ public class TodoPopup {
             if (itemIndex == -1) {
                 TodoItem newItem = new TodoItem(false, tfDisplayName.getText().trim(), taAdditionalText.getText().trim());
 
-                Data.getInstance().todoItems.getActiveItems().add(newItem);
+                Data.getInstance().todoItems.addItem(newItem);
             }
             //If updating an existing TodoItem
             else {

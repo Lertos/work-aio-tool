@@ -170,7 +170,7 @@ public class PromotePopup {
                 Helper.addLinesToList(false, newItem.getOriginPaths(), taOriginPaths.getText());
                 Helper.addLinesToList(false, newItem.getDestinationPaths(), taDestinationPaths.getText());
 
-                Data.getInstance().promoteItems.getActiveItems().add(newItem);
+                Data.getInstance().promoteItems.addItem(newItem);
             }
             //If updating an existing FolderItem
             else {

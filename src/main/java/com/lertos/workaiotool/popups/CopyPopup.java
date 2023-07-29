@@ -119,7 +119,7 @@ public class CopyPopup {
             if (itemIndex == -1) {
                 CopyItem newItem = new CopyItem(tfDisplayName.getText().trim(), taTextToCopy.getText().trim());
 
-                Data.getInstance().copyItems.getActiveItems().add(newItem);
+                Data.getInstance().copyItems.addItem(newItem);
             }
             //If updating an existing FolderItem
             else {

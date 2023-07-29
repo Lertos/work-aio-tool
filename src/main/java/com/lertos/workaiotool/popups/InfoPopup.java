@@ -118,7 +118,7 @@ public class InfoPopup {
             if (itemIndex == -1) {
                 InfoItem newItem = new InfoItem(tfDisplayName.getText().trim(), taAdditionalText.getText().trim());
 
-                Data.getInstance().infoItems.getActiveItems().add(newItem);
+                Data.getInstance().infoItems.addItem(newItem);
             }
             //If updating an existing InfoItem
             else {
