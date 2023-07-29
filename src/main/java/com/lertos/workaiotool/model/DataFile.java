@@ -5,13 +5,15 @@ import java.io.*;
 public class DataFile {
 
     private final String fileName;
+    private final String fileNameWithExtension;
 
     public DataFile(String fileName) {
         this.fileName = fileName;
+        this.fileNameWithExtension = fileName + ".ser";
     }
 
     public void saveToFile(ItemList obj) {
-        try (FileOutputStream fos = new FileOutputStream(fileName)) {
+        try (FileOutputStream fos = new FileOutputStream(fileNameWithExtension)) {
             ObjectOutput out = new ObjectOutputStream(fos);
 
             out.writeObject(obj);
@@ -26,7 +28,7 @@ public class DataFile {
     public ItemList loadFromFile() {
         ItemList obj;
 
-        try (FileInputStream fis = new FileInputStream(fileName)) {
+        try (FileInputStream fis = new FileInputStream(fileNameWithExtension)) {
             ObjectInputStream ois = new ObjectInputStream(fis);
 
             obj = (ItemList) ois.readObject();

@@ -11,7 +11,7 @@ public class FileManager {
     }
 
     public void addDataFile(String fileName) {
-        dataFiles.put(fileName, new DataFile(fileName + ".ser"));
+        dataFiles.put(fileName, new DataFile(fileName));
     }
 
     public DataFile getDataFile(String fileName) {
