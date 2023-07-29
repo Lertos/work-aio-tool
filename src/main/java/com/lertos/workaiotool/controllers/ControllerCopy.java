@@ -93,15 +93,8 @@ public class ControllerCopy {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().copyItems.getHistoryItems().size();
-
-        if (size > 0) {
-            CopyItem item = Data.getInstance().copyItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().copyItems.getActiveItems().add(item);
-
-            if (size == 1)
-                setUndoDeleteVisibility();
-        }
+        if (Data.getInstance().copyItems.restoreItemFromHistory() == 0)
+            setUndoDeleteVisibility();
     }
 
     private void setUndoDeleteVisibility() {
@@ -136,8 +129,7 @@ public class ControllerCopy {
 
                 CopyItem item = getItem();
 
-                Data.getInstance().copyItems.getActiveItems().remove(item);
-                Data.getInstance().copyItems.getHistoryItems().add(item);
+                Data.getInstance().copyItems.moveItemToHistory(item);
 
                 setUndoDeleteVisibility();
             });
