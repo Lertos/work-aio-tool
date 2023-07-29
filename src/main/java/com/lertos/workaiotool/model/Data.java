@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Data {
 
     private static Data instance;
+    private FileManager fileManager;
 
     public ItemList<TodoItem> todoItems;
     public ItemList<FolderItem> folderItems;
@@ -16,12 +17,38 @@ public class Data {
     public ItemList<SQLCompareItem> sqlCompareItems;
 
     private Data() {
-        todoItems = new ItemList<>();
-        folderItems = new ItemList<>();
-        copyItems = new ItemList<>();
-        promoteItems = new ItemList<>();
-        infoItems = new ItemList<>();
-        sqlCompareItems = new ItemList<>();
+        fileManager = new FileManager();
+
+        //Load the lists from the files, or provide defaults
+        todoItems = fileManager.getTodoItemsFile().loadFromFile();
+
+        if (todoItems == null)
+            todoItems = new ItemList<>();
+
+        folderItems = fileManager.getFolderItemsFile().loadFromFile();
+
+        if (folderItems == null)
+            folderItems = new ItemList<>();
+
+        copyItems = fileManager.getCopyItemsFile().loadFromFile();
+
+        if (copyItems == null)
+            copyItems = new ItemList<>();
+
+        promoteItems = fileManager.getPromoteItemsFile().loadFromFile();
+
+        if (promoteItems == null)
+            promoteItems = new ItemList<>();
+
+        infoItems = fileManager.getInfoItemsFile().loadFromFile();
+
+        if (infoItems == null)
+            infoItems = new ItemList<>();
+
+        sqlCompareItems = fileManager.getSqlCompareItemsFile().loadFromFile();
+
+        if (sqlCompareItems == null)
+            sqlCompareItems = new ItemList<>();
 
         todoItems.getActiveItems().add(new TodoItem(false, "First line", "Additional text 1"));
         todoItems.getActiveItems().add(new TodoItem(false, "Second line", "Additional text 2"));
@@ -54,8 +81,9 @@ public class Data {
 
         ArrayList<String> databases = new ArrayList<>();
         databases.add("testworld");
+        databases.add("testworld2");
         ArrayList<ItemSQL> itemsSQL = new ArrayList<>();
-        ItemSQL itemSQL = new ItemSQL("localhost", -1, "root", "", databases);
+        ItemSQL itemSQL = new ItemSQL("testTab", "localhost", -1, "root", "", databases);
         itemsSQL.add(itemSQL);
         SQLCompareItem sqlCompareItem = new SQLCompareItem("Test Compare", "dummy_proc", SQLCompareItem.SQLType.MYSQL, itemsSQL);
         sqlCompareItems.getActiveItems().add(sqlCompareItem);
