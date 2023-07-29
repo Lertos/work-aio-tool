@@ -27,14 +27,14 @@ public class ItemList<T> {
     public void addItem(T item) {
         activeItems.add(item);
 
-        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+        saveFile();
     }
 
     public void removeItem(T item) {
         historyItems.add(item);
         activeItems.remove(item);
 
-        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+        saveFile();
     }
 
     public void removeItem(int index) {
@@ -44,14 +44,14 @@ public class ItemList<T> {
         historyItems.add(activeItems.get(index));
         activeItems.remove(index);
 
-        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+        saveFile();
     }
 
     public void moveItemToHistory(T item) {
         activeItems.remove(item);
         historyItems.add(item);
 
-        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+        saveFile();
     }
 
     //Returns the size of the history list after the movement
@@ -60,10 +60,14 @@ public class ItemList<T> {
             T item = historyItems.remove(historyItems.size() - 1);
             activeItems.add(item);
 
-            Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
+            saveFile();
 
             return historyItems.size();
         }
         return 0;
+    }
+
+    public void saveFile() {
+        Data.getInstance().getFileManager().getDataFile(fileName).saveToFile(this);
     }
 }
