@@ -3,17 +3,20 @@ package com.lertos.workaiotool.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class ItemList<T> {
+import java.io.Serializable;
+import java.util.List;
+
+public class ItemList<T> implements Serializable {
 
     private final String fileName;
     private ObservableList<T> activeItems;
     private ObservableList<T> historyItems;
 
-    public ItemList(String fileName) {
+    public ItemList(String fileName, List<T> activeItems, List<T> historyItems) {
         this.fileName = fileName;
 
-        activeItems = FXCollections.observableArrayList();
-        historyItems = FXCollections.observableArrayList();
+        this.activeItems = FXCollections.observableArrayList(activeItems);
+        this.historyItems = FXCollections.observableArrayList(historyItems);
     }
 
     public ObservableList<T> getActiveItems() {
