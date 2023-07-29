@@ -95,4 +95,7 @@ public class Data {
         return instance;
     }
 
+    public FileManager getFileManager() {
+        return fileManager;
+    }
 }
