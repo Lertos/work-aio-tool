@@ -128,6 +128,8 @@ public class ControllerTodoList {
                 iter.remove();
             }
         }
+        //Save the file since we had to use an iterator
+        Data.getInstance().todoItems.saveFile();
         setUndoDeleteVisibility();
     }
 
@@ -143,16 +145,9 @@ public class ControllerTodoList {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().todoItems.getHistoryItems().size();
-
-        if (size > 0) {
-            TodoItem item = Data.getInstance().todoItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().todoItems.getActiveItems().add(item);
-
-            if (size == 1) {
-                btnUndoDelete.setVisible(false);
-                btnUndoDelete.setManaged(false);
-            }
+        if (Data.getInstance().todoItems.restoreItemFromHistory() == 1) {
+            btnUndoDelete.setVisible(false);
+            btnUndoDelete.setManaged(false);
         }
     }
 
@@ -189,8 +184,7 @@ public class ControllerTodoList {
             hbox.setOnMouseClicked(event -> {
                 //If delete mode is ON - a click means delete the item and add it to the history queue
                 if (isDeleteModeEnabled) {
-                    Data.getInstance().todoItems.getHistoryItems().add(getItem());
-                    Data.getInstance().todoItems.getActiveItems().remove(getItem());
+                    Data.getInstance().todoItems.moveItemToHistory(getItem());
 
                     setUndoDeleteVisibility();
                 }
