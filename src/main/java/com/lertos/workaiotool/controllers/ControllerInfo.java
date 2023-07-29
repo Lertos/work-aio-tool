@@ -89,17 +89,8 @@ public class ControllerInfo {
 
     @FXML
     private void onUndoDeleteClicked() {
-        int size = Data.getInstance().infoItems.getHistoryItems().size();
-
-        if (size > 0) {
-            InfoItem item = Data.getInstance().infoItems.getHistoryItems().remove(size - 1);
-            Data.getInstance().infoItems.getActiveItems().add(item);
-
-            if (size == 1) {
-                btnUndoDelete.setVisible(false);
-                btnUndoDelete.setManaged(false);
-            }
-        }
+        if (Data.getInstance().infoItems.restoreItemFromHistory() == 0)
+            setUndoDeleteVisibility();
     }
 
     @FXML
@@ -136,8 +127,7 @@ public class ControllerInfo {
 
                 InfoItem item = getItem();
 
-                Data.getInstance().infoItems.getActiveItems().remove(item);
-                Data.getInstance().infoItems.getHistoryItems().add(item);
+                Data.getInstance().infoItems.moveItemToHistory(item);
 
                 setUndoDeleteVisibility();
             });
