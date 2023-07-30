@@ -27,7 +27,8 @@ public class SQLComparePopup {
     private static final int INDEX_PORT_FIELD = 1;
     private static final int INDEX_USERNAME_FIELD = 2;
     private static final int INDEX_PASSWORD_FIELD = 3;
-    private static final int INDEX_DATABASES_FIELD = 4;
+    private static final int INDEX_USES_INTEGRATED_SECURITY_FIELD = 4;
+    private static final int INDEX_DATABASES_FIELD = 5;
 
     private static boolean updated = false;
     private static TabPane tabPane;
@@ -132,12 +133,14 @@ public class SQLComparePopup {
                     TextField tfPort = (TextField) getGridInputField(newTabPane, INDEX_PORT_FIELD);
                     TextField tfUsername = (TextField) getGridInputField(newTabPane, INDEX_USERNAME_FIELD);
                     PasswordField tfPassword = (PasswordField) getGridInputField(newTabPane, INDEX_PASSWORD_FIELD);
+                    CheckBox cbUsesIntegratedSecurity = (CheckBox) getGridInputField(newTabPane, INDEX_USES_INTEGRATED_SECURITY_FIELD);
                     TextArea taDatabases = (TextArea) getGridInputField(newTabPane, INDEX_DATABASES_FIELD);
 
                     tfHost.setText(itemSQL.getHost());
                     tfPort.setText(String.valueOf(itemSQL.getPort()));
                     tfUsername.setText(itemSQL.getUsername());
                     tfPassword.setText(itemSQL.getPassword());
+                    cbUsesIntegratedSecurity.setSelected(itemSQL.usesIntegratedSecurity());
                     taDatabases.setText(Helper.getLinesAsString(itemSQL.getDatabaseNames()));
                 } catch (ClassCastException e) {
                     Helper.showAlert("The creation of the tab is incorrect. Please consult the developer.");
@@ -180,12 +183,14 @@ public class SQLComparePopup {
                 TextField tfPort = (TextField) getGridInputField(tabGridPane, INDEX_PORT_FIELD);
                 TextField tfUsername = (TextField) getGridInputField(tabGridPane, INDEX_USERNAME_FIELD);
                 PasswordField tfPassword = (PasswordField) getGridInputField(tabGridPane, INDEX_PASSWORD_FIELD);
+                CheckBox cbUsesIntegratedSecurity = (CheckBox) getGridInputField(tabGridPane, INDEX_USES_INTEGRATED_SECURITY_FIELD);
                 TextArea taDatabases = (TextArea) getGridInputField(tabGridPane, INDEX_DATABASES_FIELD);
 
                 String host = tfHost.getText().trim();
                 String port = tfPort.getText().trim();
                 String username = tfUsername.getText().trim();
                 String password = tfPassword.getText().trim();
+                boolean usesIntegratedSecurity = cbUsesIntegratedSecurity.isSelected();
                 ArrayList<String> databases = Helper.getLinesToList(taDatabases.getText().trim());
 
                 String tabName = tab.getText().trim();
@@ -196,12 +201,15 @@ public class SQLComparePopup {
                 } else if (port.isEmpty()) {
                     Helper.showAlert("Tab: [" + tabName + "] - the 'port' field is empty");
                     return;
-                } else if (username.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tabName + "] - the 'username' field is empty");
-                    return;
-                } else if (password.isEmpty()) {
-                    Helper.showAlert("Tab: [" + tabName + "] - the 'password' field is empty");
-                    return;
+                } else if (!usesIntegratedSecurity) {
+                    //Only if not using integrated security do we need to check the username and password
+                    if (username.isEmpty()) {
+                        Helper.showAlert("Tab: [" + tabName + "] - the 'username' field is empty");
+                        return;
+                    } else if (password.isEmpty()) {
+                        Helper.showAlert("Tab: [" + tabName + "] - the 'password' field is empty");
+                        return;
+                    }
                 } else if (taDatabases.getText().trim().isEmpty()) {
                     Helper.showAlert("Tab: [" + tabName + "] - the 'databases' field is empty");
                     return;
@@ -217,7 +225,7 @@ public class SQLComparePopup {
                     return;
                 }
 
-                newListItemSQL.add(new ItemSQL(tab.getText(), host, portAsInt, username, password, databases));
+                newListItemSQL.add(new ItemSQL(tab.getText(), host, portAsInt, username, password, usesIntegratedSecurity, databases));
             }
 
             //If this is a new item, create a new item
@@ -294,12 +302,14 @@ public class SQLComparePopup {
         Text txtPort = new Text("Port");
         Text txtUsername = new Text("Username");
         Text txtPassword = new Text("Password");
+        Text txtUsesIntegratedSecurity = new Text("Integrated Security");
         Text txtDatabases = new Text("Databases");
 
         TextField tfHost = new TextField();
         TextField tfPort = new TextField();
         TextField tfUsername = new TextField();
         PasswordField tfPassword = new PasswordField();
+        CheckBox cbUsesIntegratedSecurity = new CheckBox();
 
         TextArea taDatabases = new TextArea();
 
@@ -314,8 +324,20 @@ public class SQLComparePopup {
         serverGridPane.add(tfUsername, 1, INDEX_USERNAME_FIELD);
         serverGridPane.add(txtPassword, 0, INDEX_PASSWORD_FIELD);
         serverGridPane.add(tfPassword, 1, INDEX_PASSWORD_FIELD);
+        serverGridPane.add(txtUsesIntegratedSecurity, 0, INDEX_USES_INTEGRATED_SECURITY_FIELD);
+        serverGridPane.add(cbUsesIntegratedSecurity, 1, INDEX_USES_INTEGRATED_SECURITY_FIELD);
         serverGridPane.add(txtDatabases, 0, INDEX_DATABASES_FIELD);
         serverGridPane.add(taDatabases, 1, INDEX_DATABASES_FIELD);
+
+        //Set listeners
+        cbUsesIntegratedSecurity.selectedProperty().addListener((obs, wasChecked, isNowChecked) -> {
+            boolean usesIntegratedSecurity = cbUsesIntegratedSecurity.isSelected();
+
+            toggleFieldVisibility(txtUsername, !usesIntegratedSecurity);
+            toggleFieldVisibility(tfUsername, !usesIntegratedSecurity);
+            toggleFieldVisibility(txtPassword, !usesIntegratedSecurity);
+            toggleFieldVisibility(tfPassword, !usesIntegratedSecurity);
+        });
 
         //Set the alignments
         serverGridPane.setAlignment(Pos.CENTER);
@@ -343,6 +365,11 @@ public class SQLComparePopup {
         tabPane.getSelectionModel().select(tabPane.getTabs().size() - 1);
 
         return serverGridPane;
+    }
+
+    private static void toggleFieldVisibility(Node node, boolean isVisible) {
+        node.setVisible(isVisible);
+        node.setManaged(isVisible);
     }
 
 }

@@ -157,7 +157,7 @@ public class SQLCompareRunPopup {
                     if (itemSQL.getTabName().equalsIgnoreCase(tabName)) {
                         ArrayList<String> databases = Helper.getLinesToList(taDatabases.getText().trim());
 
-                        newItemSQLList.add(new ItemSQL(tabName, itemSQL.getHost(), itemSQL.getPort(), itemSQL.getUsername(), itemSQL.getPassword(), databases));
+                        newItemSQLList.add(new ItemSQL(tabName, itemSQL.getHost(), itemSQL.getPort(), itemSQL.getUsername(), itemSQL.getPassword(), itemSQL.usesIntegratedSecurity(), databases));
                         break;
                     }
                 }
