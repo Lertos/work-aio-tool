@@ -24,10 +24,15 @@ public class DatabaseAccessTSQL extends DatabaseAccess {
 
         sb.append(";database=");
         sb.append(databaseName);
-        sb.append(";user=");
-        sb.append(itemSQL.getUsername());
-        sb.append(";password=");
-        sb.append(itemSQL.getPassword());
+
+        if (itemSQL.usesIntegratedSecurity()) {
+            sb.append(";integratedSecurity=true");
+        } else {
+            sb.append(";user=");
+            sb.append(itemSQL.getUsername());
+            sb.append(";password=");
+            sb.append(itemSQL.getPassword());
+        }
         sb.append(";encrypt=true;");
 
         return sb.toString();
