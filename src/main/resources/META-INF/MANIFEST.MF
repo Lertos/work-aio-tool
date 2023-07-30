@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Main-Class: com.lertos.workaiotool.MainCaller
+Class-Path: mssql-jdbc-12.2.0.jre11.jar controlsfx-11.1.1.jar javafx-bas
+ e-17.0.2.jar javafx-graphics-17.0.2.jar mysql-connector-j-8.1.0.jar jav
+ afx-controls-17.0.2.jar javafx-controls-17.0.2-win.jar javafx-base-17.0
+ .2-win.jar javafx-fxml-17.0.2.jar javafx-graphics-17.0.2-win.jar javafx
+ -fxml-17.0.2-win.jar
+

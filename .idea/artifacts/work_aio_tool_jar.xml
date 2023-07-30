@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact name="work-aio-tool:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/work_aio_tool_jar</output-path>
+    <root id="root">
+      <element id="archive" name="work-aio-tool.jar">
+        <element id="module-output" name="work-aio-tool" />
+      </element>
+      <element id="library" level="project" name="mssql-jdbc-12.2.0.jre11" />
+      <element id="library" level="project" name="Maven: org.controlsfx:controlsfx:11.1.1" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:17.0.2" />
+      <element id="library" level="project" name="mysql-connector-j-8.1.0" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:17.0.2" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:17.0.2" />
+    </root>
+  </artifact>
+</component>
