@@ -12,8 +12,10 @@ public class Config {
     public final Color TEXT_ERROR = Color.RED;
 
     //Image paths
-    public final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
-    public final String EDIT_BUTTON_PATH = "./src/main/resources/images/edit.png";
+    //public final String DELETE_BUTTON_PATH = "./src/main/resources/images/delete.png";
+    public final String DELETE_BUTTON_PATH = "delete.png";
+    //public final String EDIT_BUTTON_PATH = "./src/main/resources/images/edit.png";
+    public final String EDIT_BUTTON_PATH = "edit.png";
 
     //Giving different options for spacing throughout the system to keep the look consistent
     public final double DEFAULT_BUTTON_SPACING = 10;
